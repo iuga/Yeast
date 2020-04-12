@@ -4,6 +4,8 @@ This module exposes a collection of well-tested steps that you can directly use 
 
 ## Columns Manipulation
 
+Execute operations over columns or predictors.
+
 ### SelectColumnStep
 
 ::: yeast.steps.select_columns_step.SelectColumnStep

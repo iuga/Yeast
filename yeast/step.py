@@ -5,8 +5,9 @@ class Step():
 
     Workflow:
     init() -->
-               prepare() --> validate() --> do_validate() --> do_prepare() -->
-                                                                               bake() --> do_bake()
+               prepare() --> do_prepare() -->
+                                             bake() -->                                  do_bake()
+                                                        validate() --> do_validate() -->
 
     Notes:
     It contains some methods that should be redefined by childs if neccesary like:
@@ -16,14 +17,21 @@ class Step():
     """
     def prepare(self, df):
         """
-        During the recipe preparation the first step is the validation, then prepare the step
         During this phase the original df must not be transformed.
 
         :returns self for chaining
         """
-        self.validate(df)
         self.do_prepare(df)
         return self
+
+    def bake(self, df):
+        """
+        Execute the recipe transforming the dataframe and return it but before, validate it.
+
+        :returns the transformed dataframe
+        """
+        self.validate(df)
+        return self.do_bake(df)
 
     def validate(self, df):
         """
@@ -32,21 +40,7 @@ class Step():
         """
         return self.do_validate(df)
 
-    def bake(self, df):
-        """
-        Execute the recipe transforming the dataframe and return it.
-
-        :returns the transformed dataframe
-        """
-        return self.do_bake(df)
-
     def do_prepare(self, df):
-        """
-        Let subclasses override this operation
-        """
-        return self
-
-    def do_validate(self, df):
         """
         Let subclasses override this operation
         """
@@ -57,3 +51,9 @@ class Step():
         Let subclasses override this operation
         """
         return df
+
+    def do_validate(self, df):
+        """
+        Let subclasses override this operation
+        """
+        return self
