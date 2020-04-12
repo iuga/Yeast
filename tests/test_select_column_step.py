@@ -2,6 +2,7 @@ import pytest
 import pandas as pd
 from yeast.steps.select_columns_step import SelectColumnStep
 from yeast.errors import YeastValidationError
+from yeast.selectors import AllNumeric, AllMatching
 
 
 @pytest.fixture
@@ -40,3 +41,27 @@ def test_select_columns_step_must_fail_if_column_is_not_string(data):
     with pytest.raises(YeastValidationError):
         step = SelectColumnStep(columns=[42, 'not_found'])
         step.prepare(data).bake(data)
+
+
+def test_numerical_selectors_on_columns(data):
+    """
+    Test all_numeric
+    """
+    step = SelectColumnStep(columns=AllNumeric())
+    baked_df = step.prepare(data).bake(data)
+
+    assert 'year' in baked_df.columns
+    assert 'seasons' in baked_df.columns
+    assert 'title' not in baked_df.columns
+
+
+def test_regex_selectors_on_columns(data):
+    """
+    Test all_numeric
+    """
+    step = SelectColumnStep(columns=AllMatching('^sea'))
+    baked_df = step.prepare(data).bake(data)
+
+    assert 'seasons' in baked_df.columns
+    assert 'title' not in baked_df.columns
+    assert 'year' not in baked_df.columns

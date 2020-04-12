@@ -1,3 +1,6 @@
+from yeast.selectors import Selector
+
+
 class Step():
     """
     Yeast Step Definition:
@@ -57,3 +60,10 @@ class Step():
         Let subclasses override this operation
         """
         return self
+
+    def resolve_selector(self, selector, df):
+        """
+        Resolve the selector.
+        If function, execute and return. Else, we assume that is the war selector.
+        """
+        return selector.resolve(df) if isinstance(selector, Selector) else selector

@@ -1,57 +1,41 @@
-## 5 Minute Introduction
+## Installation
 
-# Steps
+The basic [installation](install.html) is straightforward: 
+
+```bash
+pip install git+https://github.com/iuga/Yeast
+```
+
+## Steps
+
+Steps are a collection of well-tested instruments that you can use without too much study in your
+data processing flow because they cover a wide range of use-cases. Each one has its own signature and
+specifics that you can discover on the [API reference](step_reference.html). One example:
 
 ```python
+# Convert all columns names to Snake Case:
 CleanColumnNamesStep('snake')
 ```
 
-# Recipes
+## Selectors
+
+The [selectors](selectors.html) can choose columns based on their data type or name:
 
 ```python
-recipe_a = Recipe([
-    ...
-], inputs='dfx')
-
-recipe_b = Recipe([
-    ...
-], inputs='dfy')
-
-recipe_merge = MergeRecipe('inner_join', by=['id'])
+# Shortcut to keep only the numerical columns
+SelectColumnStep(AllNumeric())
 ```
 
-# Workflows / Cookbook
+## Recipes
 
-```
-dfx -> A -> B -----|
-                 Merge -> D -> df
-dfy -> C ----------|
-```
+A Recipe executes an ordered list of steps that will be used to prepare and bake/transform the data.
 
 ```python
-workflow = Workflow()
-workflow >> ( recipe_a >> recipe_b ) >> merge_recipe << recipe_c << workflow
-merge_recipe >> recipe_c
-df = workflow.prepare_bake(inputs={
-  'dfx': dfx,
-  'dfy': dfy
-})
-```
-
-```python
-pdfx = Placeholder('dfx')
-pdfy = Placeholder('dfy')
-
-x = recipe_a(pdfa)
-x = recipe_b(x)
-
-y = recipe_c(pdfb)
-
-z = merge_recipe(x, y)
-z = recipe_d(z)
-
-Workflow(inputs={
-  'dfx': dfx,
-  'dfy': dfy
-}, outputs=z).prepare_bake()
+# Define a recipe of steps to process your data
+recipe = Recipe([
+  # Convert all columns names to Snake Case:
+  CleanColumnNamesStep('snake')
+])
+# Execute the recipe
+clean_data = recipe.prepare(raw_data).bake(raw_data)
 ```

@@ -20,6 +20,7 @@ nav:
   - Getting Started:
     - Installing Yeast: install.md
     - 5 Minute Introduction: introduction.md
+    - Methods for Select Variables in Steps: selectors.md
   - Developers API:
     - Step Reference: step_reference.md
 plugins: []
