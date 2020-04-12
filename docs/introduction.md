@@ -1,6 +1,6 @@
 ## Installation
 
-The basic [installation](install.html) is straightforward: 
+The basic [installation](install.html) is straightforward:
 
 ```bash
 pip install git+https://github.com/iuga/Yeast
@@ -10,7 +10,7 @@ pip install git+https://github.com/iuga/Yeast
 
 Steps are a collection of well-tested instruments that you can use without too much study in your
 data processing flow because they cover a wide range of use-cases. Each one has its own signature and
-specifics that you can discover on the [API reference](step_reference.html). One example:
+specifics that you can discover on the [API reference](reference.html). One example:
 
 ```python
 # Convert all columns names to Snake Case:
