@@ -1,0 +1,36 @@
+site_name: Yeast
+site_description: A Python data processing engine for modeling or visualization
+theme:
+  name: material
+  palette:
+    primary: deep purple
+    accent: deep purple
+  icon:
+    logo: material/library
+    repo: fontawesome/brands/git-alt
+
+repo_name: iuga/yeast
+repo_url: https://github.com/iuga/yeast
+
+use_directory_urls: false
+nav:
+  - Home: index.md
+  - Introduction:
+    - Why Yeast?: why.md
+  - Getting Started:
+    - Installing Yeast: install.md
+    - 5 Minute Introduction: introduction.md
+  - Developers API:
+    - Step Reference: step_reference.md
+plugins: []
+markdown_extensions:
+  - admonition
+  - codehilite
+  - mkautodoc
+  - toc:
+        permalink: True
+extra:
+  logo:
+    logo.jpg
+  include_toc: yes
+  show_powered_by: false
