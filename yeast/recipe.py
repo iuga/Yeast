@@ -23,7 +23,7 @@ class Recipe():
         For each step in the recipe:
             prepare and validate the step
         """
-        if not isinstance(x, pd.DataFrame):
+        if not isinstance(df, pd.DataFrame):
             raise YeastRecipeError('Data must be a Pandas Data Frame')
 
         for step in self.steps:
@@ -36,7 +36,7 @@ class Recipe():
         For each step in the recipe:
             bake the step
         """
-        if not isinstance(x, pd.DataFrame):
+        if not isinstance(df, pd.DataFrame):
             raise YeastRecipeError('Data must be a Pandas Data Frame')
 
         baked_df = df.copy()

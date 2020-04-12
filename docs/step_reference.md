@@ -8,5 +8,10 @@ Execute operations over columns or predictors.
 
 ### SelectColumnStep
 
-::: yeast.steps.select_columns_step.SelectColumnStep
+::: yeast.steps.SelectColumnStep
+    :docstring:
+
+### CleanColumnNamesStep
+
+::: yeast.steps.CleanColumnNamesStep
     :docstring:
