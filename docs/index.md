@@ -16,6 +16,16 @@ recipe = Recipe([
   RenameColumnsStep({'n_tkts', 'tickets_number'}),
   # Keep only numerical variables:
   SelectStep(AllNumeric()),
+  # The user_id column (string) need some processing
+  # Example "   3a2-A" to "0003A2"
+  StringTransformStep('user_id', transformers=[
+    # Remove whitespaces from start and end of string
+    StrTrim(),
+    # The suffix "-A" should be removed
+    StrReplace('-A', ''),
+    # Transform to upercase
+    StrToUpper()
+  ]),
   # Keep only ratings equal or bigger than 9:
   FilterStep("rating >= 9"),
   # Sort / Arrange the results,
@@ -39,3 +49,4 @@ your_clean_data = recipe.bake(your_raw_data)
 
 - [Steps Reference](reference.md)
 - [Column Selectors](selectors.md)
+- [Transforming Variables](transformers.md)

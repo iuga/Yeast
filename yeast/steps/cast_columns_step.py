@@ -74,7 +74,9 @@ class CastColumnsStep(Step):
             if c not in df.columns:
                 raise YeastValidationError(f'Column {c} not found on the DataFrame')
             if t not in self.type_mapper.keys():
-                raise YeastValidationError(f'Data type {t} not available. Choose from: {self.type_mapper.keys()}')
+                raise YeastValidationError(
+                    f'Data type {t} not available. Choose from: {self.type_mapper.keys()}'
+                )
 
 
 class CastStep(CastColumnsStep):

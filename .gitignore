@@ -1,5 +1,6 @@
 # SO
 .DS_Store
+templates
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

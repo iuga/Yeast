@@ -61,7 +61,7 @@ class FilterRowsStep(Step):
         Validations:
         - Check that expression is not empty
         """
-        if not isinstance(self.expression, str) or self.expression.strip() == '' :
+        if not isinstance(self.expression, str) or self.expression.strip() == '':
             raise YeastValidationError('The expression must be a non empty string')
 
 

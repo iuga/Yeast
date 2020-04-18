@@ -45,3 +45,10 @@ This module exposes a collection of well-tested steps that you can directly use 
 
 ::: yeast.steps.DropDuplicateRowsStep
     :docstring:
+
+## Individual Transformations
+
+### StringTransformStep
+
+::: yeast.steps.StringTransformStep
+    :docstring:

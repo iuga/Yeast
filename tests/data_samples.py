@@ -19,3 +19,33 @@ def startrek_data():
     pdf['seasons'] = pdf['seasons'].astype('category')
     pdf['aired'] = pd.to_datetime(pdf['aired'])
     return pdf
+
+
+@pytest.fixture
+def startrek_characters():
+    """
+    Text dataset of the Star Trek Characters
+    """
+    pdf = pd.DataFrame({
+        'name': [
+            'JONATHAN ARCHER',
+            'Michael Burnham',
+            'Chakotay ',
+            '  Data  ',
+            'the Doctor',
+            'philippa  georgiou',
+            'Jean--Luc PICARD',
+            'Christopher pike '
+        ],
+        'rank': [
+            'Captain',
+            'Comander',
+            'Comander',
+            'LT Commander',
+            'None',
+            'Capitain',
+            'Captain',
+            'CAPTAIN',
+        ]
+    })
+    return pdf

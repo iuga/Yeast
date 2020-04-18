@@ -9,6 +9,7 @@
 
 **Individual Transformations**
 
+- `StringMutateStep`
 - `ColumnMapValuesStep`
 - `ColumnStringReplaceStep`
 
