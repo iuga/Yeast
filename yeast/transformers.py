@@ -16,7 +16,8 @@ class StrTransformer(Transformer):
 
 class StrToUpper(StrTransformer):
     """
-    Convert case of a string to Upper case: ("Yeast" to "YEAST")
+    Convert case of a string to Upper case:
+    ("Yeast" to "YEAST")
     """
     def resolve(self, column):
         return column.str.upper()
@@ -24,7 +25,8 @@ class StrToUpper(StrTransformer):
 
 class StrToLower(StrTransformer):
     """
-    Convert case of a string to Lower case:  ("Yeast" to "yeast")
+    Convert case of a string to Lower case:
+    ("Yeast" to "yeast")
     """
     def resolve(self, column):
         return column.str.lower()
@@ -32,7 +34,17 @@ class StrToLower(StrTransformer):
 
 class StrToSentence(StrTransformer):
     """
-    Convert case of a string to Sentence Case: ("yeast help" to "Yeast Help")
+    Converts first character to uppercase and remaining to lowercase:
+    ("yeast help" to "Yeast help")
+    """
+    def resolve(self, column):
+        return column.str.capitalize()
+
+
+class StrToTitle(StrTransformer):
+    """
+    Converts first character of each word to uppercase and remaining to lowercase:
+    ("yeast help" to "Yeast Help")
     """
     def resolve(self, column):
         return column.str.title()
@@ -40,7 +52,8 @@ class StrToSentence(StrTransformer):
 
 class StrTrim(StrTransformer):
     """
-    Convert removing whitespaces from start and end of string:  (" Yeast " to "Yeast")
+    Convert removing whitespaces from start and end of string:
+    (" Yeast " to "Yeast")
     """
     def resolve(self, column):
         return column.str.strip()

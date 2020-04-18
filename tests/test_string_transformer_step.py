@@ -2,7 +2,7 @@ import pytest
 
 from yeast.steps.string_transform_step import StringTransformStep
 from yeast.errors import YeastValidationError
-from yeast.transformers import StrToSentence, StrToLower, StrTrim, StrReplace, StrReplaceAll
+from yeast.transformers import StrToTitle, StrToLower, StrTrim, StrReplace, StrReplaceAll
 
 from data_samples import startrek_data as data
 from data_samples import startrek_characters as chars_data
@@ -33,7 +33,7 @@ def test_string_transformation_workflow_on_name_column(chars_data):
     """
     step = StringTransformStep(columns=['name'], transformers=[
         # "JONATHAN ARCHER" to "Jonathan Archer"
-        StrToSentence(),
+        StrToTitle(),
         # " Data " to "Data"
         StrTrim(),
         # "Philippa  Georgiou" to "Philippa Georgiou"
@@ -57,7 +57,7 @@ def test_string_transformation_workflow_on_rank_column(chars_data):
     """
     step = StringTransformStep(columns=['rank'], transformers=[
         # "LT Commander" to "Lt Commander"
-        StrToSentence(),
+        StrToTitle(),
         # "Comander" to "Commander"
         StrReplace("Comander", "Commander"),
         # "Capitain" to "Captain"

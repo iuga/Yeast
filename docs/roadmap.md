@@ -21,6 +21,10 @@
 
 - `CheckColumnsStep`
 
+**Transformers**
+
+- `StrToSentence`, `StrToTitle`
+
 **Workflows**
 
 - Concatenate, Merge and Join Difference Recipes
