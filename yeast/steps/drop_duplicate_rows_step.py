@@ -10,18 +10,21 @@ class DropDuplicateRowsStep(Step):
 
     - `columns`: list of string column names to look for duplicates or a selector
     - `keep` (`first, last, none`): Determines which duplicates (if any) to keep. `first` : Drop
-                                 duplicates except for the first occurrence. `last` : Drop
-                                 duplicates except for the last occurrence. `none` : Drop
-                                 all duplicates.
+                                    duplicates except for the first occurrence. `last` : Drop
+                                    duplicates except for the last occurrence. `none` : Drop
+                                    all duplicates.
 
     Usage:
 
     ```python
+    # Remove duplicates considering all columns, keep the first occurence
+    DropDuplicatesStep()
+
     # Remove duplicates considering columnc B and C
     DropDuplicatesStep(['B', 'C'], keep="none")
 
     # Removing duplicates considering all columns starting with id_
-    DropDuplicatesStep(AllMatching('^id_'), keep="none")
+    DropDuplicatesStep(AllMatching('^id_'), keep="first")
     ```
 
     Raises:
@@ -47,7 +50,7 @@ class DropDuplicateRowsStep(Step):
         - Check if the df contains all elements in columns
         """
         # If None, pick all columns
-        self.selector = df.columns if columns is None else self.selector
+        self.selector = df.columns if self.selector is None else self.selector
 
         self.selector = self.resolve_selector(self.selector, df)
 
