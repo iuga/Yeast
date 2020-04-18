@@ -19,7 +19,7 @@ def test_recipe_workflow(raw_data):
     """
     recipe = Recipe([
         steps.CleanColumnNamesStep('snake'),
-        steps.SelectColumnStep(['creation_year', 'total_seasons'])
+        steps.SelectColumnsStep(['creation_year', 'total_seasons'])
     ])
     baked_data = recipe.prepare(raw_data).bake(raw_data)
     assert 'creation_year' in baked_data.columns
@@ -36,8 +36,8 @@ def test_recipe_workflow_validations_should_be_on_the_last_transformed_data(raw_
     Validation on the second step must fail.
     """
     recipe = Recipe([
-        steps.SelectColumnStep(['year', 'seasons']),
-        steps.SelectColumnStep(['title']),
+        steps.SelectColumnsStep(['year', 'seasons']),
+        steps.SelectColumnsStep(['title']),
     ])
     with pytest.raises(errors.YeastValidationError):
         recipe.prepare(raw_data).bake(raw_data)
@@ -49,6 +49,6 @@ def test_recipe_workflow_only_accepts_yeast_steps(raw_data):
     """
     with pytest.raises(errors.YeastRecipeError):
         Recipe([
-            steps.SelectColumnStep(['year', 'seasons']),
+            steps.SelectColumnsStep(['year', 'seasons']),
             {},
         ])

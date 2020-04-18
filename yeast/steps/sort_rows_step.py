@@ -2,32 +2,32 @@ from yeast.step import Step
 from yeast.errors import YeastValidationError
 
 
-class SelectColumnsStep(Step):
+class SortRowsStep(Step):
     """
-    Step in charge of keep columns based on their names.
+    Step in charge of sorting rows based on columns.
 
     Parameters:
 
-    - `columns`: list of string column names to keep
+    - `columns`: list of string column names to sort by
+    - `ascending`: boolean flag wo sort ascending vs. descending
 
     Usage:
 
     ```python
-    # DataFrame columns: ['A', 'B', 'C', 'D']
-    SelectColumnsStep(['B', 'C'])
-    # DataFrame result columns: ['B', 'C']
+    SortRowsStep(['B', 'C'])
     ```
 
     Raises:
 
     - `YeastValidationError`: if any column does not exist or any column name is invalid.
     """
-    def __init__(self, columns):
+    def __init__(self, columns, ascending=True):
         self.selector = columns
+        self.ascending = ascending if isinstance(ascending, bool) else True
         super().__init__()
 
     def do_bake(self, df):
-        return df[self.selector]
+        return df.sort_values(by=self.selector, axis=0, ascending=self.ascending, ignore_index=True)
 
     def do_validate(self, df):
         """
@@ -46,8 +46,8 @@ class SelectColumnsStep(Step):
             raise YeastValidationError(f'The following columns are missing: {missing_columns}')
 
 
-class SelectStep(SelectColumnsStep):
+class SortStep(SortRowsStep):
     """
-    SelectStep is an Alias for SelectColumnsStep
+    SortStep is an Alias for SortRowsStep
     """
     pass

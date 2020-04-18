@@ -2,16 +2,46 @@
 
 This module exposes a collection of well-tested steps that you can directly use them on your data processing pipelines.
 
-## Columns Manipulation
+## Columns Operations
 
-Execute operations over columns or predictors.
+### SelectColumnsStep
 
-### SelectColumnStep
+::: yeast.steps.SelectColumnsStep
+    :docstring:
 
-::: yeast.steps.SelectColumnStep
+### RenameColumnsStep
+
+::: yeast.steps.RenameColumnsStep
+    :docstring:
+
+### CastColumnsStep
+
+::: yeast.steps.CastColumnsStep
+    :docstring:
+
+### DropColumnsStep
+
+::: yeast.steps.DropColumnsStep
     :docstring:
 
 ### CleanColumnNamesStep
 
 ::: yeast.steps.CleanColumnNamesStep
+    :docstring:
+
+## Row Operations
+
+### FilterRowsStep
+
+::: yeast.steps.FilterRowsStep
+    :docstring:
+
+### SortRowsStep
+
+::: yeast.steps.SortRowsStep
+    :docstring:
+
+### DropDuplicateRowsStep
+
+::: yeast.steps.DropDuplicateRowsStep
     :docstring:

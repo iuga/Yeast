@@ -2,20 +2,20 @@ from yeast.step import Step
 from yeast.errors import YeastValidationError
 
 
-class SelectColumnsStep(Step):
+class DropColumnsStep(Step):
     """
-    Step in charge of keep columns based on their names.
+    Step in charge of drop columns based on their names.
 
     Parameters:
 
-    - `columns`: list of string column names to keep
+    - `columns`: list of string column names to drop or a selector.
 
     Usage:
 
     ```python
     # DataFrame columns: ['A', 'B', 'C', 'D']
-    SelectColumnsStep(['B', 'C'])
-    # DataFrame result columns: ['B', 'C']
+    DropColumnsStep(['B', 'C'])
+    # DataFrame result columns: ['A', 'D']
     ```
 
     Raises:
@@ -27,7 +27,7 @@ class SelectColumnsStep(Step):
         super().__init__()
 
     def do_bake(self, df):
-        return df[self.selector]
+        return df.drop(columns=self.selector)
 
     def do_validate(self, df):
         """
@@ -44,10 +44,3 @@ class SelectColumnsStep(Step):
         if not all(matches):
             missing_columns = [c for c, v in zip(self.selector, matches) if not v]
             raise YeastValidationError(f'The following columns are missing: {missing_columns}')
-
-
-class SelectStep(SelectColumnsStep):
-    """
-    SelectStep is an Alias for SelectColumnsStep
-    """
-    pass

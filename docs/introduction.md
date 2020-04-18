@@ -23,7 +23,7 @@ The [selectors](selectors.html) can choose columns based on their data type or n
 
 ```python
 # Shortcut to keep only the numerical columns
-SelectColumnStep(AllNumeric())
+SelectColumnsStep(AllNumeric())
 ```
 
 ## Recipes

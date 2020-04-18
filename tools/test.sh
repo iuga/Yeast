@@ -4,7 +4,7 @@
 source ./tools/env.sh
 
 # Execute all tests
-pytest -rsxX --disable-warnings --cov=yeast --cov-report=term --cov-report=html:test/coverage ./tests/
+pytest -rsxX --disable-warnings --cov=yeast --cov-report=term --cov-report=html:tests/coverage ./tests/
 
 echo ""
 echo "Testing complete! Glad to be of service."

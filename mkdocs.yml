@@ -15,8 +15,6 @@ repo_url: https://github.com/iuga/yeast
 use_directory_urls: false
 nav:
   - Home: index.md
-  - Introduction:
-    - Why Yeast?: why.md
   - Getting Started:
     - Installing Yeast: install.md
     - 5 Minute Introduction: introduction.md
@@ -24,6 +22,7 @@ nav:
     - Methods for Select Variables in Steps: selectors.md
   - Developers API:
     - Step Reference: reference.md
+    - Roadmap: roadmap.md
 plugins: []
 markdown_extensions:
   - admonition

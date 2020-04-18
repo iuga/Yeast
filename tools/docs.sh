@@ -11,3 +11,6 @@ PYTHONPATH=${REPO_ROOT_DIR}/yeast:$PYTHONPATH
 cd ${REPO_ROOT_DIR}
 mkdocs build
 mkdocs serve
+
+# To deploy the documentation:
+# mkdocs gh-deploy

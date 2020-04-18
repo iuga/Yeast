@@ -15,7 +15,7 @@ basically they are used to select columns based on the attributes.
 ```python
 # Will keep all the numeric variables
 Recipe([
-  SelectColumnStep(columns=AllNumeric())
+  SelectColumnsStep(columns=AllNumeric())
 ]).prepare(data).bake(data)
 ```
 
@@ -51,6 +51,6 @@ Returns all the columns that match the regular expression passed as parameter
 ```python
 # Will keep all the columns ending with "ed" (ed$)
 Recipe([
-  SelectColumnStep(columns=AllMatching('ed$'))
+  SelectColumnsStep(columns=AllMatching('ed$'))
 ]).prepare(data).bake(data)
 ```

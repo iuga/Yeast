@@ -5,15 +5,21 @@ reliable production data pipelines and inspired on [R Recipes](https://tidymodel
 
 ```python
 from yeast import Recipe
-from yeast.steps import CleanColumnNamesStep, SelectColumnStep
+from yeast.steps import *
 from yeast.selectors import AllNumeric
 
 # Define a recipe of steps to process your data
 recipe = Recipe([
   # Convert all columns names to Snake Case:
   CleanColumnNamesStep('snake'),
+  # More descriptive names for some columns
+  RenameColumnsStep({'n_tkts', 'tickets_number'}),
   # Keep only numerical variables:
-  SelectColumnStep(AllNumeric())
+  SelectStep(AllNumeric()),
+  # Keep only ratings equal or bigger than 9:
+  FilterStep("rating >= 9"),
+  # Sort / Arrange the results,
+  SortStep(['rating'])
 ])
 
 # Prepare the recipe
