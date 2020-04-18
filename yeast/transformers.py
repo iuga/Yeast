@@ -110,3 +110,24 @@ class StrPad(StrTransformer):
 
     def resolve(self, column):
         return column.str.pad(self.width, side=self.side, fillchar=self.pad)
+
+
+class StrSlice(StrTransformer):
+    """
+    Extract and replace substrings from a string:
+
+    ```python
+    StrSlice("Yeast Help", start=6, end=10) # "Help"
+    ```
+
+    Parameters:
+
+    - `start`: integer position of the first character
+    - `stop`: integer position of the last character
+    """
+    def __init__(self, start, stop):
+        self.start = start
+        self.stop = stop
+
+    def resolve(self, column):
+        return column.str.slice(start=self.start, stop=self.stop)

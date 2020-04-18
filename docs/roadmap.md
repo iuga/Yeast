@@ -9,7 +9,6 @@
 
 **Individual Transformations**
 
-- `StringMutateStep`
 - `ColumnMapValuesStep`
 - `ColumnStringReplaceStep`
 
@@ -23,8 +22,21 @@
 
 **Transformers**
 
-- `StrToSentence`, `StrToTitle`
+- Cover all the current transformers with tests
+- `StrRemove()` and `StrRemoveAll()`: Remove matched patterns in a string
+- Enhance the documentation, same structure than selectors
+
+**Selectors**
+
+- Enhance the documentation, same structure than transformers
 
 **Workflows**
 
+- `LeftJoinStep(df|recipe)`
+- `InnerJoinStep(df|recipe)`
 - Concatenate, Merge and Join Difference Recipes
+
+**Documentation**
+
+- Prepare a Python Notebook with an end to end read example
+- Improve CSS on the docstrings

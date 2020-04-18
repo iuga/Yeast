@@ -41,6 +41,11 @@ recipe = Recipe([
 ::: yeast.transformers.StrToSentence
     :docstring:
 
+### StrToTitle
+
+::: yeast.transformers.StrToTitle
+    :docstring:
+
 ### StrTrim
 
 ::: yeast.transformers.StrTrim
@@ -59,4 +64,9 @@ recipe = Recipe([
 ### StrPad
 
 ::: yeast.transformers.StrPad
+    :docstring:
+
+### StrSlice
+
+::: yeast.transformers.StrSlice
     :docstring:
