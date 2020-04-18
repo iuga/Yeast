@@ -303,6 +303,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#strtotitle" class="md-nav__link">
+    StrToTitle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#strtrim" class="md-nav__link">
     StrTrim
   </a>
@@ -326,6 +333,13 @@
           <li class="md-nav__item">
   <a href="#strpad" class="md-nav__link">
     StrPad
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strslice" class="md-nav__link">
+    StrSlice
   </a>
   
 </li>
@@ -454,6 +468,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#strtotitle" class="md-nav__link">
+    StrToTitle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#strtrim" class="md-nav__link">
     StrTrim
   </a>
@@ -477,6 +498,13 @@
           <li class="md-nav__item">
   <a href="#strpad" class="md-nav__link">
     StrPad
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strslice" class="md-nav__link">
+    StrSlice
   </a>
   
 </li>
@@ -537,22 +565,32 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 <h3 id="strtoupper">StrToUpper<a class="headerlink" href="#strtoupper" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToUpper</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Convert case of a string to Upper case: ("Yeast" to "YEAST")</p></div>
+<div class="autodoc-docstring"><p>Convert case of a string to Upper case:
+("Yeast" to "YEAST")</p></div>
 </div>
 <h3 id="strtolower">StrToLower<a class="headerlink" href="#strtolower" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToLower</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Convert case of a string to Lower case:  ("Yeast" to "yeast")</p></div>
+<div class="autodoc-docstring"><p>Convert case of a string to Lower case:
+("Yeast" to "yeast")</p></div>
 </div>
 <h3 id="strtosentence">StrToSentence<a class="headerlink" href="#strtosentence" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToSentence</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Convert case of a string to Sentence Case: ("yeast help" to "Yeast Help")</p></div>
+<div class="autodoc-docstring"><p>Converts first character to uppercase and remaining to lowercase:
+("yeast help" to "Yeast help")</p></div>
+</div>
+<h3 id="strtotitle">StrToTitle<a class="headerlink" href="#strtotitle" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToTitle</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Converts first character of each word to uppercase and remaining to lowercase:
+("yeast help" to "Yeast Help")</p></div>
 </div>
 <h3 id="strtrim">StrTrim<a class="headerlink" href="#strtrim" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrTrim</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Convert removing whitespaces from start and end of string:  (" Yeast " to "Yeast")</p></div>
+<div class="autodoc-docstring"><p>Convert removing whitespaces from start and end of string:
+(" Yeast " to "Yeast")</p></div>
 </div>
 <h3 id="strreplace">StrReplace<a class="headerlink" href="#strreplace" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
@@ -583,6 +621,20 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 <li><code>width</code>: Minimum width of padded strings.</li>
 <li><code>side</code>: Side on which padding character is added (left, right or both).</li>
 <li><code>pad</code>: Single padding character (default is a space).</li>
+</ul></div>
+</div>
+<h3 id="strslice">StrSlice<a class="headerlink" href="#strslice" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrSlice</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">start</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">stop</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract and replace substrings from a string:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">StrSlice</span><span class="p">(</span><span class="s2">&quot;Yeast Help&quot;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># &quot;Help&quot;</span>
+</code></pre></div>
+
+
+<p>Parameters:</p>
+<ul>
+<li><code>start</code>: integer position of the first character</li>
+<li><code>stop</code>: integer position of the last character</li>
 </ul></div>
 </div>
                 
