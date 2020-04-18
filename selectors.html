@@ -166,63 +166,21 @@
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
-    
-    <label class="md-nav__link" for="nav-2">
-      Introduction
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
-      </span>
-    </label>
-    <nav class="md-nav" aria-label="Introduction" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-        </span>
-        Introduction
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="why.html" title="Why Yeast?" class="md-nav__link">
-      Why Yeast?
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-2">
       Getting Started
       <span class="md-nav__icon md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
       </span>
     </label>
     <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-2">
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
         </span>
@@ -371,16 +329,16 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-3">
       Developers API
       <span class="md-nav__icon md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
       </span>
     </label>
     <nav class="md-nav" aria-label="Developers API" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-3">
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
         </span>
@@ -397,6 +355,18 @@
   <li class="md-nav__item">
     <a href="reference.html" title="Step Reference" class="md-nav__link">
       Step Reference
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="roadmap.html" title="Roadmap" class="md-nav__link">
+      Roadmap
     </a>
   </li>
 
@@ -515,7 +485,7 @@ They are shortcuts to select a subset of columns/predictors based on a common at
 basically they are used to select columns based on the attributes.</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Will keep all the numeric variables</span>
 <span class="n">Recipe</span><span class="p">([</span>
-  <span class="n">SelectColumnStep</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">AllNumeric</span><span class="p">())</span>
+  <span class="n">SelectColumnsStep</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">AllNumeric</span><span class="p">())</span>
 <span class="p">])</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
 
@@ -536,7 +506,7 @@ basically they are used to select columns based on the attributes.</p>
 <p>Returns all the columns that match the regular expression passed as parameter</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Will keep all the columns ending with &quot;ed&quot; (ed$)</span>
 <span class="n">Recipe</span><span class="p">([</span>
-  <span class="n">SelectColumnStep</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">AllMatching</span><span class="p">(</span><span class="s1">&#39;ed$&#39;</span><span class="p">))</span>
+  <span class="n">SelectColumnsStep</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">AllMatching</span><span class="p">(</span><span class="s1">&#39;ed$&#39;</span><span class="p">))</span>
 <span class="p">])</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
                 
