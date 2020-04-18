@@ -1,7 +1,6 @@
-Transformers can modify values on rows based on some conditions.
-The usage is quite simple, you can use them on any transformer step according to the type.
+Transformers can modify values on rows based on some conditions and are used inside transformer steps.
+The usage is quite simple, you can list them on any transformer step on the Recipe:
 
-One usage example could be:
 ```python
 # Will keep all the numeric variables
 recipe = Recipe([
@@ -18,34 +17,46 @@ recipe = Recipe([
 ])
 ```
 
+**Available Transformers:**
+
+- `StrToUpper`, `StrToLower`, `StrToSentence`
+- `StrTrim`
+- `StrReplace`, `StrReplaceAll`
+- `StrPad`
+
 ## String Transformers
 
-### StrToUpper()
+### StrToUpper
 
 ::: yeast.transformers.StrToUpper
     :docstring:
 
-### StrToLower()
+### StrToLower
 
 ::: yeast.transformers.StrToLower
     :docstring:
 
-### StrToSentence()
+### StrToSentence
 
 ::: yeast.transformers.StrToSentence
     :docstring:
 
-### StrTrim()
+### StrTrim
 
 ::: yeast.transformers.StrTrim
     :docstring:
 
-### StrReplace()
+### StrReplace
 
 ::: yeast.transformers.StrReplace
     :docstring:
 
-### StrReplaceAll()
+### StrReplaceAll
 
 ::: yeast.transformers.StrReplaceAll
+    :docstring:
+
+### StrPad
+
+::: yeast.transformers.StrPad
     :docstring:
