@@ -235,6 +235,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="transformers.html" title="Methods for Transforming Variables" class="md-nav__link">
+      Methods for Transforming Variables
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -389,6 +401,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#individual-transformations" class="md-nav__link">
+    Individual Transformations
+  </a>
+  
+    <nav class="md-nav" aria-label="Individual Transformations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stringtransformstep" class="md-nav__link">
+    StringTransformStep
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -511,6 +543,26 @@
           <li class="md-nav__item">
   <a href="#dropduplicaterowsstep" class="md-nav__link">
     DropDuplicateRowsStep
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#individual-transformations" class="md-nav__link">
+    Individual Transformations
+  </a>
+  
+    <nav class="md-nav" aria-label="Individual Transformations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stringtransformstep" class="md-nav__link">
+    StringTransformStep
   </a>
   
 </li>
@@ -756,6 +808,41 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if any column does not exist or any column name is invalid.</li>
 </ul></div>
 </div>
+<h2 id="individual-transformations">Individual Transformations<a class="headerlink" href="#individual-transformations" title="Permanent link">&para;</a></h2>
+<h3 id="stringtransformstep">StringTransformStep<a class="headerlink" href="#stringtransformstep" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>StringTransformStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">transformers</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Step in charge of transform a String column using a list of String transformers.
+All transformers will be applied in order.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>columns</code>: list of string column names to look for duplicates or a selector</li>
+<li><code>transformers</code>: list of String transformers</li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Define a recipe of steps to process your data</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+  <span class="c1"># The &quot;user_id&quot; column (string) need some cleaning</span>
+  <span class="c1"># Example &quot;  3a2-A &quot; must match with &quot;0003A2&quot;</span>
+  <span class="n">StringTransformStep</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">],</span> <span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
+    <span class="c1"># Remove whitespaces from start and end of string</span>
+    <span class="n">StrTrim</span><span class="p">(),</span>
+    <span class="c1"># The prefix &quot;-A&quot; should be removed</span>
+    <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+    <span class="c1"># Transform to uppercase</span>
+    <span class="n">StrToUpper</span><span class="p">(),</span>
+    <span class="c1"># Pad the left side with zeros</span>
+    <span class="n">StrPad</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+  <span class="p">])</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: If the column does not exist or there is an error on the transformers</li>
+</ul></div>
+</div>
                 
               
               
@@ -774,7 +861,7 @@ Columns that don't exist are ignored.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="selectors.html" title="Methods for Select Variables in Steps" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="transformers.html" title="Methods for Transforming Variables" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
             </div>
@@ -783,7 +870,7 @@ Columns that don't exist are ignored.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Methods for Select Variables in Steps
+                Methods for Transforming Variables
               </div>
             </div>
           </a>
