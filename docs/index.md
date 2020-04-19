@@ -6,7 +6,9 @@ reliable production data pipelines and inspired on [R Recipes](https://tidymodel
 ```python
 from yeast import Recipe
 from yeast.steps import *
-from yeast.selectors import AllString
+from yeast.selectors import *
+from yeast.transformers import *
+from yeast.aggregations import *
 
 # Define a recipe of steps to process your data
 recipe = Recipe([
@@ -25,11 +27,18 @@ recipe = Recipe([
     StrTrim(),
     # The suffix "-A" should be removed
     StrReplace('-A', ''),
-    # Transform to upercase
+    # Transform to uppercase
     StrToUpper(),
     # Pad to match length
     StrPad(width=6, side='left', pad='0')
   ]),
+  # Group the data by user_id
+  GroupByStep(['user_id']),
+  # Let's summarize the data:
+  SummarizeStep({
+    # Calculate the mean rating by user
+    'average_rating': AggMean('rating'),
+  }),
   # Sort / Arrange the results,
   SortStep(['user_id'])
 ])
@@ -41,6 +50,12 @@ recipe = recipe.prepare(raw_data)
 your_clean_data = recipe.bake(your_raw_data)
 ```
 
+## Installation
+
+```
+pip install git+https://github.com/iuga/Yeast
+```
+
 ## What's next?
 
 - [5 Minute Introduction](introduction.md)
@@ -50,5 +65,6 @@ your_clean_data = recipe.bake(your_raw_data)
 ## Developers Guide
 
 - [Steps Reference](reference.md)
-- [Column Selectors](selectors.md)
+- [Methods for select columns](selectors.md)
 - [Transforming Variables](transformers.md)
+- [Summarizing Information](aggregations.md)

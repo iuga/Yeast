@@ -5,7 +5,9 @@
 
 - `GroupByStep`
 - `SummarizeStep`
+- `MutateStep`
 - `DropZVColumnsStep`
+- `SelectStep(AllString(), 'rating', 'year')` Composed selections
 
 **Individual Transformations**
 
@@ -40,3 +42,7 @@
 
 - Prepare a Python Notebook with an end to end read example
 - Improve CSS on the docstrings
+
+**BugFixes**
+
+- Selectors doesn't support strings as inputs `title` != `['title']`

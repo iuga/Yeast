@@ -8,3 +8,5 @@ from yeast.steps.cast_columns_step import CastColumnsStep, CastStep  # NoQA
 from yeast.steps.drop_columns_step import DropColumnsStep  # NoQA
 from yeast.steps.drop_duplicate_rows_step import DropDuplicateRowsStep  # NoQA
 from yeast.steps.string_transform_step import StringTransformStep  # NoQA
+from yeast.steps.group_by_step import GroupByStep  # NoQA
+from yeast.steps.summarize_step import SummarizeStep  # NoQA

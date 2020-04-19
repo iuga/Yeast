@@ -5,7 +5,9 @@ Yeast is a Python data processing engine for modeling or visualization based on 
 ```python
 from yeast import Recipe
 from yeast.steps import *
-from yeast.selectors import AllString
+from yeast.selectors import *
+from yeast.transformers import *
+from yeast.aggregations import *
 
 # Define a recipe of steps to process your data
 recipe = Recipe([
@@ -29,6 +31,13 @@ recipe = Recipe([
     # Pad to match length
     StrPad(width=6, side='left', pad='0')
   ]),
+  # Group the data by user_id
+  GroupByStep(['user_id']),
+  # Let's summarize the data:
+  SummarizeStep({
+    # Calculate the mean rating by user
+    'average_rating': AggMean('rating'),
+  }),
   # Sort / Arrange the results,
   SortStep(['user_id'])
 ])

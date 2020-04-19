@@ -31,7 +31,6 @@ class SelectColumnsStep(Step):
 
     def do_validate(self, df):
         """
-        Validations:
         - Check that all columns are not empty strings
         - Check if the df contains all elements in columns
         """

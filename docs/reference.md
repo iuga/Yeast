@@ -52,3 +52,15 @@ This module exposes a collection of well-tested steps that you can directly use 
 
 ::: yeast.steps.StringTransformStep
     :docstring:
+
+## Aggregations
+
+### GroupByStep
+
+::: yeast.steps.GroupByStep
+    :docstring:
+
+### SummarizeStep
+
+::: yeast.steps.SummarizeStep
+    :docstring:
