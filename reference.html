@@ -247,6 +247,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="aggregations.html" title="Groups and Aggregations" class="md-nav__link">
+      Groups and Aggregations
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -421,6 +433,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#aggregations" class="md-nav__link">
+    Aggregations
+  </a>
+  
+    <nav class="md-nav" aria-label="Aggregations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#groupbystep" class="md-nav__link">
+    GroupByStep
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarizestep" class="md-nav__link">
+    SummarizeStep
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -563,6 +602,33 @@
           <li class="md-nav__item">
   <a href="#stringtransformstep" class="md-nav__link">
     StringTransformStep
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregations" class="md-nav__link">
+    Aggregations
+  </a>
+  
+    <nav class="md-nav" aria-label="Aggregations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#groupbystep" class="md-nav__link">
+    GroupByStep
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summarizestep" class="md-nav__link">
+    SummarizeStep
   </a>
   
 </li>
@@ -843,6 +909,68 @@ All transformers will be applied in order.</p>
 <li><code>YeastValidationError</code>: If the column does not exist or there is an error on the transformers</li>
 </ul></div>
 </div>
+<h2 id="aggregations">Aggregations<a class="headerlink" href="#aggregations" title="Permanent link">&para;</a></h2>
+<h3 id="groupbystep">GroupByStep<a class="headerlink" href="#groupbystep" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>GroupByStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Most data operations are done on groups defined by columns.
+GroupByStep takes an existing DataFrame and converts it into a Pandas DataFrameGroupBy where
+aggregation/summarization/mutation operations are performed "by group".</p>
+<p>A groupby operation involves some combination of:
+- Splitting the object: <code>GroupByStep()</code>
+- Applying functions: <code>SummarizeStep()</code> or <code>MutateStep()</code>
+- And combining the results into a DataFrame.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>columns</code>: list of string column names to group by or a selector</li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Basic Group By and an Aggregation</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">GroupByStep</span><span class="p">([</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">]),</span>
+    <span class="n">SummarizeStep</span><span class="p">({</span>
+        <span class="s1">&#39;average_rating&#39;</span><span class="p">:</span> <span class="n">AggMean</span><span class="p">(</span><span class="s1">&#39;rating&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;unique_titles&#39;</span><span class="p">:</span> <span class="n">AggCountDistinct</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: if a column does not exist on the DataFrame</li>
+</ul></div>
+</div>
+<h3 id="summarizestep">SummarizeStep<a class="headerlink" href="#summarizestep" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SummarizeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">aggregations</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Create one or more numeric variables summarizing the columns of an existing group created by
+GroupByStep() resulting in one row in the output for each group. Please refer to the
+Aggregations documentation to see the complete list of supported aggregations.
+The most used ones are: <code>AggMean</code>, <code>AggMedian</code>, <code>AggCount</code>, <code>AggMax</code>, <code>AggMin</code></p>
+<p>Parameters:</p>
+<ul>
+<li><code>aggregations</code>: dictionary with the aggregations to perform. The key is the new column name
+                  where the value is the specification of the aggregation to perform.
+                  For example: <code>{'new_column_name': AggMean('column')}</code></li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Basic Summarization on a Group</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">GroupByStep</span><span class="p">([</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">]),</span>
+    <span class="n">SummarizeStep</span><span class="p">({</span>
+        <span class="s1">&#39;average_rating&#39;</span><span class="p">:</span> <span class="n">AggMean</span><span class="p">(</span><span class="s1">&#39;rating&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;unique_titles&#39;</span><span class="p">:</span> <span class="n">AggCountDistinct</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: If there was not a GroupByStep before</li>
+</ul></div>
+</div>
                 
               
               
@@ -861,7 +989,7 @@ All transformers will be applied in order.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="transformers.html" title="Methods for Transforming Variables" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="aggregations.html" title="Groups and Aggregations" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
             </div>
@@ -870,7 +998,7 @@ All transformers will be applied in order.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Methods for Transforming Variables
+                Groups and Aggregations
               </div>
             </div>
           </a>

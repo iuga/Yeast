@@ -247,6 +247,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="aggregations.html" title="Groups and Aggregations" class="md-nav__link">
+      Groups and Aggregations
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -403,7 +415,9 @@
 <ul>
 <li><code>GroupByStep</code></li>
 <li><code>SummarizeStep</code></li>
+<li><code>MutateStep</code></li>
 <li><code>DropZVColumnsStep</code></li>
+<li><code>SelectStep(AllString(), 'rating', 'year')</code> Composed selections</li>
 </ul>
 <p><strong>Individual Transformations</strong></p>
 <ul>
@@ -438,6 +452,10 @@
 <ul>
 <li>Prepare a Python Notebook with an end to end read example</li>
 <li>Improve CSS on the docstrings</li>
+</ul>
+<p><strong>BugFixes</strong></p>
+<ul>
+<li>Selectors doesn't support strings as inputs <code>title</code> != <code>['title']</code></li>
 </ul>
                 
               
