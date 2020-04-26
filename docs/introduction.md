@@ -1,7 +1,36 @@
+# 5 Minute Introduction
 
-# Concepts
+Eager to get started? This part of the documentation, begins with some background information about
+Yeast, then focuses on step-by-step instructions for Recipe development.
 
-## Steps
+## A Minimal Recipe
+
+A minimal Yeast Recipe looks something like this:
+
+```python
+from Yeast import Recipe, steps
+
+recipe = Recipe([
+  # Convert all columns names to Snake Case:
+  steps.CleanColumnNamesStep('snake')
+])
+
+baked_df = recipe.prepare(df).bake(df)
+```
+
+So what did that code do?
+
+- First we imported the `Recipe` class and the `steps` module. An instance of a recipe will be our
+  list of steps to process data while steps contains a collection of well tested methods to
+  simplify the job.
+- Next we created an instance of `Recipe` that will receive a list of steps that will be executed
+  sequentially in order to process and clean the data. As an example `CleanColumnNamesStep` will
+  rename all columns to match the snake case convention.
+- Then we used `prepare(data)` to prepare the recipe before baking (processing). Some steps require
+  preparation before be baked (executed). For example: calculate the mean before imputation.
+- Finally, we called `bake(data)` to execute all the steps on `data` (a Pandas DataFrame).
+
+## The Steps
 
 Steps are a collection of well-tested instruments that you can use without too much study in your
 data processing flow because they cover a wide range of use-cases. Each one has its own signature and
@@ -14,7 +43,7 @@ CleanColumnNamesStep('snake')
 
 ## Selectors
 
-The [selectors](selectors.html) can choose columns based on their data type or name:
+The [selectors](selectors.html) can select columns based on their data type or name:
 
 ```python
 # Shortcut to keep only the numerical columns
@@ -31,8 +60,12 @@ recipe = Recipe([
   # Convert all columns names to Snake Case:
   CleanColumnNamesStep('snake')
 ])
-# Execute the recipe
-clean_data = recipe.prepare(raw_data).bake(raw_data)
+
+# Prepare the recipe
+recipe = recipe.prepare(raw_data)
+
+# Execute (bake) the recipe
+clean_data = recipe.bake(raw_data)
 ```
 ## What's next?
 

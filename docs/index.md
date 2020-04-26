@@ -3,7 +3,8 @@
 </p>
 
 Yeast is a Python data processing engine for modeling or visualization based on Pandas designed for
-reliable production data pipelines and inspired on [R Recipes](https://tidymodels.github.io/recipes/).
+reliable production data pipelines and inspired on [Tidyverse](https://www.tidyverse.org) and
+[R Recipes](https://tidymodels.github.io/recipes/).
 
 ```python
 from yeast import Recipe
