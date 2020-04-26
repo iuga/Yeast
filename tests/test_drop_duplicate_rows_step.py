@@ -84,12 +84,3 @@ def test_drop_duplicates_step_must_fail_if_column_doesnot_exist_on_df(data):
     with pytest.raises(YeastValidationError):
         step = DropDuplicateRowsStep(['seasons', 'not_found'])
         step.prepare(data).bake(data)
-
-
-def test_drop_duplicates_step_must_fail_if_column_is_not_string(data):
-    """
-    Raise an exception if any column is not string
-    """
-    with pytest.raises(YeastValidationError):
-        step = DropDuplicateRowsStep([42, 'not_found'])
-        step.prepare(data).bake(data)

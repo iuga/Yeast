@@ -29,15 +29,6 @@ def test_drop_columns_step_must_fail_if_column_doesnot_exist_on_df(data):
         step.prepare(data).bake(data)
 
 
-def test_drop_columns_step_must_fail_if_column_is_not_string(data):
-    """
-    Raise an exception if any column is not string
-    """
-    with pytest.raises(YeastValidationError):
-        step = DropColumnsStep(columns=[42, 'not_found'])
-        step.prepare(data).bake(data)
-
-
 def test_numerical_selectors_to_drop_columns(data):
     """
     Drop AllNumeric

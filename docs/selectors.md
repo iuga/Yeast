@@ -1,3 +1,16 @@
+The step to select variables from a DataFrame is `SelectColumnsStep` / `SelectStep`.
+It will keep columns based on their names or the results of the selectors.
+
+```python
+from yeast.selectors import AllNumeric
+
+Recipe([
+  # AllNumeric() is a selector in charge of keep all numeric variables
+  # So, when executed it keeps all numeric columns and title
+  SelectStep([AllNumeric(), 'title'])
+])
+```
+
 The selectors can choose columns based on their data type or name.
 They are shortcuts to select a subset of columns/predictors based on a common attribute:
 
@@ -13,44 +26,30 @@ The usage is quite simple, you can pass them on any parameter that indicates col
 basically they are used to select columns based on the attributes.
 
 ```python
-# Will keep all the numeric variables
 Recipe([
-  SelectColumnsStep(columns=AllNumeric())
-]).prepare(data).bake(data)
+  # Will keep all numeric and 2 more columns:
+  SelectStep([AllNumeric(), 'title', 'aired']),
+  # Will keep all the numeric variables:
+  SelectStep(AllNumeric()),
+  # Will only one columns:
+  SelectStep('seasons')
+])
 ```
 
-## `AllColumns`
 
-Returns all the current columns in the DataFrame
+**Available Selectors:**
 
-## `AllString`
-
-Return all the string columns in the DataFrame. The dtype must be string, not object.
-
-## `AllBoolean`
-
-Returns all the boolean columns in the DataFrame.
-
-## `AllNumeric`
-
-Returns all the numerical columns in the DataFrame.
-
-## `AllDatetime`
-
-Returns all the datetime columns in the DataFrame.
-
-
-## `AllCategorical`
-
-Returns all the categorical columns in the DataFrame.
-
-## `AllMatching`
-
-Returns all the columns that match the regular expression passed as parameter
-
-```python
-# Will keep all the columns ending with "ed" (ed$)
-Recipe([
-  SelectColumnsStep(columns=AllMatching('ed$'))
-]).prepare(data).bake(data)
-```
+- ::: yeast.selectors.AllColumns
+    :docstring:
+- ::: yeast.selectors.AllString
+    :docstring:
+- ::: yeast.selectors.AllBoolean
+    :docstring:
+- ::: yeast.selectors.AllNumeric
+    :docstring:
+- ::: yeast.selectors.AllDatetime
+    :docstring:
+- ::: yeast.selectors.AllCategorical
+    :docstring:
+- ::: yeast.selectors.AllMatching
+    :docstring:

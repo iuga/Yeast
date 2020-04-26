@@ -19,11 +19,12 @@ nav:
     - Installing Yeast: install.md
     - 5 Minute Introduction: introduction.md
     - Available Steps: steps.md
-    - Methods for Select Variables in Steps: selectors.md
+    - Methods for Selecting Variables: selectors.md
     - Methods for Transforming Variables: transformers.md
     - Groups and Aggregations: aggregations.md
   - Developers API:
     - Step Reference: reference.md
+    - Custom Steps: extensions.md
     - Roadmap: roadmap.md
 plugins: []
 markdown_extensions:

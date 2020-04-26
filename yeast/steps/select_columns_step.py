@@ -4,18 +4,30 @@ from yeast.errors import YeastValidationError
 
 class SelectColumnsStep(Step):
     """
-    Step in charge of keep columns based on their names.
+    Step in charge of keep columns based on their names or selectors
 
     Parameters:
 
-    - `columns`: list of string column names to keep
+    - `columns`: list of string column names, selectors or combinations to keep
 
     Usage:
 
     ```python
-    # DataFrame columns: ['A', 'B', 'C', 'D']
+    # ['A', 'B', 'C', 'D']
+    SelectColumnsStep('B')
+    # ['B']
+
+    # ['A', 'B', 'C', 'D']
     SelectColumnsStep(['B', 'C'])
-    # DataFrame result columns: ['B', 'C']
+    # ['B', 'C']
+
+    # ['A', 'B', 'C', 'D']
+    SelectColumnsStep(AllNumeric())
+    # ['B']
+
+    # ['AA', 'AB', 'C', 'D']
+    SelectColumnsStep([AllMatching('^A'), 'D'])
+    # ['AA', 'AB', 'D']
     ```
 
     Raises:

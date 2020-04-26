@@ -1,3 +1,4 @@
+import itertools
 from yeast.selectors import Selector
 
 
@@ -65,5 +66,17 @@ class Step():
         """
         Resolve the selector.
         If function, execute and return. Else, we assume that is the war selector.
+        Valid Selectors:
+        - One column name: 'hello'
+        - Array of column names: ['hello', 'world']
+        - Selector: AllMatching('aired')
+        - Array of selectors and names [AllMatching('air'), 'world']
         """
-        return selector.resolve(df) if isinstance(selector, Selector) else selector
+        # Convert all scenarios to list
+        selector = [selector] if not isinstance(selector, list) else selector
+        # Resolve the required ones
+        selector = [s.resolve(df) if isinstance(s, Selector) else s for s in selector]
+        # Reduce (flatten) the list (list can have strings and lists)
+        return list(itertools.chain.from_iterable(
+            itertools.repeat(x, 1) if isinstance(x, str) else x for x in selector)
+        )

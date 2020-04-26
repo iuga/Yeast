@@ -131,3 +131,41 @@ class StrSlice(StrTransformer):
 
     def resolve(self, column):
         return column.str.slice(start=self.start, stop=self.stop)
+
+
+class StrRemove(StrTransformer):
+    """
+    Remove first matched pattern in a string
+
+    ```python
+    StrRemove("_temp") # "Yeast_temp" to "Yeast"
+    ```
+
+    Parameters:
+
+    - `pattern`: Pattern or string to look for.
+    """
+    def __init__(self, pattern):
+        self.pattern = pattern
+
+    def resolve(self, column):
+        return column.str.replace(self.pattern, "", n=1)
+
+
+class StrRemoveAll(StrTransformer):
+    """
+    Remove all matched patterns in a string
+
+    ```python
+    StrRemoveAll("_temp") # "Yeast_temp_temp" to "Yeast"
+    ```
+
+    Parameters:
+
+    - `pattern`: Pattern or string to look for.
+    """
+    def __init__(self, pattern):
+        self.pattern = pattern
+
+    def resolve(self, column):
+        return column.str.replace(self.pattern, "", n=-1)

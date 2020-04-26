@@ -6,7 +6,7 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 recipe = Recipe([
     StringTransformStep(columns=['name'], transformers=[
         # "JONATHAN ARCHER" to "Jonathan Archer"
-        StrToSentence(),
+        StrToTitle(),
         # " Data " to "Data"
         StrTrim(),
         # "Philippa  Georgiou" to "Philippa Georgiou"
@@ -19,54 +19,25 @@ recipe = Recipe([
 
 **Available Transformers:**
 
-- `StrToUpper`, `StrToLower`, `StrToSentence`
-- `StrTrim`
-- `StrReplace`, `StrReplaceAll`
-- `StrPad`
-
-## String Transformers
-
-### StrToUpper
-
-::: yeast.transformers.StrToUpper
+- ::: yeast.transformers.StrToUpper
     :docstring:
-
-### StrToLower
-
-::: yeast.transformers.StrToLower
+- ::: yeast.transformers.StrToLower
     :docstring:
-
-### StrToSentence
-
-::: yeast.transformers.StrToSentence
+- ::: yeast.transformers.StrToSentence
     :docstring:
-
-### StrToTitle
-
-::: yeast.transformers.StrToTitle
+- ::: yeast.transformers.StrToTitle
     :docstring:
-
-### StrTrim
-
-::: yeast.transformers.StrTrim
+- ::: yeast.transformers.StrTrim
     :docstring:
-
-### StrReplace
-
-::: yeast.transformers.StrReplace
+- ::: yeast.transformers.StrReplace
     :docstring:
-
-### StrReplaceAll
-
-::: yeast.transformers.StrReplaceAll
+- ::: yeast.transformers.StrReplaceAll
     :docstring:
-
-### StrPad
-
-::: yeast.transformers.StrPad
+- ::: yeast.transformers.StrPad
     :docstring:
-
-### StrSlice
-
-::: yeast.transformers.StrSlice
+- ::: yeast.transformers.StrSlice
+    :docstring:
+- ::: yeast.transformers.StrRemove
+    :docstring:
+- ::: yeast.transformers.StrRemoveAll
     :docstring:

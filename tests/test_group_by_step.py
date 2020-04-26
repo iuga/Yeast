@@ -4,7 +4,7 @@ import pandas as pd
 from yeast import Recipe
 from yeast.steps.group_by_step import GroupByStep
 from yeast.steps.summarize_step import SummarizeStep
-from yeast.aggregations import AggMean, AggMax, AggMedian, AggSum,
+from yeast.aggregations import AggMean, AggMax, AggMedian, AggSum
 from yeast.aggregations import AggCountDistinct, AggMin, AggCount
 from yeast.errors import YeastValidationError
 from yeast.selectors import AllNumeric, AllMatching
