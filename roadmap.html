@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#short-term-roadmap" class="md-skip">
+        <a href="#for-beta-testing" class="md-skip">
           Skip to content
         </a>
       
@@ -229,8 +229,8 @@
 
 
   <li class="md-nav__item">
-    <a href="selectors.html" title="Methods for Select Variables in Steps" class="md-nav__link">
-      Methods for Select Variables in Steps
+    <a href="selectors.html" title="Methods for Selecting Variables" class="md-nav__link">
+      Methods for Selecting Variables
     </a>
   </li>
 
@@ -307,6 +307,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="extensions.html" title="Custom Steps" class="md-nav__link">
+      Custom Steps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -338,6 +350,13 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#for-beta-testing" class="md-nav__link">
+    For Beta Testing:
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#short-term-roadmap" class="md-nav__link">
@@ -382,6 +401,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#for-beta-testing" class="md-nav__link">
+    For Beta Testing:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#short-term-roadmap" class="md-nav__link">
     Short-term roadmap:
   </a>
@@ -410,19 +436,35 @@
                 
                   <h1>Roadmap</h1>
                 
-                <h2 id="short-term-roadmap">Short-term roadmap:<a class="headerlink" href="#short-term-roadmap" title="Permanent link">&para;</a></h2>
-<p><strong>Row and Column Operations</strong></p>
+                <h2 id="for-beta-testing">For Beta Testing:<a class="headerlink" href="#for-beta-testing" title="Permanent link">&para;</a></h2>
+<p><strong>Features</strong></p>
 <ul>
+<li><code>SelectStep([AllString(), 'rating', 'year'])</code> Composed selections</li>
 <li><code>GroupByStep</code></li>
 <li><code>SummarizeStep</code></li>
+<li><code>CustomStep</code></li>
+<li><code>StrRemove()</code> and <code>StrRemoveAll()</code>: Remove matched patterns in a string</li>
+<li><code>LeftJoinStep(df|recipe)</code> and <code>LeftJoinStep(dfs|recipes)</code></li>
+</ul>
+<p><strong>BugFixes</strong></p>
+<ul>
+<li>Selectors doesn't support strings as inputs <code>title</code> != <code>['title']</code></li>
+</ul>
+<h2 id="short-term-roadmap">Short-term roadmap:<a class="headerlink" href="#short-term-roadmap" title="Permanent link">&para;</a></h2>
+<p><strong>Row and Column Operations</strong></p>
+<ul>
 <li><code>MutateStep</code></li>
 <li><code>DropZVColumnsStep</code></li>
-<li><code>SelectStep(AllString(), 'rating', 'year')</code> Composed selections</li>
+<li><code>ReplaceNAStep</code></li>
+<li><code>LagStep</code> and <code>LeadStep</code></li>
+<li><code>PivotLongerStep</code> and <code>PivotWiderStep</code></li>
 </ul>
 <p><strong>Individual Transformations</strong></p>
 <ul>
 <li><code>ColumnMapValuesStep</code></li>
 <li><code>ColumnStringReplaceStep</code></li>
+<li><code>ReplaceNAStep</code></li>
+<li><code>IfElseStep</code></li>
 </ul>
 <p><strong>Documentation Steps</strong></p>
 <ul>
@@ -431,12 +473,17 @@
 <p><strong>Validation Steps</strong></p>
 <ul>
 <li><code>CheckColumnsStep</code></li>
+<li><code>CheckSameLength</code> for Merge Operations</li>
 </ul>
 <p><strong>Transformers</strong></p>
 <ul>
-<li>Cover all the current transformers with tests</li>
-<li><code>StrRemove()</code> and <code>StrRemoveAll()</code>: Remove matched patterns in a string</li>
-<li>Enhance the documentation, same structure than selectors</li>
+<li>
+<p>Cover all the current transformers with tests</p>
+</li>
+<li>
+<p>Enhance the documentation, same structure than selectors</p>
+</li>
+<li><code>NumericRound(x, digits=1)</code></li>
 </ul>
 <p><strong>Selectors</strong></p>
 <ul>
@@ -444,19 +491,19 @@
 </ul>
 <p><strong>Workflows</strong></p>
 <ul>
-<li><code>LeftJoinStep(df|recipe)</code></li>
-<li><code>InnerJoinStep(df|recipe)</code></li>
+<li><code>InnerJoinStep(df|recipe)</code> and <code>InnerJoinStep(dfs|recipes)</code></li>
 <li>Concatenate, Merge and Join Difference Recipes</li>
+</ul>
+<p><strong>Library</strong></p>
+<ul>
+<li>Define the * exports</li>
 </ul>
 <p><strong>Documentation</strong></p>
 <ul>
 <li>Prepare a Python Notebook with an end to end read example</li>
 <li>Improve CSS on the docstrings</li>
 </ul>
-<p><strong>BugFixes</strong></p>
-<ul>
-<li>Selectors doesn't support strings as inputs <code>title</code> != <code>['title']</code></li>
-</ul>
+<p><strong>Bugs</strong></p>
                 
               
               
@@ -475,7 +522,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="reference.html" title="Step Reference" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="extensions.html" title="Custom Steps" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
             </div>
@@ -484,7 +531,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Step Reference
+                Custom Steps
               </div>
             </div>
           </a>

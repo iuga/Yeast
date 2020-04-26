@@ -17,7 +17,7 @@
     
     
       
-        <title>Installing Yeast - Yeast</title>
+        <title>Custom Steps - Yeast</title>
       
     
     
@@ -81,7 +81,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Installing Yeast
+              Custom Steps
             
           </span>
         </div>
@@ -161,12 +161,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
     <label class="md-nav__link" for="nav-2">
       Getting Started
@@ -188,18 +186,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-    <a href="install.html" title="Installing Yeast" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="install.html" title="Installing Yeast" class="md-nav__link">
       Installing Yeast
     </a>
-    
   </li>
 
         
@@ -272,10 +263,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
     <label class="md-nav__link" for="nav-3">
       Developers API
@@ -309,11 +302,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="extensions.html" title="Custom Steps" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="extensions.html" title="Custom Steps" class="md-nav__link md-nav__link--active">
       Custom Steps
     </a>
+    
   </li>
 
         
@@ -346,7 +346,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/iuga/yeast/edit/master/docs/install.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/iuga/yeast/edit/master/docs/extensions.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
                   </a>
                 
@@ -354,11 +354,107 @@
                   
                 
                 
-                  <h1>Installing Yeast</h1>
+                  <h1>Custom Steps</h1>
                 
-                <p>In this step you’ll install Yeast library on your active environment:</p>
-<div class="codehilite"><pre><span></span><code>pip install git+https://github.com/iuga/Yeast
+                <p>The Yeast library contains a number of different Steps but you might need to define your own
+operations using <code>CustomStep</code>:</p>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CustomStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">to_prepare=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_bake=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_validate=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Custom Step was designed to extend all the power of Yeast Pipelines and cover all scenarios
+where the Yeast steps are not adequate. You might need to define your own operations.
+You could define your custom transformations, business rules or extend to third-party libraries.
+The usage is quite straightforward and designed to avoid spending too much time on the
+implementation. It expects between 1 and 3 arguments, all functions and optional:</p>
+<ul>
+<li><code>to_validate(step, df)</code></li>
+<li><code>to_prepare(step, df)</code>: returns <code>df</code></li>
+<li><code>to_bake(step, df)</code>: returns <code>df</code></li>
+</ul>
+<p>Please notice that <code>to_prepare</code> and <code>to_bake</code> must return a <code>DataFrame</code> to continue the pipeline
+execution in further steps. <code>CustomStep</code> enables you to structure and document your code and
+business rules in Steps that could be shared across Recipes.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>to_validate</code>: perform validations on the data. Raise YeastValidationError on a problem.</li>
+<li><code>to_prepare</code>: prepare the step before bake, like train or calculate aggregations.</li>
+<li><code>to_bake</code>: execute the bake (processing). This is the core method.</li>
+</ul>
+<p>Inline Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Custom Business Rules:</span>
+    <span class="n">CustomStep</span><span class="p">(</span><span class="n">to_bake</span><span class="o">=</span><span class="k">lambda</span> <span class="n">step</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="p">])</span>
 </code></pre></div>
+
+
+<p>Custom rules:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">my_bake</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="c1"># Calculate total sales or anything you need:</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;total_sales&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sales&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;fees&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Custom Business Rules:</span>
+    <span class="n">CustomStep</span><span class="p">(</span><span class="n">to_bake</span><span class="o">=</span><span class="n">my_bake</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<p>Custom Checks and Validations:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">my_validate</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">&#39;sales&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">YeastValidationError</span><span class="p">(</span><span class="s1">&#39;sales column not found&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;fees&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">YeastValidationError</span><span class="p">(</span><span class="s1">&#39;fees colum not found&#39;</span><span class="p">)</span>
+
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">CustomStep</span><span class="p">(</span><span class="n">to_validate</span><span class="o">=</span><span class="n">my_validate</span><span class="p">,</span> <span class="n">to_bake</span><span class="o">=</span><span class="n">my_bake</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<p>Define the Estimation/Preparation procedure:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">my_preparation</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="n">step</span><span class="o">.</span><span class="n">mean_sales</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">my_bake</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sales_deviation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sales&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">step</span><span class="o">.</span><span class="n">mean_sales</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">CustomStep</span><span class="p">(</span><span class="n">to_prepare</span><span class="o">=</span><span class="n">my_preparation</span><span class="p">,</span> <span class="n">to_bake</span><span class="o">=</span><span class="n">my_bake</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<p>Creating a custom step inheriting from CustomStep:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MyCustomStep</span><span class="p">(</span><span class="n">CustomStep</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">do_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="c1"># Some validations that could raise YeastValidationError</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">do_prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="c1"># Prepare the step if needed</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span> <span class="nf">do_bake</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="c1"># Logic to process the df</span>
+        <span class="k">return</span> <span class="n">df</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">MyCustomStep</span><span class="p">()</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: if any of the parameters is defined but not callable.</li>
+</ul></div>
+</div>
                 
               
               
@@ -377,7 +473,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="index.html" title="Home" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="reference.html" title="Step Reference" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
             </div>
@@ -386,19 +482,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Home
+                Step Reference
               </div>
             </div>
           </a>
         
         
-          <a href="introduction.html" title="5 Minute Introduction" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="roadmap.html" title="Roadmap" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                5 Minute Introduction
+                Roadmap
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
