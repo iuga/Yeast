@@ -1,4 +1,6 @@
-# Yeast
+<p align="center">
+  <img src="logo.png" alt="Yeast logo">
+</p>
 
 Yeast is a Python data processing engine for modeling or visualization based on Pandas designed for
 reliable production data pipelines and inspired on [R Recipes](https://tidymodels.github.io/recipes/).
