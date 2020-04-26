@@ -1,3 +1,4 @@
+# Available Steps
 
 ## Column Operations
 
@@ -43,3 +44,8 @@ Aliases for the most important Steps:
 - [FilterStep](reference.html#filterrowsstep) alias of [FilterRowsStep](reference.html#filterrowsstep)
 - [SortStep](reference.html#sortrowsstep) alias of [SortRowsStep](reference.html#sortrowsstep)
 - [CastStep](reference.html#castcolumnsstep) alias of [CastColumnsStep](reference.html#castcolumnsstep)
+
+## What's next?
+
+- [Steps API Reference](reference.md)
+- [Custom Steps](extensions.md)

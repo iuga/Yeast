@@ -1,3 +1,5 @@
+# Methods for Transforming Variables
+
 Transformers can modify values on rows based on some conditions and are used inside transformer steps.
 The usage is quite simple, you can list them on any transformer step on the Recipe:
 
@@ -41,3 +43,7 @@ recipe = Recipe([
     :docstring:
 - ::: yeast.transformers.StrRemoveAll
     :docstring:
+
+## What's next?
+
+- [Methods for Groups and Aggregations](aggregations.md)

@@ -1,3 +1,5 @@
+# Methods for Selecting Variables
+
 The step to select variables from a DataFrame is `SelectColumnsStep` / `SelectStep`.
 It will keep columns based on their names or the results of the selectors.
 
@@ -53,3 +55,7 @@ Recipe([
     :docstring:
 - ::: yeast.selectors.AllMatching
     :docstring:
+
+## What's next?
+
+[Methods for Transforming Variables](transformers.md)

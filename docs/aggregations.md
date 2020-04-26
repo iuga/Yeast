@@ -1,3 +1,5 @@
+# Methods for Groups and Aggregations
+
 Most data operations are done on groups defined by columns. `GroupByStep` takes an existing DataFrame and converts it into a Pandas `DataFrameGroupBy` where aggregation/summarization/mutation operations are performed "by group".
 
 A group by operation involves some combination of:
@@ -25,7 +27,7 @@ recipe = Recipe([
     })
 ])
 ```
-```
+```bash
    client_id  branch_id  total_sales  number_of_sales  
 0       2121        3AX       3453.4               12
 1       2122        3AX          202                2
@@ -46,3 +48,7 @@ The most common aggregations are:
     :docstring:
 - ::: yeast.aggregations.AggCountDistinct
     :docstring:
+
+## What's next?
+
+[Available Steps](steps.md)

@@ -54,19 +54,19 @@ your_clean_data = recipe.bake(your_raw_data)
 
 ## Installation
 
-```
+```bash
 pip install git+https://github.com/iuga/Yeast
 ```
 
 ## What's next?
 
 - [5 Minute Introduction](introduction.md)
+- [Methods for Selecting Variables](selectors.md)
+- [Methods for Transforming Variables](transformers.md)
+- [Methods for Groups and Aggregations](aggregations.md)
 - [Available Steps](steps.md)
-- [Installation](install.md)
 
 ## Developers Guide
 
 - [Steps Reference](reference.md)
-- [Methods for select columns](selectors.md)
-- [Transforming Variables](transformers.md)
-- [Summarizing Information](aggregations.md)
+- [Custom Steps](steps.md)

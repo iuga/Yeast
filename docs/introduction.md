@@ -1,10 +1,5 @@
-## Installation
 
-The basic [installation](install.html) is straightforward:
-
-```bash
-pip install git+https://github.com/iuga/Yeast
-```
+# Concepts
 
 ## Steps
 
@@ -39,3 +34,6 @@ recipe = Recipe([
 # Execute the recipe
 clean_data = recipe.prepare(raw_data).bake(raw_data)
 ```
+## What's next?
+
+[Methods for Selecting Variables](selectors.md)
