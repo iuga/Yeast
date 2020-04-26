@@ -1,7 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Yeast package
+name: Build
 
 on:
   push:
@@ -26,9 +23,9 @@ jobs:
     - name: Install dependencies
       run: |
         ./tools/install.sh
-    - name: Lint with flake8
+    - name: Lint code
       run: |
         ./tools/lint.sh
-    - name: Test with pytest
+    - name: Unit Tests and Coverage
       run: |
         ./tools/test.sh

@@ -53,7 +53,10 @@
 
 **Workflows**
 
-- `InnerJoinStep(df|recipe)` and `InnerJoinStep(dfs|recipes)`
+- `LeftJoinStep`
+- `InnerJoinStep`
+- `RightJoinStep`
+- `FullJoinStep`
 - Concatenate, Merge and Join Difference Recipes
 
 **Library**
