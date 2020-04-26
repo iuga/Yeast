@@ -8,7 +8,8 @@ class LeftJoinStep(Step):
     """
     Return all rows from `Left`, and all columns from `Left` and `Right`.
     Rows in `Left` with no match in `Right` will have NA values in the new columns.
-    If there are multiple matches between `Left` and `Right` all combinations of the matches are returned.
+    If there are multiple matches between `Left` and `Right` all combinations of the matches
+    are returned.
 
     Parameters:
 
@@ -75,12 +76,16 @@ class LeftJoinStep(Step):
         if self.by:
             missing = [c for c in self.by if c not in left.columns]
             if missing:
-                raise YeastValidationError(f"Columns {missing} not found on the left side of the merge")
+                raise YeastValidationError(
+                    f"Columns {missing} not found on the left side of the merge"
+                )
         # All columns in by must be on Right
         if self.by and isinstance(self.right, DataFrame):
             missing = [c for c in self.by if c not in self.right.columns]
             if missing:
-                raise YeastValidationError(f"Columns {missing} not found on the right side of the merge")
+                raise YeastValidationError(
+                    f"Columns {missing} not found on the right side of the merge"
+                )
         # self.df is only supported if right is a Recipe
         if self.df is not None and not isinstance(self.right, Recipe):
             raise YeastValidationError(f"'df' parameter is only supported if right is a Recipe")

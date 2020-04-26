@@ -1,6 +1,7 @@
 from pandas import NamedAgg
 from pandas import Series
 
+
 class Aggregation():
     """
     Base abstract interface to define group aggregations
@@ -70,7 +71,6 @@ class AggCountDistinct(AggNumeric):
 
     def resolve(self, gdf):
         return NamedAgg(column=self.column, aggfunc=Series.nunique)
-
 
 
 class AggMax(AggNumeric):
