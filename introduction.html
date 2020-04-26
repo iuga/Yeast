@@ -101,8 +101,35 @@
 
 
 
-<h1 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">&para;</a></h1>
-<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
+<h1 id="5-minute-introduction">5 Minute Introduction<a class="headerlink" href="#5-minute-introduction" title="Permanent link">&para;</a></h1>
+<p>Eager to get started? This part of the documentation, begins with some background information about
+Yeast, then focuses on step-by-step instructions for Recipe development.</p>
+<h2 id="a-minimal-recipe">A Minimal Recipe<a class="headerlink" href="#a-minimal-recipe" title="Permanent link">&para;</a></h2>
+<p>A minimal Yeast Recipe looks something like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">Yeast</span> <span class="kn">import</span> <span class="n">Recipe</span><span class="p">,</span> <span class="n">steps</span>
+
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+  <span class="c1"># Convert all columns names to Snake Case:</span>
+  <span class="n">steps</span><span class="o">.</span><span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="n">baked_df</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>So what did that code do?</p>
+<ul>
+<li>First we imported the <code>Recipe</code> class and the <code>steps</code> module. An instance of a recipe will be our
+  list of steps to process data while steps contains a collection of well tested methods to
+  simplify the job.</li>
+<li>Next we created an instance of <code>Recipe</code> that will receive a list of steps that will be executed
+  sequentially in order to process and clean the data. As an example <code>CleanColumnNamesStep</code> will
+  rename all columns to match the snake case convention.</li>
+<li>Then we used <code>prepare(data)</code> to prepare the recipe before baking (processing). Some steps require
+  preparation before be baked (executed). For example: calculate the mean before imputation.</li>
+<li>Finally, we called <code>bake(data)</code> to execute all the steps on <code>data</code> (a Pandas DataFrame).</li>
+</ul>
+<h2 id="the-steps">The Steps<a class="headerlink" href="#the-steps" title="Permanent link">&para;</a></h2>
 <p>Steps are a collection of well-tested instruments that you can use without too much study in your
 data processing flow because they cover a wide range of use-cases. Each one has its own signature and
 specifics that you can discover on the <a href="reference.html">API reference</a>. One example:</p>
@@ -112,7 +139,7 @@ specifics that you can discover on the <a href="reference.html">API reference</a
 
 
 <h2 id="selectors">Selectors<a class="headerlink" href="#selectors" title="Permanent link">&para;</a></h2>
-<p>The <a href="selectors.html">selectors</a> can choose columns based on their data type or name:</p>
+<p>The <a href="selectors.html">selectors</a> can select columns based on their data type or name:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Shortcut to keep only the numerical columns</span>
 <span class="n">SelectColumnsStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">())</span>
 </code></pre></div>
@@ -125,8 +152,12 @@ specifics that you can discover on the <a href="reference.html">API reference</a
   <span class="c1"># Convert all columns names to Snake Case:</span>
   <span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">)</span>
 <span class="p">])</span>
-<span class="c1"># Execute the recipe</span>
-<span class="n">clean_data</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+
+<span class="c1"># Prepare the recipe</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+
+<span class="c1"># Execute (bake) the recipe</span>
+<span class="n">clean_data</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
 </code></pre></div>
 
 
