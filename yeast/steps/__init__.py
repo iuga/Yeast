@@ -11,3 +11,4 @@ from yeast.steps.string_transform_step import StringTransformStep  # NoQA
 from yeast.steps.group_by_step import GroupByStep  # NoQA
 from yeast.steps.summarize_step import SummarizeStep  # NoQA
 from yeast.steps.custom_step import CustomStep  # NoQA
+from yeast.steps.left_join_step import LeftJoinStep  # NoQA

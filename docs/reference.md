@@ -65,6 +65,13 @@ This module exposes a collection of well-tested steps that you can directly use 
 ::: yeast.steps.SummarizeStep
     :docstring:
 
+## Workflows
+
+### LeftJoinStep
+
+::: yeast.steps.LeftJoinStep
+    :docstring:
+
 ## Extensions
 
 ### CustomStep

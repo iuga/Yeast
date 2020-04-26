@@ -49,3 +49,49 @@ def startrek_characters():
         ]
     })
     return pdf
+
+
+@pytest.fixture
+def startrek_starships():
+    """
+    Dataset of the Star Trek SpaceShips
+    """
+    pdf = pd.DataFrame({
+        'uid': [
+            'NCC-1701',
+            'NCC-74656',
+            'NCC-1031',
+            'NCC-1764',
+            'NX-01'
+        ],
+        'name': [
+            'USS Enterprise',
+            'USS Voyager',
+            'USS Discovery',
+            'USS Defiant',
+            'Enterprise'
+        ]
+    })
+    return pdf
+
+
+@pytest.fixture
+def startrek_starships_specs():
+    """
+    Specs of the Star Trek SpaceShips
+    """
+    pdf = pd.DataFrame({
+        'uid': [
+            'NCC-1701',
+            'NCC-74656',
+            'NCC-1031',
+            'NCC-1764'
+        ],
+        'warp': [
+            9.2,
+            9.975,
+            9.9,
+            9.2
+        ]
+    })
+    return pdf

@@ -1,4 +1,4 @@
-import pandas as pd
+from pandas.core.frame import DataFrame
 from yeast.step import Step
 from yeast.errors import YeastRecipeError
 
@@ -23,8 +23,8 @@ class Recipe():
         For each step in the recipe:
             prepare and validate the step
         """
-        if not isinstance(df, pd.DataFrame):
-            raise YeastRecipeError('Data must be a Pandas Data Frame')
+        if type(df) not in [DataFrame, Recipe]:
+            raise YeastRecipeError('Data must be a Pandas DataFrame or a Recipe')
 
         for step in self.steps:
             step.prepare(df)
@@ -36,8 +36,8 @@ class Recipe():
         For each step in the recipe:
             bake the step
         """
-        if not isinstance(df, pd.DataFrame):
-            raise YeastRecipeError('Data must be a Pandas Data Frame')
+        if type(df) not in [DataFrame, Recipe]:
+            raise YeastRecipeError('Data must be a Pandas DataFrame or a Recipe')
 
         baked_df = df.copy()
         for step in self.steps:

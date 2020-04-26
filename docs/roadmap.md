@@ -8,6 +8,7 @@
 - `SummarizeStep`
 - `CustomStep`
 - `StrRemove()` and `StrRemoveAll()`: Remove matched patterns in a string
+- `LeftJoinStep(df|recipe)` and `LeftJoinStep(dfs|recipes)`
 
 **BugFixes**
 
@@ -20,11 +21,15 @@
 - `MutateStep`
 - `DropZVColumnsStep`
 - `ReplaceNAStep`
+- `LagStep` and `LeadStep`
+- `PivotLongerStep` and `PivotWiderStep`
 
 **Individual Transformations**
 
 - `ColumnMapValuesStep`
 - `ColumnStringReplaceStep`
+- `ReplaceNAStep`
+- `IfElseStep`
 
 **Documentation Steps**
 
@@ -33,6 +38,7 @@
 **Validation Steps**
 
 - `CheckColumnsStep`
+- `CheckSameLength` for Merge Operations
 
 **Transformers**
 
@@ -47,7 +53,6 @@
 
 **Workflows**
 
-- `LeftJoinStep(df|recipe)` and `LeftJoinStep(dfs|recipes)`
 - `InnerJoinStep(df|recipe)` and `InnerJoinStep(dfs|recipes)`
 - Concatenate, Merge and Join Difference Recipes
 

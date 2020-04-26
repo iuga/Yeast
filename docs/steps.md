@@ -16,6 +16,25 @@ Execute operations over rows or values:
 - [FilterRowsStep](reference.html#filterrowsstep): Filter values based on a expression
 - [SortRowsStep](reference.html#sortrowsstep): Sort values based on columns
 
+## Aggregations
+
+Aggregate or Summarize data:
+
+- [GroupByStep](reference.md#groupbystep): Group by rows based on columns
+- [SummarizeStep](reference.md#summarizestep): Summarize the group by data
+
+## WorkFlows
+
+Arrange and merge workflows and recipes
+
+- [LeftJoinStep](reference.md#leftjoinstep): Left Join with a DataFrame or Recipe
+
+## Extensions
+
+Customize Yeast behavior for our project:
+
+- [CustomStep](reference.md#customstep): Step to add your own functionality
+
 ## Step Shortcuts
 
 Aliases for the most important Steps:
