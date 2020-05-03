@@ -60,6 +60,24 @@ def test_modify_variable_using_a_transformer(starship_data):
     assert bdf.loc[0]['uid'] == 'ncc-1701'
 
 
+def test_mutation_using_custom_function(starship_data):
+    """
+    As transformer we are using a custom function
+    """
+    def my_step(df):
+        return df['uid'] + ': ' + df['warp'].astype(str)
+
+    step = MutateStep({
+        'description': my_step
+    })
+
+    import pdb; pdb.set_trace()
+    bdf = step.bake(starship_data)
+
+    assert 'description' in bdf.columns
+    assert bdf.loc[0]['description'] == 'NCC-1701: 9.2'
+
+
 def test_mutation_using_a_transformer_must_follow_the_order(starship_data):
     """
     The execution of mutate must follow the order on the list

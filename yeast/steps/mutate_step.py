@@ -64,11 +64,10 @@ class MutateStep(Step):
     ])
 
     # Create or update a variable using a custom function
-    def new_variable(x):
-        return x.sales / 1e6
+    def new_variable(df):
+        return df.sales / 1e6
 
     Recipe([
-        # Create or update a variable
         MutateStep({
             'mean_sales': new_variable,
         })

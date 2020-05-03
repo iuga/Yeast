@@ -15,6 +15,7 @@
 - `ColumnStringReplaceStep`
 - `ReplaceNAStep`
 - `IfElseStep`
+- Should we deprecate `StringTransformStep`?
 
 **Documentation Steps**
 
