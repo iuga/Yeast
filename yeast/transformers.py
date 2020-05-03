@@ -1,8 +1,29 @@
+from yeast.errors import YeastTransformerError
+
+
 class Transformer():
     """
-    Base abstract interface to define column transformers
+    Base abstract interface to define column transformers.
+    The column name to transform can be assigned during two phases:
+    - During object definition (constructor) with presedence.
+    - During resolving (resolve)
+
+    Workflow:
+    __init__ >> resolve >> do_resolve
     """
-    def resolve(self, column):
+    def __init__(self, column=None):
+        self.column = column
+
+    def resolve(self, df, column=None):
+        self.column = self.column if self.column else column
+        if not self.column:
+            raise YeastTransformerError('The selected column name to transform is empty')
+        return self.do_resolve(df, self.column)
+
+    def do_resolve(self, df, column):
+        """
+        Let subclasses override this operation
+        """
         pass
 
 
@@ -10,8 +31,7 @@ class StrTransformer(Transformer):
     """
     Base abstract interface to define string column transformers
     """
-    def resolve(self, column):
-        pass
+    pass
 
 
 class StrToUpper(StrTransformer):
@@ -19,8 +39,8 @@ class StrToUpper(StrTransformer):
     Convert case of a string to Upper case:
     ("Yeast" to "YEAST")
     """
-    def resolve(self, column):
-        return column.str.upper()
+    def do_resolve(self, df, column):
+        return df[column].str.upper()
 
 
 class StrToLower(StrTransformer):
@@ -28,8 +48,8 @@ class StrToLower(StrTransformer):
     Convert case of a string to Lower case:
     ("Yeast" to "yeast")
     """
-    def resolve(self, column):
-        return column.str.lower()
+    def do_resolve(self, df, column):
+        return df[column].str.lower()
 
 
 class StrToSentence(StrTransformer):
@@ -37,8 +57,8 @@ class StrToSentence(StrTransformer):
     Converts first character to uppercase and remaining to lowercase:
     ("yeast help" to "Yeast help")
     """
-    def resolve(self, column):
-        return column.str.capitalize()
+    def do_resolve(self, df, column):
+        return df[column].str.capitalize()
 
 
 class StrToTitle(StrTransformer):
@@ -46,8 +66,8 @@ class StrToTitle(StrTransformer):
     Converts first character of each word to uppercase and remaining to lowercase:
     ("yeast help" to "Yeast Help")
     """
-    def resolve(self, column):
-        return column.str.title()
+    def do_resolve(self, df, column):
+        return df[column].str.title()
 
 
 class StrTrim(StrTransformer):
@@ -55,8 +75,8 @@ class StrTrim(StrTransformer):
     Convert removing whitespaces from start and end of string:
     (" Yeast " to "Yeast")
     """
-    def resolve(self, column):
-        return column.str.strip()
+    def do_resolve(self, df, column):
+        return df[column].str.strip()
 
 
 class StrReplace(StrTransformer):
@@ -68,12 +88,13 @@ class StrReplace(StrTransformer):
     - `pattern`: Pattern or string to look for.
     - `replacement`: A string of replacements.
     """
-    def __init__(self, pattern, replacement):
+    def __init__(self, pattern, replacement, column=None):
+        super().__init__(column=column)
         self.pattern = pattern
         self.replacement = replacement
 
-    def resolve(self, column):
-        return column.str.replace(self.pattern, self.replacement, n=1)
+    def do_resolve(self, df, column):
+        return df[column].str.replace(self.pattern, self.replacement, n=1)
 
 
 class StrReplaceAll(StrTransformer):
@@ -85,12 +106,13 @@ class StrReplaceAll(StrTransformer):
     - `pattern`: Pattern or string to look for.
     - `replacement`: A string of replacements.
     """
-    def __init__(self, pattern, replacement):
+    def __init__(self, pattern, replacement, column=None):
+        super().__init__(column=column)
         self.pattern = pattern
         self.replacement = replacement
 
-    def resolve(self, column):
-        return column.str.replace(self.pattern, self.replacement, n=-1)
+    def do_resolve(self, df, column):
+        return df[column].str.replace(self.pattern, self.replacement, n=-1)
 
 
 class StrPad(StrTransformer):
@@ -103,13 +125,14 @@ class StrPad(StrTransformer):
     - `side`: Side on which padding character is added (left, right or both).
     - `pad`: Single padding character (default is a space).
     """
-    def __init__(self, width, side="left", pad=" "):
+    def __init__(self, width, side="left", pad=" ", column=None):
+        super().__init__(column=column)
         self.width = width
         self.side = side
         self.pad = pad
 
-    def resolve(self, column):
-        return column.str.pad(self.width, side=self.side, fillchar=self.pad)
+    def do_resolve(self, df, column):
+        return df[column].str.pad(self.width, side=self.side, fillchar=self.pad)
 
 
 class StrSlice(StrTransformer):
@@ -125,12 +148,13 @@ class StrSlice(StrTransformer):
     - `start`: integer position of the first character
     - `stop`: integer position of the last character
     """
-    def __init__(self, start, stop):
+    def __init__(self, start, stop, column=None):
+        super().__init__(column=column)
         self.start = start
         self.stop = stop
 
-    def resolve(self, column):
-        return column.str.slice(start=self.start, stop=self.stop)
+    def do_resolve(self, df, column):
+        return df[column].str.slice(start=self.start, stop=self.stop)
 
 
 class StrRemove(StrTransformer):
@@ -145,11 +169,12 @@ class StrRemove(StrTransformer):
 
     - `pattern`: Pattern or string to look for.
     """
-    def __init__(self, pattern):
+    def __init__(self, pattern, column=None):
+        super().__init__(column=column)
         self.pattern = pattern
 
-    def resolve(self, column):
-        return column.str.replace(self.pattern, "", n=1)
+    def do_resolve(self, df, column):
+        return df[column].str.replace(self.pattern, "", n=1)
 
 
 class StrRemoveAll(StrTransformer):
@@ -164,8 +189,9 @@ class StrRemoveAll(StrTransformer):
 
     - `pattern`: Pattern or string to look for.
     """
-    def __init__(self, pattern):
+    def __init__(self, pattern, column=None):
+        super().__init__(column=column)
         self.pattern = pattern
 
-    def resolve(self, column):
-        return column.str.replace(self.pattern, "", n=-1)
+    def do_resolve(self, df, column):
+        return df[column].str.replace(self.pattern, "", n=-1)

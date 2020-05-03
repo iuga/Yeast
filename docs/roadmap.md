@@ -1,19 +1,4 @@
 
-## For Beta Testing:
-
-**Features**
-
-- `SelectStep([AllString(), 'rating', 'year'])` Composed selections
-- `GroupByStep`
-- `SummarizeStep`
-- `CustomStep`
-- `StrRemove()` and `StrRemoveAll()`: Remove matched patterns in a string
-- `LeftJoinStep(df|recipe)` and `LeftJoinStep(dfs|recipes)`
-
-**BugFixes**
-
-- Selectors doesn't support strings as inputs `title` != `['title']`
-
 ## Short-term roadmap:
 
 **Row and Column Operations**
@@ -43,9 +28,13 @@
 **Transformers**
 
 - Cover all the current transformers with tests
-
 - Enhance the documentation, same structure than selectors
 - `NumericRound(x, digits=1)`
+- `RowNumber()`
+
+**Aggregations**
+
+-
 
 **Selectors**
 

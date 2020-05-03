@@ -25,16 +25,18 @@ recipe = Recipe([
   SelectStep(AllString()),
   # The user_id column (string) need some processing
   # Example "   3a2-A" to "0003A2"
-  StringTransformStep('user_id', transformers=[
-    # Remove whitespaces from start and end of string
-    StrTrim(),
-    # The suffix "-A" should be removed
-    StrReplace('-A', ''),
-    # Transform to uppercase
-    StrToUpper(),
-    # Pad to match length
-    StrPad(width=6, side='left', pad='0')
-  ]),
+  MutateStep({
+    'user_id' : [
+      # Remove whitespaces from start and end of string
+      StrTrim('user_id'),
+      # The suffix "-A" should be removed
+      StrReplace('-A', '', 'user_id'),
+      # Transform to uppercase
+      StrToUpper('user_id'),
+      # Pad to match length
+      StrPad(width=6, side='left', pad='0', 'user_id')
+    ]
+  }),
   # Group the data by user_id
   GroupByStep(['user_id']),
   # Let's summarize the data:
@@ -65,9 +67,8 @@ pip install git+https://github.com/iuga/Yeast
 - [Methods for Selecting Variables](selectors.md)
 - [Methods for Transforming Variables](transformers.md)
 - [Methods for Groups and Aggregations](aggregations.md)
-- [Available Steps](steps.md)
+- [Available Steps](reference.md)
 
 ## Developers Guide
 
-- [Steps Reference](reference.md)
-- [Custom Steps](steps.md)
+- [Steps List & Reference](reference.md)

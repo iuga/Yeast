@@ -1,21 +1,25 @@
-# Methods for Transforming Variables
+# Methods for Creating and Transforming Variables
 
-Transformers can modify values on rows based on some conditions and are used inside transformer steps.
-The usage is quite simple, you can list them on any transformer step on the Recipe:
+Transformers can modify values on rows or create new variables based on some conditions and are
+used inside transformer steps. The usage is quite simple, you can list them on any transformer step on the Recipe:
 
 ```python
-# Will keep all the numeric variables
 recipe = Recipe([
-    StringTransformStep(columns=['name'], transformers=[
-        # "JONATHAN ARCHER" to "Jonathan Archer"
-        StrToTitle(),
-        # " Data " to "Data"
-        StrTrim(),
-        # "Philippa  Georgiou" to "Philippa Georgiou"
-        StrReplace('  ', ' '),
-        # "Jean--Luc PICARD" to "Jean-Luc Picard"
-        StrReplaceAll('--', '-')
-    ])
+    # Let's transform/create some variables:
+    MutateStep({
+      # Transform the "name" column
+      'name': [
+          # "JONATHAN ARCHER" to "Jonathan Archer"
+          StrToTitle('name'),
+          # " Data " to "Data"
+          StrTrim('name'),
+          # "Philippa  Georgiou" to "Philippa Georgiou"
+          StrReplace('  ', ' ', 'name'),
+          # "Jean--Luc PICARD" to "Jean-Luc Picard"
+          StrReplaceAll('--', '-', 'name')
+      ],
+      'rank': StrToTitle('rank')
+    })
 ])
 ```
 

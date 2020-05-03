@@ -15,7 +15,6 @@ nav:
     - Methods for Selecting Variables: selectors.md
     - Methods for Transforming Variables: transformers.md
     - Methods for Groups and Aggregations: aggregations.md
-    - Available Steps: steps.md
   - Developers API:
     - Step Reference: reference.md
     - Custom Steps: extensions.md

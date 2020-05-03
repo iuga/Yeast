@@ -45,7 +45,7 @@ class StringTransformStep(Step):
     def do_bake(self, df):
         for column_name in self.selector:
             for transformer in self.transformers:
-                df[column_name] = transformer.resolve(df[column_name])
+                df[column_name] = transformer.resolve(df, column=column_name)
         return df
 
     def do_validate(self, df):

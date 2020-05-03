@@ -1,6 +1,7 @@
 from pandas.core.frame import DataFrame
 from yeast.step import Step
-from yeast.errors import YeastRecipeError
+from yeast.errors import YeastRecipeError, YeastBakeError, YeastValidationError
+from yeast.errors import YeastTransformerError
 
 
 class Recipe():
@@ -10,6 +11,13 @@ class Recipe():
 
     Workflow:
     For each step first we prepare it to then bake it.
+
+    Raises:
+
+    - `YeastRecipeError`: if there was an error with the recipe
+    - `YeastBakeError`: if there was an error while baking
+    - `YeastTransformerError`: if there was an error while transforming
+    - `YeastValidationError`: if there was an error during step validation
     """
     def __init__(self, steps):
         steps = steps if isinstance(steps, list) else [steps]
@@ -41,5 +49,16 @@ class Recipe():
 
         baked_df = df.copy()
         for step in self.steps:
-            baked_df = step.bake(baked_df)
+            try:
+                baked_df = step.bake(baked_df)
+            except YeastRecipeError as ex:
+                raise ex
+            except YeastValidationError as ex:
+                raise ex
+            except YeastBakeError as ex:
+                raise ex
+            except YeastTransformerError as ex:
+                raise ex
+            except Exception as ex:
+                raise YeastBakeError(f'There was an error while baking: {ex}') from ex
         return baked_df

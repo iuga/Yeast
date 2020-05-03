@@ -5,15 +5,14 @@
   color: #f7f7f7 !important;
 }
 
-/* .book-summary ul.summary li:first-child {
-  display: none;
+div.autodoc-docstring {
+  margin-bottom: 15px;
 }
-.book-summary ul.summary li:nth-last-of-type(-n+2) {
-  display: none;
+
+div.autodoc-signature {
+  font-size: 16px;
+  margin-bottom: 5px;
 }
-.book-summary ul.summary li.divider {
-  display: none;
-} */
 
 .codehilite code { background-color: transparent }
 .codehilite .hll { background-color: #ffffcc }

@@ -12,3 +12,4 @@ from yeast.steps.group_by_step import GroupByStep  # NoQA
 from yeast.steps.summarize_step import SummarizeStep  # NoQA
 from yeast.steps.custom_step import CustomStep  # NoQA
 from yeast.steps.left_join_step import LeftJoinStep  # NoQA
+from yeast.steps.mutate_step import MutateStep  # NoQA
