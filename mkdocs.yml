@@ -19,6 +19,8 @@ nav:
     - Step Reference: reference.md
     - Custom Steps: extensions.md
     - Roadmap: roadmap.md
+  - Examples:
+    - Student Performance: examples/students.md
 plugins: []
 extra_css:
     - extra.css
