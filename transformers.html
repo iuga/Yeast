@@ -98,29 +98,41 @@
 
 
 <h1 id="methods-for-creating-and-transforming-variables">Methods for Creating and Transforming Variables<a class="headerlink" href="#methods-for-creating-and-transforming-variables" title="Permanent link">&para;</a></h1>
-<p>Transformers can modify values on rows or create new variables based on some conditions and are
-used inside transformer steps. The usage is quite simple, you can list them on any transformer step on the Recipe:</p>
+<p>Besides selecting sets of existing columns, it’s often useful to add new columns that are functions
+of existing columns or modify values on rows. This is the job of <code>MutateStep()</code>:</p>
+<p>This steps uses a dictionary to list columns (keys) and transformers (values) that should be applied
+while you are allowed to refer to columns that you’ve just created:</p>
+<p>The most basic signature is the following:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
-    <span class="c1"># Let&#39;s transform/create some variables:</span>
     <span class="n">MutateStep</span><span class="p">({</span>
-      <span class="c1"># Transform the &quot;name&quot; column</span>
-      <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="c1"># &quot;JONATHAN ARCHER&quot; to &quot;Jonathan Archer&quot;</span>
-          <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
-          <span class="c1"># &quot; Data &quot; to &quot;Data&quot;</span>
-          <span class="n">StrTrim</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
-          <span class="c1"># &quot;Philippa  Georgiou&quot; to &quot;Philippa Georgiou&quot;</span>
-          <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;  &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">),</span>
-          <span class="c1"># &quot;Jean--Luc PICARD&quot; to &quot;Jean-Luc Picard&quot;</span>
-          <span class="n">StrReplaceAll</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
-      <span class="p">],</span>
-      <span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">)</span>
+        <span class="c1"># &quot;JONATHAN ARCHER&quot; to &quot;Jonathan Archer&quot;</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
     <span class="p">})</span>
 <span class="p">])</span>
 </code></pre></div>
 
 
-<p><strong>Available Transformers:</strong></p>
+<p>But you can extend to complex chains of transformations:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Let&#39;s transform/create some variables:</span>
+<span class="n">MutateStep</span><span class="p">({</span>
+  <span class="c1"># Transform the &quot;name&quot; column</span>
+  <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="c1"># &quot;JONATHAN ARCHER&quot; to &quot;Jonathan Archer&quot;</span>
+      <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
+      <span class="c1"># &quot; Data &quot; to &quot;Data&quot;</span>
+      <span class="n">StrTrim</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
+      <span class="c1"># &quot;Philippa  Georgiou&quot; to &quot;Philippa Georgiou&quot;</span>
+      <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;  &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">),</span>
+      <span class="c1"># &quot;Jean--Luc PICARD&quot; to &quot;Jean-Luc Picard&quot;</span>
+      <span class="n">StrReplaceAll</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div>
+
+
+<h2 id="available-transformers">Available Transformers<a class="headerlink" href="#available-transformers" title="Permanent link">&para;</a></h2>
+<h3 id="string-transformers">String Transformers<a class="headerlink" href="#string-transformers" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
 <div class="autodoc">
