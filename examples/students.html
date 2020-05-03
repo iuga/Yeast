@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>Student Performance - Yeast</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="A Python data processing engine for modeling or visualization">
+<meta name="generator" content="mkdocs-1.1, mkdocs-gitbook-1.0.7">
+
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+<meta name="HandheldFriendly" content="true"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta rel="next" href="" />
+<link href="../css/style.min.css" rel="stylesheet">
+<link href="../extra.css" rel="stylesheet">
+<link href="../styles.css" rel="stylesheet"> 
+</head>
+
+<body>
+<div class="book without-summary">
+<div class="book-summary">
+
+<nav role="navigation">
+<ul class="summary">
+<!--
+<li>
+<a href=".." target="_blank" class="custom-link">Yeast</a>
+</li>
+<li class="divider"></li> -->
+<li class="header">Yeast</li>
+
+<li>
+<a href="../index.html" class="">Home</a>
+</li>
+
+<li class="header">Getting Started</li>
+
+<li>
+<a href="../introduction.html" class="">5 Minute Introduction</a>
+</li>
+
+<li>
+<a href="../selectors.html" class="">Methods for Selecting Variables</a>
+</li>
+
+<li>
+<a href="../transformers.html" class="">Methods for Transforming Variables</a>
+</li>
+
+<li>
+<a href="../aggregations.html" class="">Methods for Groups and Aggregations</a>
+</li>
+
+<li class="header">Developers API</li>
+
+<li>
+<a href="../reference.html" class="">Step Reference</a>
+</li>
+
+<li>
+<a href="../extensions.html" class="">Custom Steps</a>
+</li>
+
+<li>
+<a href="../roadmap.html" class="">Roadmap</a>
+</li>
+
+<li class="header">Examples</li>
+
+<li>
+<a href="students.html" class="active">Student Performance</a>
+</li>
+
+<!-- <li class="divider"></li> -->
+
+
+
+</ul>
+
+</nav>
+
+</div> <!-- end of book-summary -->
+
+<div class="book-body">
+<div class="body-inner">
+<div class="book-header" role="navigation">
+
+<!-- Title -->
+<h1>
+<i class="fa fa-circle-o-notch fa-spin"></i>
+<a href="." ></a>
+</h1>
+
+</div> <!-- end of book-header -->
+
+<div class="page-wrapper" tabindex="-1" role="main">
+<div class="page-inner">
+
+<section class="normal markdown-section">
+
+
+
+<h1 id="student-performance-cleaning-recipe">Student Performance - Cleaning Recipe<a class="headerlink" href="#student-performance-cleaning-recipe" title="Permanent link">&para;</a></h1>
+<p>This dataset was downloaded from <a href="https://archive.ics.uci.edu/ml/datasets/Student+Performance">UCI Machine Learning Repository</a>. This data approach student achievement in secondary education of two Portuguese schools. The data attributes include student grades, demographic, social and school related features) and it was collected by using school reports and questionnaires. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (mat) and Portuguese language (por). In [Cortez and Silva, 2008], the two datasets were modeled under binary/five-level classification and regression tasks. Important note: the target attribute G3 has a strong correlation with attributes G2 and G1. This occurs because G3 is the final year grade (issued at the 3rd period), while G1 and G2 correspond to the 1st and 2nd period grades. It is more difficult to predict G3 without G2 and G1, but such prediction is much more useful (see paper source for more details).</p>
+<h2 id="importing-the-libraries">Importing the Libraries<a class="headerlink" href="#importing-the-libraries" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># General Libraries</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Yeast specifics classes</span>
+<span class="kn">from</span> <span class="nn">yeast</span> <span class="kn">import</span> <span class="n">Recipe</span>
+<span class="kn">from</span> <span class="nn">yeast.steps</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+
+
+<h2 id="getting-the-data">Getting the Data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">math_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;student-mat.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+<span class="n">port_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;student-por.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">math_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>school</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>address</th>
+      <th>famsize</th>
+      <th>Pstatus</th>
+      <th>Medu</th>
+      <th>Fedu</th>
+      <th>Mjob</th>
+      <th>Fjob</th>
+      <th>...</th>
+      <th>famrel</th>
+      <th>freetime</th>
+      <th>goout</th>
+      <th>Dalc</th>
+      <th>Walc</th>
+      <th>health</th>
+      <th>absences</th>
+      <th>G1</th>
+      <th>G2</th>
+      <th>G3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>18</td>
+      <td>U</td>
+      <td>GT3</td>
+      <td>A</td>
+      <td>4</td>
+      <td>4</td>
+      <td>at_home</td>
+      <td>teacher</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+      <td>6</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 33 columns</p>
+</div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">port_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>school</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>address</th>
+      <th>famsize</th>
+      <th>Pstatus</th>
+      <th>Medu</th>
+      <th>Fedu</th>
+      <th>Mjob</th>
+      <th>Fjob</th>
+      <th>...</th>
+      <th>famrel</th>
+      <th>freetime</th>
+      <th>goout</th>
+      <th>Dalc</th>
+      <th>Walc</th>
+      <th>health</th>
+      <th>absences</th>
+      <th>G1</th>
+      <th>G2</th>
+      <th>G3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>18</td>
+      <td>U</td>
+      <td>GT3</td>
+      <td>A</td>
+      <td>4</td>
+      <td>4</td>
+      <td>at_home</td>
+      <td>teacher</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>0</td>
+      <td>11</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 33 columns</p>
+</div>
+
+<h2 id="cleaning-the-data">Cleaning the Data<a class="headerlink" href="#cleaning-the-data" title="Permanent link">&para;</a></h2>
+<h3 id="defining-the-processing-recipe">Defining the processing Recipe<a class="headerlink" href="#defining-the-processing-recipe" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># All column names to snake case</span>
+    <span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">),</span>
+    <span class="c1"># Rename columns with better names</span>
+    <span class="n">RenameColumnsStep</span><span class="p">({</span>
+        <span class="s1">&#39;famsize&#39;</span><span class="p">:</span> <span class="s1">&#39;family_size&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pstatus&#39;</span><span class="p">:</span> <span class="s1">&#39;parent_status&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;medu&#39;</span><span class="p">:</span> <span class="s1">&#39;mother_education&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fedu&#39;</span><span class="p">:</span> <span class="s1">&#39;father_education&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;mjob&#39;</span><span class="p">:</span> <span class="s1">&#39;mother_job&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fjob&#39;</span><span class="p">:</span> <span class="s1">&#39;father_job&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;traveltime&#39;</span><span class="p">:</span> <span class="s1">&#39;travel_time&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;studytime&#39;</span><span class="p">:</span> <span class="s1">&#39;study_time&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;schoolsup&#39;</span><span class="p">:</span> <span class="s1">&#39;school_support&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;famsup&#39;</span><span class="p">:</span> <span class="s1">&#39;family_support&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;famrel&#39;</span><span class="p">:</span> <span class="s1">&#39;family_relationship_quality&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;freetime&#39;</span><span class="p">:</span> <span class="s1">&#39;free_time&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;goout&#39;</span><span class="p">:</span> <span class="s1">&#39;go_out_friends&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Dalc&#39;</span><span class="p">:</span> <span class="s1">&#39;workday_alcohol_consumption&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Walc&#39;</span><span class="p">:</span> <span class="s1">&#39;weekend_alcohol_consumption&#39;</span><span class="p">,</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<h3 id="preparing-the-recipe">Preparing the recipe<a class="headerlink" href="#preparing-the-recipe" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">math_df</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h3 id="bake-execute-the-recipe">Bake / Execute the recipe<a class="headerlink" href="#bake-execute-the-recipe" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">baked_math_df</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">math_df</span><span class="p">)</span> 
+<span class="n">baked_port_df</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">port_df</span><span class="p">)</span> 
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">baked_math_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>school</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>address</th>
+      <th>family_size</th>
+      <th>parent_status</th>
+      <th>mother_education</th>
+      <th>father_education</th>
+      <th>mother_job</th>
+      <th>father_job</th>
+      <th>...</th>
+      <th>family_relationship_quality</th>
+      <th>free_time</th>
+      <th>go_out_friends</th>
+      <th>dalc</th>
+      <th>walc</th>
+      <th>health</th>
+      <th>absences</th>
+      <th>g1</th>
+      <th>g2</th>
+      <th>g3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>18</td>
+      <td>U</td>
+      <td>GT3</td>
+      <td>A</td>
+      <td>4</td>
+      <td>4</td>
+      <td>at_home</td>
+      <td>teacher</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+      <td>6</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 33 columns</p>
+</div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">baked_port_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>school</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>address</th>
+      <th>family_size</th>
+      <th>parent_status</th>
+      <th>mother_education</th>
+      <th>father_education</th>
+      <th>mother_job</th>
+      <th>father_job</th>
+      <th>...</th>
+      <th>family_relationship_quality</th>
+      <th>free_time</th>
+      <th>go_out_friends</th>
+      <th>dalc</th>
+      <th>walc</th>
+      <th>health</th>
+      <th>absences</th>
+      <th>g1</th>
+      <th>g2</th>
+      <th>g3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>18</td>
+      <td>U</td>
+      <td>GT3</td>
+      <td>A</td>
+      <td>4</td>
+      <td>4</td>
+      <td>at_home</td>
+      <td>teacher</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>0</td>
+      <td>11</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 33 columns</p>
+</div>
+
+
+</section>
+
+</div> <!-- end of page-inner -->
+</div> <!-- end of page-wrapper -->
+
+</div> <!-- end of body-inner -->
+
+</div> <!-- end of book-body -->
+<script src="../js/main.js"></script>
+<script src="../js/gitbook.min.js"></script>
+<script src="../js/theme.min.js"></script>
+</body>
+</html>
