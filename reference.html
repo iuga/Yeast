@@ -54,10 +54,6 @@
 <a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
 </li>
 
-<li>
-<a href="steps.html" class="">Available Steps</a>
-</li>
-
 <li class="header">Developers API</li>
 
 <li>
@@ -103,7 +99,40 @@
 
 <h1 id="steps-reference">Steps Reference<a class="headerlink" href="#steps-reference" title="Permanent link">&para;</a></h1>
 <p>This module exposes a collection of well-tested steps that you can directly use them on your data processing pipelines.</p>
-<h2 id="columns-operations">Columns Operations<a class="headerlink" href="#columns-operations" title="Permanent link">&para;</a></h2>
+<h4 id="columns-operations">Columns Operations<a class="headerlink" href="#columns-operations" title="Permanent link">&para;</a></h4>
+<p>Execute operations over columns or predictors:</p>
+<ul>
+<li><a href="#selectcolumnsstep">SelectColumnsStep</a> / <a href="#selectcolumnsstep">SelectStep</a>: Select a group of columns</li>
+<li><a href="#mutatestep">MutateStep</a>: Create or transform column values</li>
+<li><a href="#renamecolumnsstep">RenameColumnsStep</a>: Rename column names</li>
+<li><a href="#castcolumnsstep">CastColumnsStep</a> / <a href="#castcolumnsstep">CastStep</a>: Cast the columns data types</li>
+<li><a href="#dropcolumnsstep">DropColumnsStep</a>: Drop/Remove columns</li>
+<li><a href="#cleancolumnnamesstep">CleanColumnNamesStep</a>: Clean all column names</li>
+</ul>
+<h4 id="row-operations">Row Operations<a class="headerlink" href="#row-operations" title="Permanent link">&para;</a></h4>
+<p>Execute operations over rows or values:</p>
+<ul>
+<li><a href="#filterrowsstep">FilterRowsStep</a> / <a href="#filterrowsstep">FilterStep</a>: Filter values based on a expression</li>
+<li><a href="#sortrowsstep">SortRowsStep</a> / <a href="#sortrowsstep">SortStep</a>: Sort values based on columns</li>
+</ul>
+<h4 id="aggregations">Aggregations<a class="headerlink" href="#aggregations" title="Permanent link">&para;</a></h4>
+<p>Aggregate or Summarize data:</p>
+<ul>
+<li><a href="#groupbystep">GroupByStep</a>: Group by rows based on columns</li>
+<li><a href="#summarizestep">SummarizeStep</a>: Summarize the group by data</li>
+</ul>
+<h4 id="workflows">WorkFlows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h4>
+<p>Arrange and merge workflows and recipes</p>
+<ul>
+<li><a href="#leftjoinstep">LeftJoinStep</a>: Left Join with a DataFrame or Recipe</li>
+</ul>
+<h4 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">&para;</a></h4>
+<p>Customize Yeast behavior for our project:</p>
+<ul>
+<li><a href="#customstep">CustomStep</a>: Step to add your own functionality</li>
+</ul>
+<h1 id="steps-documentation">Steps Documentation<a class="headerlink" href="#steps-documentation" title="Permanent link">&para;</a></h1>
+<h2 id="columns-operations_1">Columns Operations<a class="headerlink" href="#columns-operations_1" title="Permanent link">&para;</a></h2>
 <h3 id="selectcolumnsstep">SelectColumnsStep<a class="headerlink" href="#selectcolumnsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SelectColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">)</span></div>
@@ -134,6 +163,81 @@
 <p>Raises:</p>
 <ul>
 <li><code>YeastValidationError</code>: if any column does not exist or any column name is invalid.</li>
+</ul></div>
+</div>
+<h2 id="mutatestep">MutateStep<a class="headerlink" href="#mutatestep" title="Permanent link">&para;</a></h2>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MutateStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">transformers</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Create or transform variables mantaining the number of rows appliyng a list of transformers.
+If more than one transformer is passed to a column, they will be executed in order.
+New variables overwrite existing variables of the same name.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>transformers</code>: Dictionary of transformers using keys as column names and values as
+                  transformers. E.g: <code>{ column_name: Transformer }</code>.
+                  It also support lambda functions. E.g: <code>{var : lambda df: df}</code> and a
+                  list of transforers (lambda or Transformer: <code>{var: [tx1, tx2, ...]}</code></li>
+</ul>
+<p>Short-Term Roadmap:</p>
+<ul>
+<li>Using custom functions</li>
+<li>Using mutate after <code>GroupByStep()</code></li>
+<li>If column is not defined, use the destination column</li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a variable using a lambda function</span>
+<span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s1">&#39;total_sales&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">sales</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">fee</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+
+<span class="c1"># Create or update variables using Transformers</span>
+<span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">StrToLower</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
+        <span class="s2">&quot;uid: : StrToUpper(&#39;uid&#39;)</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+
+<span class="c1"># Create or update variables using mutiple Transformers</span>
+<span class="c1"># You can use Transformers or Lambda functions</span>
+<span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+            <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+
+<span class="c1"># Create or update variables using Group Transformers</span>
+<span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Create or update a variable</span>
+    <span class="n">GroupByStep</span><span class="p">(</span><span class="s1">&#39;client_id&#39;</span><span class="p">),</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s2">&quot;row_number&quot;</span><span class="p">:</span> <span class="n">RowNumber</span><span class="p">(),</span>
+        <span class="s2">&quot;lag_sales&quot;</span><span class="p">:</span> <span class="n">NumericLag</span><span class="p">(</span><span class="s1">&#39;sales&#39;</span><span class="p">),</span>
+        <span class="s2">&quot;lead_sales&quot;</span><span class="p">:</span> <span class="n">NumericLead</span><span class="p">(</span><span class="s1">&#39;sales&#39;</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+
+<span class="c1"># Create or update a variable using a custom function</span>
+<span class="k">def</span> <span class="nf">new_variable</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">sales</span> <span class="o">/</span> <span class="mf">1e6</span>
+
+<span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Create or update a variable</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s1">&#39;mean_sales&#39;</span><span class="p">:</span> <span class="n">new_variable</span><span class="p">,</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: xxx</li>
 </ul></div>
 </div>
 <h3 id="renamecolumnsstep">RenameColumnsStep<a class="headerlink" href="#renamecolumnsstep" title="Permanent link">&para;</a></h3>
@@ -234,7 +338,7 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if the case is not available.</li>
 </ul></div>
 </div>
-<h2 id="row-operations">Row Operations<a class="headerlink" href="#row-operations" title="Permanent link">&para;</a></h2>
+<h2 id="row-operations_1">Row Operations<a class="headerlink" href="#row-operations_1" title="Permanent link">&para;</a></h2>
 <h3 id="filterrowsstep">FilterRowsStep<a class="headerlink" href="#filterrowsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>FilterRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">expression</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
@@ -364,7 +468,7 @@ All transformers will be applied in order.</p>
 <li><code>YeastValidationError</code>: If the column does not exist or there is an error on the transformers</li>
 </ul></div>
 </div>
-<h2 id="aggregations">Aggregations<a class="headerlink" href="#aggregations" title="Permanent link">&para;</a></h2>
+<h2 id="aggregations_1">Aggregations<a class="headerlink" href="#aggregations_1" title="Permanent link">&para;</a></h2>
 <h3 id="groupbystep">GroupByStep<a class="headerlink" href="#groupbystep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>GroupByStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">)</span></div>
@@ -426,7 +530,7 @@ The most used ones are: <code>AggMean</code>, <code>AggMedian</code>, <code>AggC
 <li><code>YeastValidationError</code>: If there was not a GroupByStep before</li>
 </ul></div>
 </div>
-<h2 id="workflows">Workflows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h2>
+<h2 id="workflows_1">Workflows<a class="headerlink" href="#workflows_1" title="Permanent link">&para;</a></h2>
 <h3 id="leftjoinstep">LeftJoinStep<a class="headerlink" href="#leftjoinstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>LeftJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">right</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">)</span></div>
@@ -466,7 +570,7 @@ are returned.</p>
 <li><code>YeastValidationError</code>: if any of the validations is not correct.</li>
 </ul></div>
 </div>
-<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">&para;</a></h2>
+<h2 id="extensions_1">Extensions<a class="headerlink" href="#extensions_1" title="Permanent link">&para;</a></h2>
 <h3 id="customstep">CustomStep<a class="headerlink" href="#customstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CustomStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">to_prepare=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_bake=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_validate=None</em><span class="autodoc-punctuation">)</span></div>

@@ -54,10 +54,6 @@
 <a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
 </li>
 
-<li>
-<a href="steps.html" class="">Available Steps</a>
-</li>
-
 <li class="header">Developers API</li>
 
 <li>
@@ -101,21 +97,25 @@
 
 
 
-<h1 id="methods-for-transforming-variables">Methods for Transforming Variables<a class="headerlink" href="#methods-for-transforming-variables" title="Permanent link">&para;</a></h1>
-<p>Transformers can modify values on rows based on some conditions and are used inside transformer steps.
-The usage is quite simple, you can list them on any transformer step on the Recipe:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Will keep all the numeric variables</span>
-<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
-    <span class="n">StringTransformStep</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
-        <span class="c1"># &quot;JONATHAN ARCHER&quot; to &quot;Jonathan Archer&quot;</span>
-        <span class="n">StrToTitle</span><span class="p">(),</span>
-        <span class="c1"># &quot; Data &quot; to &quot;Data&quot;</span>
-        <span class="n">StrTrim</span><span class="p">(),</span>
-        <span class="c1"># &quot;Philippa  Georgiou&quot; to &quot;Philippa Georgiou&quot;</span>
-        <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;  &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">),</span>
-        <span class="c1"># &quot;Jean--Luc PICARD&quot; to &quot;Jean-Luc Picard&quot;</span>
-        <span class="n">StrReplaceAll</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
-    <span class="p">])</span>
+<h1 id="methods-for-creating-and-transforming-variables">Methods for Creating and Transforming Variables<a class="headerlink" href="#methods-for-creating-and-transforming-variables" title="Permanent link">&para;</a></h1>
+<p>Transformers can modify values on rows or create new variables based on some conditions and are
+used inside transformer steps. The usage is quite simple, you can list them on any transformer step on the Recipe:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Let&#39;s transform/create some variables:</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+      <span class="c1"># Transform the &quot;name&quot; column</span>
+      <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span>
+          <span class="c1"># &quot;JONATHAN ARCHER&quot; to &quot;Jonathan Archer&quot;</span>
+          <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
+          <span class="c1"># &quot; Data &quot; to &quot;Data&quot;</span>
+          <span class="n">StrTrim</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
+          <span class="c1"># &quot;Philippa  Georgiou&quot; to &quot;Philippa Georgiou&quot;</span>
+          <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;  &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">),</span>
+          <span class="c1"># &quot;Jean--Luc PICARD&quot; to &quot;Jean-Luc Picard&quot;</span>
+          <span class="n">StrReplaceAll</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+      <span class="p">],</span>
+      <span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">)</span>
+    <span class="p">})</span>
 <span class="p">])</span>
 </code></pre></div>
 
@@ -124,42 +124,42 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 <ul>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToUpper</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToUpper</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert case of a string to Upper case:
 ("Yeast" to "YEAST")</p></div>
 </div>
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToLower</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToLower</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert case of a string to Lower case:
 ("Yeast" to "yeast")</p></div>
 </div>
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToSentence</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToSentence</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Converts first character to uppercase and remaining to lowercase:
 ("yeast help" to "Yeast help")</p></div>
 </div>
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToTitle</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToTitle</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Converts first character of each word to uppercase and remaining to lowercase:
 ("yeast help" to "Yeast Help")</p></div>
 </div>
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrTrim</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrTrim</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert removing whitespaces from start and end of string:
 (" Yeast " to "Yeast")</p></div>
 </div>
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrReplace</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">replacement</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrReplace</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">replacement</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace first ocurrence of matched patterns in a string: 'Y' to 'X' ("YYY" to "XYY")</p>
 <p>Parameters:</p>
 <ul>
@@ -170,7 +170,7 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrReplaceAll</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">replacement</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrReplaceAll</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">replacement</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace all ocurrences of matched patterns in a string: 'Y' to 'X' ("YYY" to "XXX")</p>
 <p>Parameters:</p>
 <ul>
@@ -181,7 +181,7 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrPad</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">width</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">side='left'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">pad=' '</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrPad</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">width</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">side='left'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">pad=' '</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Pad a string: 'Y' to 4 chars, left and '0' ("Y" to "000Y")</p>
 <p>Parameters:</p>
 <ul>
@@ -193,7 +193,7 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrSlice</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">start</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">stop</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrSlice</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">start</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">stop</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract and replace substrings from a string:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">StrSlice</span><span class="p">(</span><span class="s2">&quot;Yeast Help&quot;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># &quot;Help&quot;</span>
 </code></pre></div>
@@ -208,7 +208,7 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrRemove</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrRemove</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Remove first matched pattern in a string</p>
 <div class="codehilite"><pre><span></span><code><span class="n">StrRemove</span><span class="p">(</span><span class="s2">&quot;_temp&quot;</span><span class="p">)</span> <span class="c1"># &quot;Yeast_temp&quot; to &quot;Yeast&quot;</span>
 </code></pre></div>
@@ -222,7 +222,7 @@ The usage is quite simple, you can list them on any transformer step on the Reci
 </li>
 <li>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrRemoveAll</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrRemoveAll</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Remove all matched patterns in a string</p>
 <div class="codehilite"><pre><span></span><code><span class="n">StrRemoveAll</span><span class="p">(</span><span class="s2">&quot;_temp&quot;</span><span class="p">)</span> <span class="c1"># &quot;Yeast_temp_temp&quot; to &quot;Yeast&quot;</span>
 </code></pre></div>

@@ -54,10 +54,6 @@
 <a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
 </li>
 
-<li>
-<a href="steps.html" class="">Available Steps</a>
-</li>
-
 <li class="header">Developers API</li>
 
 <li>
@@ -126,16 +122,18 @@ reliable production data pipelines and inspired on <a href="https://www.tidyvers
   <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllString</span><span class="p">()),</span>
   <span class="c1"># The user_id column (string) need some processing</span>
   <span class="c1"># Example &quot;   3a2-A&quot; to &quot;0003A2&quot;</span>
-  <span class="n">StringTransformStep</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
-    <span class="c1"># Remove whitespaces from start and end of string</span>
-    <span class="n">StrTrim</span><span class="p">(),</span>
-    <span class="c1"># The suffix &quot;-A&quot; should be removed</span>
-    <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-    <span class="c1"># Transform to uppercase</span>
-    <span class="n">StrToUpper</span><span class="p">(),</span>
-    <span class="c1"># Pad to match length</span>
-    <span class="n">StrPad</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
-  <span class="p">]),</span>
+  <span class="n">MutateStep</span><span class="p">({</span>
+    <span class="s1">&#39;user_id&#39;</span> <span class="p">:</span> <span class="p">[</span>
+      <span class="c1"># Remove whitespaces from start and end of string</span>
+      <span class="n">StrTrim</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
+      <span class="c1"># The suffix &quot;-A&quot; should be removed</span>
+      <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
+      <span class="c1"># Transform to uppercase</span>
+      <span class="n">StrToUpper</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
+      <span class="c1"># Pad to match length</span>
+      <span class="n">StrPad</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
+  <span class="p">}),</span>
   <span class="c1"># Group the data by user_id</span>
   <span class="n">GroupByStep</span><span class="p">([</span><span class="s1">&#39;user_id&#39;</span><span class="p">]),</span>
   <span class="c1"># Let&#39;s summarize the data:</span>
@@ -166,12 +164,11 @@ reliable production data pipelines and inspired on <a href="https://www.tidyvers
 <li><a href="selectors.html">Methods for Selecting Variables</a></li>
 <li><a href="transformers.html">Methods for Transforming Variables</a></li>
 <li><a href="aggregations.html">Methods for Groups and Aggregations</a></li>
-<li><a href="steps.html">Available Steps</a></li>
+<li><a href="reference.html">Available Steps</a></li>
 </ul>
 <h2 id="developers-guide">Developers Guide<a class="headerlink" href="#developers-guide" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="reference.html">Steps Reference</a></li>
-<li><a href="steps.html">Custom Steps</a></li>
+<li><a href="reference.html">Steps List &amp; Reference</a></li>
 </ul>
 
 

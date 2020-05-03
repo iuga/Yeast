@@ -54,10 +54,6 @@
 <a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
 </li>
 
-<li>
-<a href="steps.html" class="">Available Steps</a>
-</li>
-
 <li class="header">Developers API</li>
 
 <li>
@@ -101,20 +97,6 @@
 
 
 
-<h2 id="for-beta-testing">For Beta Testing:<a class="headerlink" href="#for-beta-testing" title="Permanent link">&para;</a></h2>
-<p><strong>Features</strong></p>
-<ul>
-<li><code>SelectStep([AllString(), 'rating', 'year'])</code> Composed selections</li>
-<li><code>GroupByStep</code></li>
-<li><code>SummarizeStep</code></li>
-<li><code>CustomStep</code></li>
-<li><code>StrRemove()</code> and <code>StrRemoveAll()</code>: Remove matched patterns in a string</li>
-<li><code>LeftJoinStep(df|recipe)</code> and <code>LeftJoinStep(dfs|recipes)</code></li>
-</ul>
-<p><strong>BugFixes</strong></p>
-<ul>
-<li>Selectors doesn't support strings as inputs <code>title</code> != <code>['title']</code></li>
-</ul>
 <h2 id="short-term-roadmap">Short-term roadmap:<a class="headerlink" href="#short-term-roadmap" title="Permanent link">&para;</a></h2>
 <p><strong>Row and Column Operations</strong></p>
 <ul>
@@ -142,14 +124,13 @@
 </ul>
 <p><strong>Transformers</strong></p>
 <ul>
-<li>
-<p>Cover all the current transformers with tests</p>
-</li>
-<li>
-<p>Enhance the documentation, same structure than selectors</p>
-</li>
+<li>Cover all the current transformers with tests</li>
+<li>Enhance the documentation, same structure than selectors</li>
 <li><code>NumericRound(x, digits=1)</code></li>
+<li><code>RowNumber()</code></li>
 </ul>
+<p><strong>Aggregations</strong></p>
+<p>-</p>
 <p><strong>Selectors</strong></p>
 <ul>
 <li>Enhance the documentation, same structure than transformers</li>
