@@ -126,7 +126,7 @@ def test_mutation_using_a_transformer_must_follow_the_order_with_mixed_types(sta
             StrReplace('2', '3', 'uid')
         ]
     })
-    bdf = step.prepare(starship_data).bake(starship_data)
+    bdf = step.bake(starship_data)
 
     assert 'uid' in bdf.columns
     assert len(bdf.columns) == 2

@@ -1,7 +1,7 @@
 from types import LambdaType
 from pandas.core.groupby.generic import DataFrameGroupBy
 from yeast.step import Step
-from yeast.errors import YeastBakeError
+from yeast.errors import YeastBakeError, YeastValidationError
 from yeast.transformers import Transformer
 
 
@@ -120,7 +120,17 @@ class MutateStep(Step):
 
     def do_validate(self, df):
         """
-        - All keys should be string
+        - All keys should be valid column names
         - All values should be callables or transformers or list of those things
         """
-        pass
+        for column in self.transformers.keys():
+            if not isinstance(column, str) and column.strip() == '':
+                raise YeastValidationError(f'"{column}" is not a valid column name')
+        for item in self.transformers.values():
+            if type(item) in [list, tuple]:
+                for subitem in item:
+                    if not isinstance(subitem, Transformer) and not isinstance(subitem, LambdaType):
+                        raise YeastValidationError(f"Transformer {subitem} not recognized")
+            else:
+                if not isinstance(item, Transformer) and not isinstance(item, LambdaType):
+                    raise YeastValidationError(f"Transformer {item} not recognized")
