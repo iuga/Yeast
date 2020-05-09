@@ -95,11 +95,6 @@ Customize Yeast behavior for our project:
 
 ## Individual Transformations
 
-### StringTransformStep
-
-::: yeast.steps.StringTransformStep
-    :docstring:
-
 ## Aggregations
 
 ### GroupByStep
