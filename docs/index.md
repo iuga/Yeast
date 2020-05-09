@@ -28,13 +28,13 @@ recipe = Recipe([
   MutateStep({
     'user_id' : [
       # Remove whitespaces from start and end of string
-      StrTrim('user_id'),
+      StrTrim(),
       # The suffix "-A" should be removed
-      StrReplace('-A', '', 'user_id'),
+      StrReplace('-A', ''),
       # Transform to uppercase
-      StrToUpper('user_id'),
+      StrToUpper(),
       # Pad to match length
-      StrPad(width=6, side='left', pad='0', 'user_id')
+      StrPad(width=6, side='left', pad='0')
     ]
   }),
   # Group the data by user_id
