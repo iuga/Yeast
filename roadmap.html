@@ -118,7 +118,6 @@
 <li><code>ColumnStringReplaceStep</code></li>
 <li><code>ReplaceNAStep</code></li>
 <li><code>IfElseStep</code></li>
-<li>Should we deprecate <code>StringTransformStep</code>?</li>
 </ul>
 <p><strong>Documentation Steps</strong></p>
 <ul>
@@ -131,10 +130,16 @@
 </ul>
 <p><strong>Transformers</strong></p>
 <ul>
-<li>Cover all the current transformers with tests</li>
-<li>Enhance the documentation, same structure than selectors</li>
 <li><code>NumericRound(x, digits=1)</code></li>
-<li><code>RowNumber()</code></li>
+<li><code>Rank(ties_method = {‘average’, ‘min’, ‘max’, ‘first’, ‘dense’})</code></li>
+<li><code>RowNumber()</code> : Equivalent to Rank(ties.method = "first")</li>
+<li><code>RankFirst()</code>: Equivalent to rank(ties.method = "min")</li>
+<li><code>RankMin()</code>: Equivalent to rank(ties.method = "min")</li>
+<li><code>RankMax()</code>: Equivalent to rank(ties.method = "max")</li>
+<li><code>RankDense()</code>: Like MinRank(), but with no gaps between ranks</li>
+<li><code>RankPercent()</code>: a number between 0 and 1 computed by rescaling min_rank to [0, 1]</li>
+<li><code>XXXLag()</code></li>
+<li><code>XXXLead()</code></li>
 </ul>
 <p><strong>Aggregations</strong></p>
 <p>-</p>

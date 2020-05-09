@@ -111,14 +111,20 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <p>The most basic signature is the following:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
     <span class="n">MutateStep</span><span class="p">({</span>
-        <span class="c1"># &quot;JONATHAN ARCHER&quot; to &quot;Jonathan Archer&quot;</span>
-        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+        <span class="c1"># Column &quot;fullname&quot; from: &quot;JONATHAN ARCHER&quot; to &quot;Jonathan Archer&quot;</span>
+        <span class="s1">&#39;fullname&#39;</span><span class="p">:</span> <span class="n">StrToTitle</span><span class="p">()</span>
     <span class="p">})</span>
 <span class="p">])</span>
 </code></pre></div>
 
 
-<p>But you can extend to complex chains of transformations:</p>
+<p>While you can also pass a column name to transform:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Column &quot;fullname&quot; from: &quot;JONATHAN ARCHER&quot; to &quot;Jonathan Archer&quot;</span>
+<span class="n">MutateStep</span><span class="p">({</span><span class="s1">&#39;fullname&#39;</span><span class="p">:</span> <span class="n">StrToTitle</span><span class="p">(</span><span class="s1">&#39;fullname&#39;</span><span class="p">)})</span>
+</code></pre></div>
+
+
+<p>Moreover, you can extend to complex chains of transformations:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Let&#39;s transform/create some variables:</span>
 <span class="n">MutateStep</span><span class="p">({</span>
   <span class="c1"># Transform the &quot;name&quot; column</span>
@@ -137,8 +143,14 @@ while you are allowed to refer to columns that you’ve just created:</p>
 </code></pre></div>
 
 
+<p>Currently the transformers are categorized as:</p>
+<ul>
+<li>String Transformers: String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible.</li>
+<li>Rank Transformers: Returns the sample ranks of the values in a column.</li>
+</ul>
 <h2 id="available-transformers">Available Transformers<a class="headerlink" href="#available-transformers" title="Permanent link">&para;</a></h2>
 <h3 id="string-transformers">String Transformers<a class="headerlink" href="#string-transformers" title="Permanent link">&para;</a></h3>
+<p>String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible:</p>
 <ul>
 <li>
 <div class="autodoc">
@@ -249,6 +261,111 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <p>Parameters:</p>
 <ul>
 <li><code>pattern</code>: Pattern or string to look for.</li>
+</ul></div>
+</div>
+</li>
+</ul>
+<h3 id="rank-transformers">Rank Transformers<a class="headerlink" href="#rank-transformers" title="Permanent link">&para;</a></h3>
+<p>Returns the sample ranks of the values in a column:</p>
+<ul>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankTransformer</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ties_method='first'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">percentage=False</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Returns the sample ranks of the values in the column.
+Ties (i.e., equal values) and missing values can be handled in several ways.</p>
+<p>Ties Methods:</p>
+<p>The <code>first</code> method results in a permutation with increasing values at each index set of ties.
+<code>average</code>, replaces them by their mean, and <code>max</code> and <code>min</code> replaces them by their maximum and
+minimum respectively. <code>dense</code> is like <code>min</code>, but with no gaps between ranks.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>column</code>: name used to rank values</li>
+<li><code>ties_method</code>: string specifying how ties are treated:
+                 {'average', 'min', 'max', 'first', 'dense'}</li>
+<li><code>ascending</code>: boolean with the order of the row numbers</li>
+</ul></div>
+</div>
+</li>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>Rank</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ties_method='first'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">percentage=False</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Convenience alias for RankTransformer()</p></div>
+</div>
+</li>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RowNumber</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Creates/transforms a variable containg the row number.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>ascending</code>: boolean with the order of the row numbers</li>
+<li><code>column</code>: used to sort/arrange and rank values</li>
+</ul></div>
+</div>
+</li>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankFirst</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Increasing rank values at each index set of ties</p>
+<p>Parameters:</p>
+<ul>
+<li><code>ascending</code>: boolean with the order of the row numbers</li>
+<li><code>column</code>: used to sort/arrange and rank values</li>
+</ul></div>
+</div>
+</li>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMin</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Replace by the minimum value</p>
+<p>Parameters:</p>
+<ul>
+<li><code>ascending</code>: boolean with the order of the row numbers</li>
+<li><code>column</code>: used to sort/arrange and rank values</li>
+</ul></div>
+</div>
+</li>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMax</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Replace by the maximum value</p>
+<p>Parameters:</p>
+<ul>
+<li><code>ascending</code>: boolean with the order of the row numbers</li>
+<li><code>column</code>: used to sort/arrange and rank values</li>
+</ul></div>
+</div>
+</li>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankDense</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Replace by the minimum value like <code>RankMin</code>, but with no gaps between ranks.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>ascending</code>: boolean with the order of the row numbers</li>
+<li><code>column</code>: used to sort/arrange and rank values</li>
+</ul></div>
+</div>
+</li>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMean</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Replace by the mean/average value</p>
+<p>Parameters:</p>
+<ul>
+<li><code>ascending</code>: boolean with the order of the row numbers</li>
+<li><code>column</code>: used to sort/arrange and rank values</li>
+</ul></div>
+</div>
+</li>
+<li>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankPercent</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>A number between 0 and 1 computed by rescaling <code>RankMin</code> to [0, 1]</p>
+<p>Parameters:</p>
+<ul>
+<li><code>ascending</code>: boolean with the order of the row numbers</li>
+<li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
 </li>

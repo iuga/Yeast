@@ -184,12 +184,6 @@ New variables overwrite existing variables of the same name.</p>
                   It also support lambda functions. E.g: <code>{var : lambda df: df}</code> and a
                   list of transforers (lambda or Transformer: <code>{var: [tx1, tx2, ...]}</code></li>
 </ul>
-<p>Short-Term Roadmap:</p>
-<ul>
-<li>Using custom functions</li>
-<li>Using mutate after <code>GroupByStep()</code></li>
-<li>If column is not defined, use the destination column</li>
-</ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Create a variable using a lambda function</span>
 <span class="n">Recipe</span><span class="p">([</span>
@@ -202,7 +196,16 @@ New variables overwrite existing variables of the same name.</p>
 <span class="n">Recipe</span><span class="p">([</span>
     <span class="n">MutateStep</span><span class="p">({</span>
         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">StrToLower</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
-        <span class="s2">&quot;uid: : StrToUpper(&#39;uid&#39;)</span>
+        <span class="s2">&quot;uid&quot;</span><span class="p">:</span> <span class="p">:</span> <span class="n">StrToUpper</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+
+<span class="c1"># If the output column is the same as the input column you don&#39;t need to</span>
+<span class="c1"># set the column name. The result will be the same</span>
+<span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">StrToLower</span><span class="p">(),</span>  <span class="c1"># name will be transformed to lower case</span>
+        <span class="s2">&quot;uid&quot;</span><span class="p">:</span> <span class="p">:</span> <span class="n">StrToUpper</span><span class="p">()</span>   <span class="c1"># uid will be transformed to upper case</span>
     <span class="p">})</span>
 <span class="p">])</span>
 
@@ -242,6 +245,7 @@ New variables overwrite existing variables of the same name.</p>
 
 <p>Raises:</p>
 <ul>
+<li><code>YeastBakeError</code>: If there was an error executing any transformer</li>
 <li><code>YeastValidationError</code>: xxx</li>
 </ul></div>
 </div>
@@ -439,40 +443,6 @@ Columns that don't exist are ignored.</p>
 </ul></div>
 </div>
 <h2 id="individual-transformations">Individual Transformations<a class="headerlink" href="#individual-transformations" title="Permanent link">&para;</a></h2>
-<h3 id="stringtransformstep">StringTransformStep<a class="headerlink" href="#stringtransformstep" title="Permanent link">&para;</a></h3>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>StringTransformStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">transformers</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Step in charge of transform a String column using a list of String transformers.
-All transformers will be applied in order.</p>
-<p>Parameters:</p>
-<ul>
-<li><code>columns</code>: list of string column names to look for duplicates or a selector</li>
-<li><code>transformers</code>: list of String transformers</li>
-</ul>
-<p>Usage:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a recipe of steps to process your data</span>
-<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
-  <span class="c1"># The &quot;user_id&quot; column (string) need some cleaning</span>
-  <span class="c1"># Example &quot;  3a2-A &quot; must match with &quot;0003A2&quot;</span>
-  <span class="n">StringTransformStep</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">],</span> <span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
-    <span class="c1"># Remove whitespaces from start and end of string</span>
-    <span class="n">StrTrim</span><span class="p">(),</span>
-    <span class="c1"># The prefix &quot;-A&quot; should be removed</span>
-    <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-    <span class="c1"># Transform to uppercase</span>
-    <span class="n">StrToUpper</span><span class="p">(),</span>
-    <span class="c1"># Pad the left side with zeros</span>
-    <span class="n">StrPad</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
-  <span class="p">])</span>
-<span class="p">])</span>
-</code></pre></div>
-
-
-<p>Raises:</p>
-<ul>
-<li><code>YeastValidationError</code>: If the column does not exist or there is an error on the transformers</li>
-</ul></div>
-</div>
 <h2 id="aggregations_1">Aggregations<a class="headerlink" href="#aggregations_1" title="Permanent link">&para;</a></h2>
 <h3 id="groupbystep">GroupByStep<a class="headerlink" href="#groupbystep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
