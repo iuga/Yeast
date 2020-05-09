@@ -131,13 +131,13 @@ reliable production data pipelines and inspired on <a href="https://www.tidyvers
   <span class="n">MutateStep</span><span class="p">({</span>
     <span class="s1">&#39;user_id&#39;</span> <span class="p">:</span> <span class="p">[</span>
       <span class="c1"># Remove whitespaces from start and end of string</span>
-      <span class="n">StrTrim</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
+      <span class="n">StrTrim</span><span class="p">(),</span>
       <span class="c1"># The suffix &quot;-A&quot; should be removed</span>
-      <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
+      <span class="n">StrReplace</span><span class="p">(</span><span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
       <span class="c1"># Transform to uppercase</span>
-      <span class="n">StrToUpper</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
+      <span class="n">StrToUpper</span><span class="p">(),</span>
       <span class="c1"># Pad to match length</span>
-      <span class="n">StrPad</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
+      <span class="n">StrPad</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
     <span class="p">]</span>
   <span class="p">}),</span>
   <span class="c1"># Group the data by user_id</span>
