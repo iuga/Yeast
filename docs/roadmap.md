@@ -28,10 +28,16 @@
 
 **Transformers**
 
-- Cover all the current transformers with tests
-- Enhance the documentation, same structure than selectors
 - `NumericRound(x, digits=1)`
-- `RowNumber()`
+- `Rank(ties_method = {‘average’, ‘min’, ‘max’, ‘first’, ‘dense’})`
+- `RowNumber()` : Equivalent to Rank(ties.method = "first")
+- `RankFirst()`: Equivalent to rank(ties.method = "min")
+- `RankMin()`: Equivalent to rank(ties.method = "min")
+- `RankMax()`: Equivalent to rank(ties.method = "max")
+- `RankDense()`: Like MinRank(), but with no gaps between ranks
+- `RankPercent()`: a number between 0 and 1 computed by rescaling min_rank to [0, 1]
+- `XXXLag()`
+- `XXXLead()`
 
 **Aggregations**
 

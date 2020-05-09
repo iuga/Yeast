@@ -264,10 +264,10 @@ baked_math_df.head(1)
       <th>address</th>
       <th>family_size</th>
       <th>parent_status</th>
-      <th>mothers_education</th>
-      <th>fathers_education</th>
-      <th>mothers_job</th>
-      <th>fathers_job</th>
+      <th>mother_education</th>
+      <th>father_education</th>
+      <th>mother_job</th>
+      <th>father_job</th>
       <th>...</th>
       <th>family_relationship_quality</th>
       <th>free_time</th>
@@ -345,10 +345,10 @@ baked_port_df.head(1)
       <th>address</th>
       <th>family_size</th>
       <th>parent_status</th>
-      <th>mothers_education</th>
-      <th>fathers_education</th>
-      <th>mothers_job</th>
-      <th>fathers_job</th>
+      <th>mother_education</th>
+      <th>father_education</th>
+      <th>mother_job</th>
+      <th>father_job</th>
       <th>...</th>
       <th>family_relationship_quality</th>
       <th>free_time</th>
@@ -393,8 +393,3 @@ baked_port_df.head(1)
 </div>
 
 
-
-
-```python
-
-```

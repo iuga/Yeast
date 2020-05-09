@@ -26,6 +26,19 @@ class Transformer():
         """
         pass
 
+    def set_column_if_required(self, column):
+        """
+        Set the column if it does not have a value.
+        This should be use to double check that the destination column has a value
+        """
+        self.column = self.column if self.column else column
+
+    def __call__(self, df, column=None):
+        """
+        Make transformers callable
+        """
+        return self.resolve(df, column=column)
+
 
 class StrTransformer(Transformer):
     """
@@ -195,3 +208,143 @@ class StrRemoveAll(StrTransformer):
 
     def do_resolve(self, df, column):
         return df[column].str.replace(self.pattern, "", n=-1)
+
+
+class RankTransformer(Transformer):
+    """
+    Returns the sample ranks of the values in the column.
+    Ties (i.e., equal values) and missing values can be handled in several ways.
+
+    Ties Methods:
+
+    The `first` method results in a permutation with increasing values at each index set of ties.
+    `average`, replaces them by their mean, and `max` and `min` replaces them by their maximum and
+    minimum respectively. `dense` is like `min`, but with no gaps between ranks.
+
+    Parameters:
+
+    - `column`: name used to rank values
+    - `ties_method`: string specifying how ties are treated:
+                     {'average', 'min', 'max', 'first', 'dense'}
+    - `ascending`: boolean with the order of the row numbers
+    """
+    def __init__(self, column=None, ties_method="first", ascending=True, percentage=False):
+        super().__init__(column=column)
+        self.ascending = ascending
+        self.method = ties_method
+        self.percentage = percentage
+        if self.method not in ['average', 'min', 'max', 'first', 'dense']:
+            raise YeastTransformerError(f'Method {ties_method} not recognized')
+
+    def do_resolve(self, df, column):
+        return df[column].rank(method=self.method, ascending=self.ascending, pct=self.percentage)
+
+
+class Rank(RankTransformer):
+    """
+    Convenience alias for RankTransformer()
+    """
+    pass
+
+
+class RankFirst(RankTransformer):
+    """
+    Increasing rank values at each index set of ties
+
+    Parameters:
+
+    - `ascending`: boolean with the order of the row numbers
+    - `column`: used to sort/arrange and rank values
+    """
+    def __init__(self, column=None, ascending=True):
+        super().__init__(column=column)
+        self.ascending = ascending
+        self.method = 'first'
+
+
+class RowNumber(RankFirst):
+    """
+    Creates/transforms a variable containg the row number.
+
+    Parameters:
+
+    - `ascending`: boolean with the order of the row numbers
+    - `column`: used to sort/arrange and rank values
+    """
+    pass
+
+
+class RankMin(RankTransformer):
+    """
+    Replace by the minimum value
+
+    Parameters:
+
+    - `ascending`: boolean with the order of the row numbers
+    - `column`: used to sort/arrange and rank values
+    """
+    def __init__(self, column=None, ascending=True):
+        super().__init__(column=column)
+        self.ascending = ascending
+        self.method = 'min'
+
+
+class RankMax(RankTransformer):
+    """
+    Replace by the maximum value
+
+    Parameters:
+
+    - `ascending`: boolean with the order of the row numbers
+    - `column`: used to sort/arrange and rank values
+    """
+    def __init__(self, column=None, ascending=True):
+        super().__init__(column=column)
+        self.ascending = ascending
+        self.method = 'max'
+
+
+class RankDense(RankTransformer):
+    """
+    Replace by the minimum value like `RankMin`, but with no gaps between ranks.
+
+    Parameters:
+
+    - `ascending`: boolean with the order of the row numbers
+    - `column`: used to sort/arrange and rank values
+    """
+    def __init__(self, column=None, ascending=True):
+        super().__init__(column=column)
+        self.ascending = ascending
+        self.method = 'dense'
+
+
+class RankMean(RankTransformer):
+    """
+    Replace by the mean/average value
+
+    Parameters:
+
+    - `ascending`: boolean with the order of the row numbers
+    - `column`: used to sort/arrange and rank values
+    """
+    def __init__(self, column=None, ascending=True):
+        super().__init__(column=column)
+        self.ascending = ascending
+        self.method = 'average'
+
+
+class RankPercent(RankTransformer):
+    """
+    A number between 0 and 1 computed by rescaling `RankMin` to [0, 1]
+
+    Parameters:
+
+    - `ascending`: boolean with the order of the row numbers
+    - `column`: used to sort/arrange and rank values
+    """
+    def __init__(self, column=None, ascending=True):
+        super().__init__(column=column)
+        self.ascending = ascending
+        self.method = 'min'
+        self.percentage = True

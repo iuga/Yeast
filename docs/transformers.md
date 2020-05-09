@@ -11,13 +11,20 @@ The most basic signature is the following:
 ```python
 recipe = Recipe([
     MutateStep({
-        # "JONATHAN ARCHER" to "Jonathan Archer"
-        'name': StrToTitle('name')
+        # Column "fullname" from: "JONATHAN ARCHER" to "Jonathan Archer"
+        'fullname': StrToTitle()
     })
 ])
 ```
 
-But you can extend to complex chains of transformations:
+While you can also pass a column name to transform:
+
+```python
+# Column "fullname" from: "JONATHAN ARCHER" to "Jonathan Archer"
+MutateStep({'fullname': StrToTitle('fullname')})
+```
+
+Moreover, you can extend to complex chains of transformations:
 
 ```python
 # Let's transform/create some variables:
@@ -37,9 +44,16 @@ MutateStep({
 })
 ```
 
+Currently the transformers are categorized as:
+
+- String Transformers: String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible.
+- Rank Transformers: Returns the sample ranks of the values in a column.
+
 ## Available Transformers
 
 ### String Transformers
+
+String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible:
 
 - ::: yeast.transformers.StrToUpper
     :docstring:
@@ -63,6 +77,30 @@ MutateStep({
     :docstring:
 - ::: yeast.transformers.StrRemoveAll
     :docstring:
+
+### Rank Transformers
+
+Returns the sample ranks of the values in a column:
+
+- ::: yeast.transformers.RankTransformer
+    :docstring:
+- ::: yeast.transformers.Rank
+    :docstring:
+- ::: yeast.transformers.RowNumber
+    :docstring:
+- ::: yeast.transformers.RankFirst
+    :docstring:
+- ::: yeast.transformers.RankMin
+    :docstring:
+- ::: yeast.transformers.RankMax
+    :docstring:
+- ::: yeast.transformers.RankDense
+    :docstring:
+- ::: yeast.transformers.RankMean
+    :docstring:
+- ::: yeast.transformers.RankPercent
+    :docstring:
+
 
 ## What's next?
 

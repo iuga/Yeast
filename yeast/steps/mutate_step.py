@@ -1,4 +1,5 @@
 from types import LambdaType
+from pandas.core.groupby.generic import DataFrameGroupBy
 from yeast.step import Step
 from yeast.errors import YeastBakeError
 from yeast.transformers import Transformer
@@ -17,12 +18,6 @@ class MutateStep(Step):
                       It also support lambda functions. E.g: `{var : lambda df: df}` and a
                       list of transforers (lambda or Transformer: `{var: [tx1, tx2, ...]}`
 
-    Short-Term Roadmap:
-
-    - Using custom functions
-    - Using mutate after `GroupByStep()`
-    - If column is not defined, use the destination column
-
     Usage:
 
     ```python
@@ -37,7 +32,16 @@ class MutateStep(Step):
     Recipe([
         MutateStep({
             "name": StrToLower('name'),
-            "uid: : StrToUpper('uid')
+            "uid": : StrToUpper('uid')
+        })
+    ])
+
+    # If the output column is the same as the input column you don't need to
+    # set the column name. The result will be the same
+    Recipe([
+        MutateStep({
+            "name": StrToLower(),  # name will be transformed to lower case
+            "uid": : StrToUpper()   # uid will be transformed to upper case
         })
     ])
 
@@ -76,6 +80,7 @@ class MutateStep(Step):
 
     Raises:
 
+    - `YeastBakeError`: If there was an error executing any transformer
     - `YeastValidationError`: xxx
     """
     def __init__(self, transformers):
@@ -85,41 +90,37 @@ class MutateStep(Step):
         for column, transformers in self.transformers.items():
             transformers = transformers if type(transformers) in [list, tuple] else [transformers]
             for transformer in transformers:
-                if isinstance(transformer, LambdaType):
-                    df = self.assign_lamda(df, column, transformer)
-                if isinstance(transformer, Transformer):
-                    df = self.assign_transformer(df, column, transformer)
+                df = self.assign_transformer(df, column, transformer)
         return df
 
-    def assign_lamda(self, df, column, tx):
+    def assign_transformer(self, df, column, transformer):
         """
         Create or update a column using a lambda function
         """
         try:
-            df[column] = tx(df)
+            # Set the column name if empty, using the destination column
+            if isinstance(transformer, Transformer):
+                transformer.set_column_if_required(column)
+            # Split between groups and dataframes
+            if isinstance(df, DataFrameGroupBy):
+                df = df.apply(self.add_column, column=column, values=transformer(df))
+            else:
+                df[column] = transformer(df)
             return df
         except KeyError as ex:
-            raise YeastBakeError(f'There was an error on the lambda function: {type(ex)} {ex}')
+            raise YeastBakeError(f'There was an error executing the transformer: {ex}') from ex
 
-    def assign_transformer(self, df, column, tx):
+    @staticmethod
+    def add_column(df, column, values):
         """
-        Create or update a column using a transformer
-
-        desc = StrToLower()
-        df['desc'] = step.resolve(df['desc'])
-
-        lower_desc = StrToLower('desc')
-        df['lower_desc'] = step.resolve(df['desc'])
+        Static methof to add a column using apply. Usually for Groups:
         """
-        try:
-            df[column] = tx.resolve(df)
-            return df
-        except KeyError as ex:
-            raise YeastBakeError(f'There was an error on the lambda function: {type(ex)} {ex}')
+        df[column] = values
+        return df
 
     def do_validate(self, df):
         """
         - All keys should be string
-        - All values should be callables or transformers
+        - All values should be callables or transformers or list of those things
         """
         pass
