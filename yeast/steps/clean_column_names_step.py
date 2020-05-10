@@ -38,13 +38,13 @@ class CleanColumnNamesStep(Step):
     def do_bake(self, df):
         if self.case == 'snake':
             mapper = {
-                c: underscore(c.replace('  ', ' ').replace(' ', '_')) for c in df.columns
+                c: underscore(c.strip().replace('  ', ' ').replace(' ', '_')) for c in df.columns
             }
         elif self.case in ['upper_camel', 'lower_camel']:
             upper = True if self.case == 'upper_camel' else False
             mapper = {
                 c: camelize(
-                    c.replace('  ', ' ').replace(' ', ''),
+                    c.strip().replace('  ', ' ').replace(' ', ''),
                     uppercase_first_letter=upper
                 ) for c in df.columns
             }

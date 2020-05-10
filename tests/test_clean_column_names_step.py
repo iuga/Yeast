@@ -60,6 +60,19 @@ def test_lower_camel_case_cleaning(data):
     assert 'Total Seasons' not in baked_df.columns
 
 
+def test_snake_case_with_whitespaces_before_and_after(data):
+    """
+    Test cleaning with whitespaces before and after the name
+    """
+    data.columns = ['   series_Name    ', '  CreationYear', 'Total Seasons  ']
+    step = steps.CleanColumnNamesStep('snake')
+    baked_df = step.prepare(data).bake(data)
+
+    assert 'series_name' in baked_df.columns
+    assert 'creation_year' in baked_df.columns
+    assert 'total_seasons' in baked_df.columns
+
+
 def test_invalid_case_must_raise_error(data):
     """
     Error on invalid case

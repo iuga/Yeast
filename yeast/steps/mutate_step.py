@@ -108,7 +108,9 @@ class MutateStep(Step):
                 df[column] = transformer(df)
             return df
         except KeyError as ex:
-            raise YeastBakeError(f'There was an error executing the transformer: {ex}') from ex
+            raise YeastBakeError(
+                f'There was an error executing the transformer: {transformer} on {column}'
+            ) from ex
 
     @staticmethod
     def add_column(df, column, values):

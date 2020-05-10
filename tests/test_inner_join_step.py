@@ -20,7 +20,6 @@ def test_inner_join_step(startrek_starships, startrek_starships_specs):
     ])
     bdf = recipe.prepare(startrek_starships).bake(startrek_starships)
 
-    import pdb; pdb.set_trace()
     assert bdf.shape == (4, 3)
     row = pd.Series({'uid': 'NCC-1031', 'name': 'USS Discovery', 'warp': 9.9}, name=0)
     assert_series_equal(bdf.loc[0], row)
