@@ -3,19 +3,19 @@ import pandas as pd
 from pandas.testing import assert_series_equal
 
 from yeast import Recipe
-from yeast.steps import LeftJoinStep, SortStep, RenameColumnsStep
+from yeast.steps import FullJoinStep, SortStep, RenameColumnsStep
 from yeast.errors import YeastValidationError
 
 from tests.data_samples import startrek_starships
 from tests.data_samples import startrek_starships_specs
 
 
-def test_left_join_step(startrek_starships, startrek_starships_specs):
+def test_full_join_step(startrek_starships, startrek_starships_specs):
     """
-    Left Join with NA mismmatches
+    Full Outer Join with NA mismmatches
     """
     recipe = Recipe([
-        LeftJoinStep(startrek_starships_specs, by="uid"),
+        FullJoinStep(startrek_starships_specs, by="uid"),
         SortStep('uid')
     ])
     baked_data = recipe.prepare(startrek_starships).bake(startrek_starships)
@@ -27,16 +27,16 @@ def test_left_join_step(startrek_starships, startrek_starships_specs):
     assert_series_equal(baked_data.loc[4], row)
 
 
-def test_left_join_with_using_a_recipe(startrek_starships, startrek_starships_specs):
+def test_full_join_with_using_a_recipe(startrek_starships, startrek_starships_specs):
     """
-    Left Join with another Recipe
+    Full Outer Join with another Recipe
     """
     right_recipe = Recipe([
         SortStep('uid')
     ])
 
     left_recipe = Recipe([
-        LeftJoinStep(right_recipe, by='uid', df=startrek_starships_specs),
+        FullJoinStep(right_recipe, by='uid', df=startrek_starships_specs),
         SortStep('uid')
     ])
     baked_df = left_recipe.prepare(startrek_starships).bake(startrek_starships)

@@ -4,14 +4,13 @@ from yeast.steps.join_step import JoinStep
 from yeast.errors import YeastValidationError
 
 
-class LeftJoinStep(JoinStep):
+class InnerJoinStep(JoinStep):
     """
-    Left Join two DataFrames together
+    Inner Join two DataFrames together
 
-    Return all rows from `x`, and all columns from `x` and `y`.
-    Rows in `x` with no match in `y` will have NA values in the new columns.
-    If there are multiple matches between `x` and `y` all combinations of the matches
-    are returned.
+    Return all rows from `x` where there are matching values in `y`, and all columns from `x` and
+    `y`. If there are multiple matches between `x` and `y`, all combination of the matches are
+    returned.
 
     Parameters:
 
@@ -22,20 +21,20 @@ class LeftJoinStep(JoinStep):
     Usage:
 
     ```python
-    # Left Join with another DataFrame
+    # Inner Join with another DataFrame
     # sales_df and client_df are DataFrames, by argument is optional
     Recipe([
-        LeftJoinStep(sales_df, by="client_id")
+        InnerJoinStep(sales_df, by="client_id")
     ]).bake(client_df)
 
-    # Left join with the DataFrame obtained from the execution of a Recipe
+    # Inner join with the DataFrame obtained from the execution of a Recipe
     # sales_recipe will be executed using sales_df inside the client_recipe execution
     sales_recipe = Recipe([
         RenameStep({'client_id': 'cid'})
     ])
 
     client_recipe = Recipe([
-        LeftJoinStep(sales_recipe, by=["client_id", "region_id"], df=sales_df)
+        InnerJoinStep(sales_recipe, by=["client_id", "region_id"], df=sales_df)
     ])
 
     client_recipe.prepare(client_df).bake(client_df)
@@ -47,6 +46,6 @@ class LeftJoinStep(JoinStep):
     """
     def __init__(self, y, by=None, df=None):
         self.y = y
-        self.how = "left"
+        self.how = "inner"
         self.by = by if not by else by if type(by) in [list, tuple] else [by]
         self.df = df

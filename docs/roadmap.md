@@ -1,3 +1,11 @@
+## Next Release
+
+- `MergeStep`: containing all logic for the merge between DataFrames
+- `LeftJoinStep`: perform a left join - Inherits from `MergeStep`
+- `InnerJoinStep`: perform a inner join - Inherits from `MergeStep`
+- `RightJoinStep`: perform a right join - Inherits from `MergeStep`
+- `FullJoinStep`: perform a full join - Inherits from `MergeStep`
+
 
 ## Short-term roadmap:
 

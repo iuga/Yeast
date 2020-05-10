@@ -33,6 +33,9 @@ Aggregate or Summarize data:
 Arrange and merge workflows and recipes
 
 - [LeftJoinStep](#leftjoinstep): Left Join with a DataFrame or Recipe
+- [RightJoinStep](#rightjoinstep): Right Join with a DataFrame or Recipe
+- [InnerJoinStep](#innerjoinstep): Inner Join with a DataFrame or Recipe
+- [FullJoinStep](#fulljoinstep): Full Outer Join with a DataFrame or Recipe
 
 #### Extensions
 
@@ -112,6 +115,21 @@ Customize Yeast behavior for our project:
 ### LeftJoinStep
 
 ::: yeast.steps.LeftJoinStep
+    :docstring:
+
+### RightJoinStep
+
+::: yeast.steps.RightJoinStep
+    :docstring:
+
+### InnerJoinStep
+
+::: yeast.steps.InnerJoinStep
+    :docstring:
+
+### FullJoinStep
+
+::: yeast.steps.FullJoinStep
     :docstring:
 
 ## Extensions

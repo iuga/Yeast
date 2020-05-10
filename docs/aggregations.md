@@ -51,4 +51,4 @@ The most common aggregations are:
 
 ## What's next?
 
-[Available Steps](reference.md)
+[Join two DataFrames together](merge.md)
