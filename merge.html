@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>Join two DataFrames together - Yeast</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="A Python data processing engine for modeling or visualization">
+<meta name="generator" content="mkdocs-1.1, mkdocs-gitbook-1.0.7">
+
+<link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
+<meta name="HandheldFriendly" content="true"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta rel="next" href="" />
+<link href="./css/style.min.css" rel="stylesheet">
+<link href="extra.css" rel="stylesheet">
+<link href="styles.css" rel="stylesheet"> 
+</head>
+
+<body>
+<div class="book without-summary">
+<div class="book-summary">
+
+<nav role="navigation">
+<ul class="summary">
+<!--
+<li>
+<a href="." target="_blank" class="custom-link">Yeast</a>
+</li>
+<li class="divider"></li> -->
+<li class="header">Yeast</li>
+
+<li>
+<a href="index.html" class="">Home</a>
+</li>
+
+<li class="header">Getting Started</li>
+
+<li>
+<a href="introduction.html" class="">5 Minute Introduction</a>
+</li>
+
+<li>
+<a href="selectors.html" class="">Methods for Selecting Variables</a>
+</li>
+
+<li>
+<a href="transformers.html" class="">Methods for Transforming Variables</a>
+</li>
+
+<li>
+<a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
+</li>
+
+<li>
+<a href="merge.html" class="active">Join two DataFrames together</a>
+</li>
+
+<li class="header">Developers API</li>
+
+<li>
+<a href="reference.html" class="">Step Reference</a>
+</li>
+
+<li>
+<a href="extensions.html" class="">Custom Steps</a>
+</li>
+
+<li>
+<a href="roadmap.html" class="">Roadmap</a>
+</li>
+
+<li class="header">Examples</li>
+
+<li>
+<a href="examples/students.html" class="">Student Performance</a>
+</li>
+
+<!-- <li class="divider"></li> -->
+
+
+
+</ul>
+
+</nav>
+
+</div> <!-- end of book-summary -->
+
+<div class="book-body">
+<div class="body-inner">
+<div class="book-header" role="navigation">
+
+<!-- Title -->
+<h1>
+<i class="fa fa-circle-o-notch fa-spin"></i>
+<a href="." ></a>
+</h1>
+
+</div> <!-- end of book-header -->
+
+<div class="page-wrapper" tabindex="-1" role="main">
+<div class="page-inner">
+
+<section class="normal markdown-section">
+
+
+
+<h1 id="join-two-dataframes-together">Join two DataFrames together<a class="headerlink" href="#join-two-dataframes-together" title="Permanent link">&para;</a></h1>
+<p>It’s rare that a data analysis involves only a single DataFrame. In practice, you’ll normally have
+many tables that contribute to an analysis, and you need flexible tools to combine them.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">df_stocks</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>      ticker      name    market
+<span class="m">0</span>     <span class="s1">&#39;APPL&#39;</span>   <span class="s1">&#39;Apple&#39;</span>  <span class="s1">&#39;NASDAQ&#39;</span>
+...
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_prices</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>      ticker           date    price
+<span class="m">0</span>     <span class="s1">&#39;APPL&#39;</span>    <span class="s1">&#39;28-02-2020&#39;</span>    <span class="m">2219</span>
+<span class="m">1</span>     <span class="s1">&#39;APPL&#39;</span>    <span class="s1">&#39;30-03-2020&#39;</span>    <span class="m">2203</span>
+<span class="m">2</span>     <span class="s1">&#39;APPL&#39;</span>    <span class="s1">&#39;30-04-2020&#39;</span>    <span class="m">3322</span>
+...
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+  <span class="n">LeftJoinStep</span><span class="p">(</span><span class="n">df_prices</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;ticker&quot;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">df_stocks</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>      ticker      name    market          date    price
+<span class="m">0</span>     <span class="s1">&#39;APPL&#39;</span>   <span class="s1">&#39;Apple&#39;</span>  <span class="s1">&#39;NASDAQ&#39;</span>  <span class="s1">&#39;28-02-2020&#39;</span>     <span class="m">2219</span>
+<span class="m">0</span>     <span class="s1">&#39;APPL&#39;</span>   <span class="s1">&#39;Apple&#39;</span>  <span class="s1">&#39;NASDAQ&#39;</span>  <span class="s1">&#39;30-03-2020&#39;</span>     <span class="m">2203</span>
+<span class="m">0</span>     <span class="s1">&#39;APPL&#39;</span>   <span class="s1">&#39;Apple&#39;</span>  <span class="s1">&#39;NASDAQ&#39;</span>  <span class="s1">&#39;30-04-2020&#39;</span>     <span class="m">3322</span>
+</code></pre></div>
+
+
+<p>Yeast supports four types of joins: <code>left</code>, <code>right</code>, <code>inner</code> and <code>full</code>:</p>
+<h3 id="leftjoinstepy"><code>LeftJoinStep(y)</code><a class="headerlink" href="#leftjoinstepy" title="Permanent link">&para;</a></h3>
+<p>Return all rows from <code>x</code>, and all columns from <code>x</code> and <code>y</code>.
+Rows in <code>x</code> with no match in <code>y</code> will have NA values in the new columns.
+If there are multiple matches between <code>x</code> and <code>y</code> all combinations of the matches are returned.</p>
+<p><img alt="" src="https://www.w3schools.com/sql/img_leftjoin.gif" /></p>
+<h3 id="rightjoinstepy"><code>RightJoinStep(y)</code><a class="headerlink" href="#rightjoinstepy" title="Permanent link">&para;</a></h3>
+<p>Return all rows from <code>y</code>, and all columns from <code>x</code> and <code>y</code>. Rows in <code>y</code> with no match in <code>x</code>
+will have <code>NA</code> values in the new columns. If there are multiple matches between <code>x</code> and <code>y</code>,
+all combinations of the matches are returned.</p>
+<p><img alt="" src="https://www.w3schools.com/sql/img_rightjoin.gif" /></p>
+<h3 id="innerjoinstepy"><code>InnerJoinStep(y)</code><a class="headerlink" href="#innerjoinstepy" title="Permanent link">&para;</a></h3>
+<p>Return all rows from <code>x</code> where there are matching values in <code>y</code>, and all columns from <code>x</code> and <code>y</code>.
+If there are multiple matches between <code>x</code> and <code>y</code>, all combination of the matches are returned.</p>
+<p><img alt="" src="https://www.w3schools.com/sql/img_innerjoin.gif" /></p>
+<h3 id="fulljoinstepy"><code>FullJoinStep(y)</code><a class="headerlink" href="#fulljoinstepy" title="Permanent link">&para;</a></h3>
+<p>Return all rows and all columns from both <code>x</code> and <code>y</code>. Where there are not matching values, returns
+<code>NA</code> for the one missing.</p>
+<p><img alt="" src="https://www.w3schools.com/sql/img_fulljoin.gif" /></p>
+<h2 id="joining-with-the-result-for-a-recipe">Joining with the result for a Recipe<a class="headerlink" href="#joining-with-the-result-for-a-recipe" title="Permanent link">&para;</a></h2>
+<p>Sometimes when you are working on complex scenarios you want to merge the data from the result of
+another recipe that was not executed. All join steps support a <code>Recipe</code> as <code>y</code> argument:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Left join with the DataFrame obtained from the execution of another Recipe</span>
+
+<span class="c1"># Recipe to prepare the prices dataset</span>
+<span class="n">prices_recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">SortStep</span><span class="p">([</span><span class="s1">&#39;ticker&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">])</span>
+<span class="p">])</span>
+
+<span class="c1"># Recipe to prepare the stocks data:</span>
+<span class="n">stocks_recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">LeftJoinStep</span><span class="p">(</span><span class="n">prices_recipe</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;ticker&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df_prices</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># `prices_recipe` will be executed using `df_prices` inside the `stocks_recipe` execution</span>
+<span class="n">stocks_recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">df_stocks</span><span class="p">)</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">df_stocks</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
+<p><a href="reference.html">Available Steps</a></p>
+
+
+</section>
+
+</div> <!-- end of page-inner -->
+</div> <!-- end of page-wrapper -->
+
+</div> <!-- end of body-inner -->
+
+</div> <!-- end of book-body -->
+<script src="./js/main.js"></script>
+<script src="./js/gitbook.min.js"></script>
+<script src="./js/theme.min.js"></script>
+</body>
+</html>

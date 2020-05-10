@@ -54,6 +54,10 @@
 <a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
 </li>
 
+<li>
+<a href="merge.html" class="">Join two DataFrames together</a>
+</li>
+
 <li class="header">Developers API</li>
 
 <li>
@@ -115,7 +119,6 @@
 <p><strong>Individual Transformations</strong></p>
 <ul>
 <li><code>ColumnMapValuesStep</code></li>
-<li><code>ColumnStringReplaceStep</code></li>
 <li><code>ReplaceNAStep</code></li>
 <li><code>IfElseStep</code></li>
 </ul>
@@ -131,13 +134,7 @@
 <p><strong>Transformers</strong></p>
 <ul>
 <li><code>NumericRound(x, digits=1)</code></li>
-<li><code>Rank(ties_method = {‘average’, ‘min’, ‘max’, ‘first’, ‘dense’})</code></li>
-<li><code>RowNumber()</code> : Equivalent to Rank(ties.method = "first")</li>
-<li><code>RankFirst()</code>: Equivalent to rank(ties.method = "min")</li>
-<li><code>RankMin()</code>: Equivalent to rank(ties.method = "min")</li>
-<li><code>RankMax()</code>: Equivalent to rank(ties.method = "max")</li>
-<li><code>RankDense()</code>: Like MinRank(), but with no gaps between ranks</li>
-<li><code>RankPercent()</code>: a number between 0 and 1 computed by rescaling min_rank to [0, 1]</li>
+<li><code>MapString</code>: Map one value into another</li>
 <li><code>XXXLag()</code></li>
 <li><code>XXXLead()</code></li>
 </ul>
@@ -148,13 +145,7 @@
 <li>Enhance the documentation, same structure than transformers</li>
 </ul>
 <p><strong>Workflows</strong></p>
-<ul>
-<li><code>LeftJoinStep</code></li>
-<li><code>InnerJoinStep</code></li>
-<li><code>RightJoinStep</code></li>
-<li><code>FullJoinStep</code></li>
-<li>Concatenate, Merge and Join Difference Recipes</li>
-</ul>
+<p>-</p>
 <p><strong>Library</strong></p>
 <ul>
 <li>Define the * exports</li>
