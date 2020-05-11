@@ -153,45 +153,65 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li>Rank Transformers: Returns the sample ranks of the values in a column.</li>
 </ul>
 <h2 id="available-transformers">Available Transformers<a class="headerlink" href="#available-transformers" title="Permanent link">&para;</a></h2>
-<h3 id="string-transformers">String Transformers<a class="headerlink" href="#string-transformers" title="Permanent link">&para;</a></h3>
+<h4 id="string-transformers">String Transformers<a class="headerlink" href="#string-transformers" title="Permanent link">&para;</a></h4>
 <p>String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible:</p>
 <ul>
-<li>
+<li><a href="#strtoupper">StrToUpper</a>: Convert to UPPER CASE</li>
+<li><a href="#strtolower">StrToLower</a>: Convert to lower case</li>
+<li><a href="#strtosentence">StrToSentence</a>: Convert to Sentence case</li>
+<li><a href="#strtotitle">StrToTitle</a>: Convert to Title Case</li>
+<li><a href="#strtrim">StrTrim</a>: Remove whitespaces</li>
+<li><a href="#strreplace">StrReplace</a>: Replace first occurrence of pattern</li>
+<li><a href="#strreplaceall">StrReplaceAll</a>: Replace all occurrences of pattern</li>
+<li><a href="#strpad">StrPad</a>: Pad a string</li>
+<li><a href="#strslice">StrSlice</a>: Extract and replace substrings</li>
+<li><a href="#strremove">StrRemove</a>: Remove first matched pattern</li>
+<li><a href="#strremoveall">StrRemoveAll</a>: Remove all matched patterns</li>
+</ul>
+<h4 id="rank-transformers">Rank Transformers<a class="headerlink" href="#rank-transformers" title="Permanent link">&para;</a></h4>
+<p>Returns the sample ranks of the values in a column:</p>
+<ul>
+<li><a href="#rank-ranktransformer">Rank / RankTransformer</a>: Return the sample ranks of the values</li>
+<li><a href="#rownumber">RowNumber</a>: Return the row number</li>
+<li><a href="#rankfirst">RankFirst</a>: Increasing rank values at each index</li>
+<li><a href="#rankmin">RankMin</a>: Return the minimum value</li>
+<li><a href="#rankmax">RankMax</a>: Return the maximum value</li>
+<li><a href="#rankdense">RankDense</a>: Like <code>RankMin</code> but with no gaps between ranks</li>
+<li><a href="#rankmean">RankMean</a>: Return the mean/average value</li>
+<li><a href="#rankpercent">RankPercent</a>: A number between 0 and 1 computed by rescaling <code>RankMin</code> to <code>[0, 1]</code></li>
+</ul>
+<h2 id="transformer-documentation">Transformer Documentation<a class="headerlink" href="#transformer-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="strtoupper">StrToUpper<a class="headerlink" href="#strtoupper" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToUpper</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert case of a string to Upper case:
 ("Yeast" to "YEAST")</p></div>
 </div>
-</li>
-<li>
+<h3 id="strtolower">StrToLower<a class="headerlink" href="#strtolower" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToLower</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert case of a string to Lower case:
 ("Yeast" to "yeast")</p></div>
 </div>
-</li>
-<li>
+<h3 id="strtosentence">StrToSentence<a class="headerlink" href="#strtosentence" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToSentence</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Converts first character to uppercase and remaining to lowercase:
 ("yeast help" to "Yeast help")</p></div>
 </div>
-</li>
-<li>
+<h3 id="strtotitle">StrToTitle<a class="headerlink" href="#strtotitle" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToTitle</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Converts first character of each word to uppercase and remaining to lowercase:
 ("yeast help" to "Yeast Help")</p></div>
 </div>
-</li>
-<li>
+<h3 id="strtrim">StrTrim<a class="headerlink" href="#strtrim" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrTrim</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert removing whitespaces from start and end of string:
 (" Yeast " to "Yeast")</p></div>
 </div>
-</li>
-<li>
+<h3 id="strreplace">StrReplace<a class="headerlink" href="#strreplace" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrReplace</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">replacement</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace first ocurrence of matched patterns in a string: 'Y' to 'X' ("YYY" to "XYY")</p>
@@ -201,8 +221,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>replacement</code>: A string of replacements.</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="strreplaceall">StrReplaceAll<a class="headerlink" href="#strreplaceall" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrReplaceAll</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">replacement</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace all ocurrences of matched patterns in a string: 'Y' to 'X' ("YYY" to "XXX")</p>
@@ -212,8 +231,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>replacement</code>: A string of replacements.</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="strpad">StrPad<a class="headerlink" href="#strpad" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrPad</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">width</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">side='left'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">pad=' '</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Pad a string: 'Y' to 4 chars, left and '0' ("Y" to "000Y")</p>
@@ -224,8 +242,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>pad</code>: Single padding character (default is a space).</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="strslice">StrSlice<a class="headerlink" href="#strslice" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrSlice</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">start</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">stop</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract and replace substrings from a string:</p>
@@ -239,8 +256,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>stop</code>: integer position of the last character</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="strremove">StrRemove<a class="headerlink" href="#strremove" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrRemove</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Remove first matched pattern in a string</p>
@@ -253,8 +269,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>pattern</code>: Pattern or string to look for.</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="strremoveall">StrRemoveAll<a class="headerlink" href="#strremoveall" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrRemoveAll</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Remove all matched patterns in a string</p>
@@ -267,12 +282,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>pattern</code>: Pattern or string to look for.</li>
 </ul></div>
 </div>
-</li>
-</ul>
-<h3 id="rank-transformers">Rank Transformers<a class="headerlink" href="#rank-transformers" title="Permanent link">&para;</a></h3>
-<p>Returns the sample ranks of the values in a column:</p>
-<ul>
-<li>
+<h3 id="rank-ranktransformer">Rank / RankTransformer<a class="headerlink" href="#rank-ranktransformer" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankTransformer</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ties_method='first'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">percentage=False</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Returns the sample ranks of the values in the column.
@@ -289,14 +299,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>ascending</code>: boolean with the order of the row numbers</li>
 </ul></div>
 </div>
-</li>
-<li>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>Rank</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ties_method='first'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">percentage=False</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Convenience alias for RankTransformer()</p></div>
-</div>
-</li>
-<li>
+<h3 id="rownumber">RowNumber<a class="headerlink" href="#rownumber" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RowNumber</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Creates/transforms a variable containg the row number.</p>
@@ -306,8 +309,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="rankfirst">RankFirst<a class="headerlink" href="#rankfirst" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankFirst</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Increasing rank values at each index set of ties</p>
@@ -317,8 +319,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="rankmin">RankMin<a class="headerlink" href="#rankmin" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMin</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace by the minimum value</p>
@@ -328,8 +329,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="rankmax">RankMax<a class="headerlink" href="#rankmax" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMax</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace by the maximum value</p>
@@ -339,8 +339,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="rankdense">RankDense<a class="headerlink" href="#rankdense" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankDense</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace by the minimum value like <code>RankMin</code>, but with no gaps between ranks.</p>
@@ -350,8 +349,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="rankmean">RankMean<a class="headerlink" href="#rankmean" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMean</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace by the mean/average value</p>
@@ -361,8 +359,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-</li>
-<li>
+<h3 id="rankpercent">RankPercent<a class="headerlink" href="#rankpercent" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankPercent</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>A number between 0 and 1 computed by rescaling <code>RankMin</code> to [0, 1]</p>
@@ -372,8 +369,6 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-</li>
-</ul>
 <h2 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="aggregations.html">Methods for Groups and Aggregations</a></li>
