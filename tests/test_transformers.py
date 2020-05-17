@@ -1,5 +1,7 @@
+import numpy as np
+
 from yeast.transformers import StrToLower, StrToUpper, StrToSentence, StrToTitle, StrTrim
-from yeast.transformers import StrSlice, StrReplace, StrRemove, StrRemoveAll, StrMapValues
+from yeast.transformers import StrSlice, StrReplace, StrRemove, StrRemoveAll, MapValues
 
 from data_samples import startrek_data as data
 from data_samples import startrek_characters as chars_data
@@ -63,7 +65,7 @@ def test_str_remove_all(chars_data):
 
 
 def test_str_map_values(chars_data):
-    ranks = StrMapValues({
+    ranks = MapValues({
         'Capitain': 'Captain',
         'CAPTAIN': 'Captain',
         'Comander': 'Commander'
@@ -73,3 +75,16 @@ def test_str_map_values(chars_data):
     assert 'CAPTAIN' not in ranks
     assert 'Commander' in ranks
     assert 'Comander' not in ranks
+
+
+def test_numerical_map_values(data):
+    seasons = MapValues({
+        7: 8,
+        4: np.NaN
+    }).resolve(data, column='seasons').to_list()
+    assert seasons[0] == 1
+    assert seasons[1] == 8
+    assert seasons[2] == 8
+    assert np.isnan(seasons[3])
+    assert seasons[4] == 8
+    assert seasons[5] == 2

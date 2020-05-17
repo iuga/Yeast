@@ -51,6 +51,10 @@ Currently the transformers are categorized as:
 
 ## Available Transformers
 
+#### General Transformers
+
+- [MapValues](#MapValues): Replace specified values with new values.
+
 #### String Transformers
 
 String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible:
@@ -66,7 +70,6 @@ String Transformers provide a cohesive set of transformers designed to make work
 - [StrSlice](#strslice): Extract and replace substrings
 - [StrRemove](#strremove): Remove first matched pattern
 - [StrRemoveAll](#strremoveall): Remove all matched patterns
-- [StrMapValues](#strmapvalues): Replace specified values with new values.
 
 #### Rank Transformers
 
@@ -139,9 +142,9 @@ Returns the sample ranks of the values in a column:
 ::: yeast.transformers.StrRemoveAll
     :docstring:
 
-### StrMapValues
+### MapValues
 
-::: yeast.transformers.StrMapValues
+::: yeast.transformers.MapValues
     :docstring:
 
 ### Rank / RankTransformer

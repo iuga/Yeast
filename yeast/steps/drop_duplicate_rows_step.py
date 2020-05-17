@@ -60,3 +60,10 @@ class DropDuplicateRowsStep(Step):
         if not all(matches):
             missing_columns = [c for c, v in zip(self.selector, matches) if not v]
             raise YeastValidationError(f'The following columns are missing: {missing_columns}')
+
+
+class DropDuplicatesStep(DropDuplicateRowsStep):
+    """
+    DropDuplicatesStep is an Alias for DropDuplicateRowsStep
+    """
+    pass

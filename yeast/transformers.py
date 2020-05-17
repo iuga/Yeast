@@ -40,6 +40,33 @@ class Transformer():
         return self.resolve(df, column=column)
 
 
+class MapValues(Transformer):
+    """
+    Replace specified values with new values.
+
+    ```python
+    # Map String/Categorical values
+    # Replace `old_value` with `new_value`
+    MapValues({'old_value': 'new_value', ...})
+
+    # Map Numerical values
+    # Replace `90` with `NaN`
+    MapValues({90: np.NaN})
+    ```
+
+    Parameters:
+
+    - `mapping`: Specify different replacement values for different existing values.
+               For example: `{'old': 'new'}` replace the value `old` with `new`.
+    """
+    def __init__(self, mapping, column=None):
+        super().__init__(column=column)
+        self.mapping = mapping
+
+    def do_resolve(self, df, column):
+        return df[column].replace(self.mapping)
+
+
 class StrTransformer(Transformer):
     """
     Base abstract interface to define string column transformers
@@ -208,27 +235,6 @@ class StrRemoveAll(StrTransformer):
 
     def do_resolve(self, df, column):
         return df[column].str.replace(self.pattern, "", n=-1)
-
-
-class StrMapValues(StrTransformer):
-    """
-    Replace specified values with new values.
-
-    ```python
-    StrMapValues({'old_value': 'new_value', ...})
-    ```
-
-    Parameters:
-
-    - `mapping`: Specify different replacement values for different existing values.
-               For example: `{'old': 'new'}` replace the value `old` with `new`.
-    """
-    def __init__(self, mapping, column=None):
-        super().__init__(column=column)
-        self.mapping = mapping
-
-    def do_resolve(self, df, column):
-        return df[column].replace(self.mapping)
 
 
 class RankTransformer(Transformer):

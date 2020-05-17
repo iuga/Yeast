@@ -6,7 +6,7 @@ from yeast.steps.clean_column_names_step import CleanColumnNamesStep  # NoQA
 from yeast.steps.rename_columns_step import RenameColumnsStep  # NoQA
 from yeast.steps.cast_columns_step import CastColumnsStep, CastStep  # NoQA
 from yeast.steps.drop_columns_step import DropColumnsStep  # NoQA
-from yeast.steps.drop_duplicate_rows_step import DropDuplicateRowsStep  # NoQA
+from yeast.steps.drop_duplicate_rows_step import DropDuplicateRowsStep, DropDuplicatesStep  # NoQA
 from yeast.steps.group_by_step import GroupByStep  # NoQA
 from yeast.steps.summarize_step import SummarizeStep  # NoQA
 from yeast.steps.custom_step import CustomStep  # NoQA
