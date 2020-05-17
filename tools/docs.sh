@@ -9,6 +9,7 @@ source ./tools/env.sh
 # Notebooks to Markdown
 jupyter nbconvert --to markdown docs/examples/students.ipynb
 jupyter nbconvert --to markdown docs/examples/working_with_strings.ipynb
+jupyter nbconvert --to markdown docs/examples/san_francisco_crime.ipynb
 
 # Build and Serve docs
 PYTHONPATH=${REPO_ROOT_DIR}/yeast:$PYTHONPATH

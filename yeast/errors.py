@@ -12,6 +12,13 @@ class YeastRecipeError(Exception):
     pass
 
 
+class YeastPreparationError(Exception):
+    """
+    YeastPreparationError is raised when there was an error on the recipe preparation
+    """
+    pass
+
+
 class YeastBakeError(Exception):
     """
     YeastRecipeError is raised when there was an error while baking

@@ -18,13 +18,19 @@ class Step():
     - do_prepare() is called by prepare()
     - do_bake() is called by bake()
     - do_validate() is called by validate()
+
+    The `needs_preparation` is used to understand if the recipe needs the preparation stage.
+    If any of the steps require prep, skip this stake (time-consuming)
     """
+    needs_preparation = False
+
     def prepare(self, df):
         """
         During this phase the original df must not be transformed.
 
         :returns self for chaining
         """
+        self.validate(df)
         self.do_prepare(df)
         return self
 

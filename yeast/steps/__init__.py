@@ -17,3 +17,4 @@ from yeast.steps.right_join_step import RightJoinStep  # NoQA
 from yeast.steps.full_join_step import FullJoinStep  # NoQA
 from yeast.steps.mutate_step import MutateStep  # NoQA
 from yeast.steps.replace_na_step import ReplaceNAStep  # NoQA
+from yeast.steps.mean_impute_step import MeanImputeStep  # NoQA

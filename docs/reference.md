@@ -30,6 +30,12 @@ Aggregate or Summarize data:
 - [SummarizeStep](#summarizestep): Summarize the group by data
 - [DropDuplicateRowsStep](#dropduplicaterowsstep): Drop duplicate rows
 
+#### Imputation
+
+Impute missing data:
+
+- [MeanImputeStep](#meanimputestep): Impute numeric data using the mean
+
 #### WorkFlows
 
 Arrange and merge workflows and recipes
@@ -115,6 +121,13 @@ Customize Yeast behavior for our project:
 ### SummarizeStep
 
 ::: yeast.steps.SummarizeStep
+    :docstring:
+
+## Imputation
+
+### MeanImputeStep
+
+::: yeast.steps.MeanImputeStep
     :docstring:
 
 ## Workflows

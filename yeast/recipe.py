@@ -1,6 +1,7 @@
 from pandas.core.frame import DataFrame
 from yeast.step import Step
 from yeast.errors import YeastRecipeError, YeastBakeError, YeastValidationError
+from yeast.errors import YeastPreparationError
 from yeast.errors import YeastTransformerError
 
 
@@ -27,15 +28,31 @@ class Recipe():
 
     def prepare(self, df):
         """
-        Prepare all the steps including validations.
+        Prepare all the steps including validations (if required).
         For each step in the recipe:
-            prepare and validate the step
+            If the recipe needs preparation:
+                - prepare the step
+                - bake the step
         """
-        if type(df) not in [DataFrame, Recipe]:
+        if not isinstance(df, (DataFrame, Recipe)):
             raise YeastRecipeError('Data must be a Pandas DataFrame or a Recipe')
 
-        for step in self.steps:
-            step.prepare(df)
+        if self.needs_preparation():
+            prep_df = df.copy()
+            for step in self.steps:
+                try:
+                    step.prepare(prep_df)
+                    prep_df = step.bake(prep_df)
+                except YeastRecipeError as ex:
+                    raise ex
+                except YeastValidationError as ex:
+                    raise ex
+                except YeastBakeError as ex:
+                    raise ex
+                except YeastTransformerError as ex:
+                    raise ex
+                except Exception as ex:
+                    raise YeastPreparationError(f'There was an error while preparing: {ex}') from ex
         return self
 
     def bake(self, df):
@@ -44,7 +61,7 @@ class Recipe():
         For each step in the recipe:
             bake the step
         """
-        if type(df) not in [DataFrame, Recipe]:
+        if not isinstance(df, (DataFrame, Recipe)):
             raise YeastRecipeError('Data must be a Pandas DataFrame or a Recipe')
 
         baked_df = df.copy()
@@ -62,3 +79,9 @@ class Recipe():
             except Exception as ex:
                 raise YeastBakeError(f'There was an error while baking: {ex}') from ex
         return baked_df
+
+    def needs_preparation(self):
+        """
+        Scan all steps in this recipe to detect if any of the steps require preparation
+        """
+        return any([s.needs_preparation for s in self.steps])
