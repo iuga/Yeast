@@ -52,5 +52,5 @@ class ReplaceNAStep(Step):
             if not all(matches):
                 missing_columns = [c for c, v in zip(self.mapping.keys(), matches) if not v]
                 raise YeastValidationError(f'The following columns are missing: {missing_columns}')
-        if isinstance(self.mapping, str) and not self.mapping in df.columns:
+        if isinstance(self.mapping, str) and self.mapping not in df.columns:
             raise YeastValidationError(f'The following column is missing: {self.mapping}')

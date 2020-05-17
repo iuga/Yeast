@@ -7,25 +7,25 @@ from yeast.steps import SortStep, CleanColumnNamesStep, FilterStep
 from data_samples import startrek_data as data
 
 
-def test_chain_of_recipes_using_the_cookbok(data):
-    """
-    """
-    # Define the cookbook
-    cookbook = Cookbook()
-
-    # Recipe One
-    recipe_one = Recipe([CleanColumnNamesStep('snake')])
-    cookbook.add('one', recipe_one)
-
-    # Recipe Two
-    recipe_two = Recipe([FilterStep('watched == False')])
-    cookbook.add('two', recipe_two)
-
-    # Preparing the Workflow
-    cookbook >> cookbook.get('one') >> cookbook.get('two')
-
-    # Execute the cookbook
-    bdf = cookbook.bake(data)
+# def test_chain_of_recipes_using_the_cookbok(data):
+#     """
+#     """
+#     # Define the cookbook
+#     cookbook = Cookbook()
+#
+#     # Recipe One
+#     recipe_one = Recipe([CleanColumnNamesStep('snake')])
+#     cookbook.add('one', recipe_one)
+#
+#     # Recipe Two
+#     recipe_two = Recipe([FilterStep('watched == False')])
+#     cookbook.add('two', recipe_two)
+#
+#     # Preparing the Workflow
+#     cookbook >> cookbook.get('one') >> cookbook.get('two')
+#
+#     # Execute the cookbook
+#     bdf = cookbook.bake(data)
 
 
 def test_add_recipe_by_name(data):

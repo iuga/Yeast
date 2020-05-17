@@ -4,10 +4,9 @@ from yeast.errors import YeastCookbookError
 
 class Cookbook():
     """
-    Recipe Cookbook implements a storage for all recipes often used throughout your aaplication.
+    Recipe Cookbook implements a storage for all recipes often used throughout your aplication.
 
     Usage:
-
     ```python
     from yeast import Cookbook
 
@@ -65,23 +64,16 @@ class Cookbook():
         """
         return self.book.keys()
 
-        def __rshift__(self, next_stage):
-        """
-        Implements Self >> Next_Stage == self.set_next(next_stage)
-        """
-        self.set_next(next_stage)
-        return next_stage
-
-    def __rshift__(self, next_recipe):
-        """
-        Cookbook >> Next Recipe
-        """
-        self.set_next(next_stage)
-        return next_stage
-
-    def __lshift__(self, previous_recipe):
-        """
-        Previous Recipe << Cookbook
-        """
-        self.set_previous(previous_stage)
-        return previous_stage
+    # def __rshift__(self, next_recipe):
+    #     """
+    #     Cookbook >> Next Recipe
+    #     """
+    #     self.set_next(next_stage)
+    #     return next_stage
+    #
+    # def __lshift__(self, previous_recipe):
+    #     """
+    #     Previous Recipe << Cookbook
+    #     """
+    #     self.set_previous(previous_stage)
+    #     return previous_stage
