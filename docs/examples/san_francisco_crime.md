@@ -47,13 +47,6 @@ train.head(n=2)
 train.shape
 ```
 
-
-
-
-    (878049, 9)
-
-
-
 ### The cleaning recipe
 
 
@@ -67,165 +60,17 @@ recipe = Recipe([
         'X': MapValues({-120.5: np.NaN}),
         'Y': MapValues({90: np.NaN})
     }),
-#     s.MeanInputeStep('X'),
-#     s.MeanInputeStep('Y'),
-])
+    MeanImputeStep(['X', 'Y'])
+]).prepare(train)
 ```
 
 
 ```python
-baked_train = recipe.prepare(train).bake(train)
+baked_train = recipe.bake(train)
+baked_test = recipe.bake(test)
 baked_train.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Dates</th>
-      <th>Category</th>
-      <th>Descript</th>
-      <th>DayOfWeek</th>
-      <th>PdDistrict</th>
-      <th>Resolution</th>
-      <th>Address</th>
-      <th>X</th>
-      <th>Y</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2015-05-13 23:53:00</td>
-      <td>WARRANTS</td>
-      <td>WARRANT ARREST</td>
-      <td>Wednesday</td>
-      <td>NORTHERN</td>
-      <td>ARREST, BOOKED</td>
-      <td>OAK ST / LAGUNA ST</td>
-      <td>-122.425892</td>
-      <td>37.774599</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2015-05-13 23:53:00</td>
-      <td>OTHER OFFENSES</td>
-      <td>TRAFFIC VIOLATION ARREST</td>
-      <td>Wednesday</td>
-      <td>NORTHERN</td>
-      <td>ARREST, BOOKED</td>
-      <td>OAK ST / LAGUNA ST</td>
-      <td>-122.425892</td>
-      <td>37.774599</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2015-05-13 23:33:00</td>
-      <td>OTHER OFFENSES</td>
-      <td>TRAFFIC VIOLATION ARREST</td>
-      <td>Wednesday</td>
-      <td>NORTHERN</td>
-      <td>ARREST, BOOKED</td>
-      <td>VANNESS AV / GREENWICH ST</td>
-      <td>-122.424363</td>
-      <td>37.800414</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2015-05-13 23:30:00</td>
-      <td>LARCENY/THEFT</td>
-      <td>GRAND THEFT FROM LOCKED AUTO</td>
-      <td>Wednesday</td>
-      <td>NORTHERN</td>
-      <td>NONE</td>
-      <td>1500 Block of LOMBARD ST</td>
-      <td>-122.426995</td>
-      <td>37.800873</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2015-05-13 23:30:00</td>
-      <td>LARCENY/THEFT</td>
-      <td>GRAND THEFT FROM LOCKED AUTO</td>
-      <td>Wednesday</td>
-      <td>PARK</td>
-      <td>NONE</td>
-      <td>100 Block of BRODERICK ST</td>
-      <td>-122.438738</td>
-      <td>37.771541</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 ## Links & Resources
 
 - [SF-Crime Analysis & Prediction by @yannisp](https://www.kaggle.com/yannisp/sf-crime-analysis-prediction)
-
-
-```python
-baked_train.query('Y == 90')
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Dates</th>
-      <th>Category</th>
-      <th>Descript</th>
-      <th>DayOfWeek</th>
-      <th>PdDistrict</th>
-      <th>Resolution</th>
-      <th>Address</th>
-      <th>X</th>
-      <th>Y</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
-
-```
