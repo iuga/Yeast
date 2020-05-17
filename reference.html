@@ -75,7 +75,7 @@
 <li class="header">Examples</li>
 
 <li>
-<a href="examples/students.html" class="">Student Performance</a>
+<a href="examples/san_francisco_crime.html" class="">San Francisco Crime</a>
 </li>
 
 <!-- <li class="divider"></li> -->
@@ -118,6 +118,7 @@
 <li><a href="#castcolumnsstep">CastColumnsStep</a> / <a href="#castcolumnsstep">CastStep</a>: Cast the columns data types</li>
 <li><a href="#dropcolumnsstep">DropColumnsStep</a>: Drop/Remove columns</li>
 <li><a href="#cleancolumnnamesstep">CleanColumnNamesStep</a>: Clean all column names</li>
+<li><a href="#replacenastep">ReplaceNAStep</a>: Replace missing values</li>
 </ul>
 <h4 id="row-operations">Row Operations<a class="headerlink" href="#row-operations" title="Permanent link">&para;</a></h4>
 <p>Execute operations over rows or values:</p>
@@ -130,6 +131,12 @@
 <ul>
 <li><a href="#groupbystep">GroupByStep</a>: Group by rows based on columns</li>
 <li><a href="#summarizestep">SummarizeStep</a>: Summarize the group by data</li>
+<li><a href="#dropduplicaterowsstep">DropDuplicateRowsStep</a>: Drop duplicate rows</li>
+</ul>
+<h4 id="imputation">Imputation<a class="headerlink" href="#imputation" title="Permanent link">&para;</a></h4>
+<p>Impute missing data:</p>
+<ul>
+<li><a href="#meanimputestep">MeanImputeStep</a>: Impute numeric data using the mean</li>
 </ul>
 <h4 id="workflows">WorkFlows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h4>
 <p>Arrange and merge workflows and recipes</p>
@@ -354,6 +361,33 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if the case is not available.</li>
 </ul></div>
 </div>
+<h3 id="replacenastep">ReplaceNAStep<a class="headerlink" href="#replacenastep" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>ReplaceNAStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">value=0</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Replace missing values</p>
+<p>Parameters:</p>
+<ul>
+<li><code>mapping</code>: replacing mapping as <code>{'column': replacement_value, ...}</code> or string column name.</li>
+<li><code>value</code>: value to replace the NAs if mapping is a string column name. Default: <code>0</code></li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Replace NA values in one column</span>
+<span class="n">ReplaceNAStep</span><span class="p">(</span><span class="s1">&#39;factor&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># Replace NA values on several columns</span>
+<span class="n">ReplaceNAStep</span><span class="p">({</span>
+    <span class="s1">&#39;factor&#39;</span><span class="p">:</span> <span class="mf">1.00</span><span class="p">,</span>
+    <span class="s1">&#39;pending&#39;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+    <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;other&#39;</span>
+<span class="p">})</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: if a column does not exist on the dataframe</li>
+</ul></div>
+</div>
 <h2 id="row-operations_1">Row Operations<a class="headerlink" href="#row-operations_1" title="Permanent link">&para;</a></h2>
 <h3 id="filterrowsstep">FilterRowsStep<a class="headerlink" href="#filterrowsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
@@ -510,6 +544,31 @@ The most used ones are: <code>AggMean</code>, <code>AggMedian</code>, <code>AggC
 <p>Raises:</p>
 <ul>
 <li><code>YeastValidationError</code>: If there was not a GroupByStep before</li>
+</ul></div>
+</div>
+<h2 id="imputation_1">Imputation<a class="headerlink" href="#imputation_1" title="Permanent link">&para;</a></h2>
+<h3 id="meanimputestep">MeanImputeStep<a class="headerlink" href="#meanimputestep" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MeanImputeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Impute numeric data using the mean</p>
+<p>MeanImputeStep estimates the variable mean from the prepare data then applies the new values
+to new data sets using these averages.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>selector</code>: string list of column names or a selector to impute</li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Impute the age and size column using the mean from the training set</span>
+<span class="n">MeanImputeStep</span><span class="p">([</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">])</span>
+
+<span class="c1"># You can also use selectors:</span>
+<span class="n">MeanImputeStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">())</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: if a column does not exist</li>
 </ul></div>
 </div>
 <h2 id="workflows_1">Workflows<a class="headerlink" href="#workflows_1" title="Permanent link">&para;</a></h2>

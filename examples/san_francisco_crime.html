@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>San Francisco Crime - Yeast</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="A Python data processing engine for modeling or visualization">
+<meta name="generator" content="mkdocs-1.1, mkdocs-gitbook-1.0.7">
+
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+<meta name="HandheldFriendly" content="true"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta rel="next" href="" />
+<link href="../css/style.min.css" rel="stylesheet">
+<link href="../extra.css" rel="stylesheet">
+<link href="../styles.css" rel="stylesheet"> 
+</head>
+
+<body>
+<div class="book without-summary">
+<div class="book-summary">
+
+<nav role="navigation">
+<ul class="summary">
+<!--
+<li>
+<a href=".." target="_blank" class="custom-link">Yeast</a>
+</li>
+<li class="divider"></li> -->
+<li class="header">Yeast</li>
+
+<li>
+<a href="../index.html" class="">Home</a>
+</li>
+
+<li class="header">Getting Started</li>
+
+<li>
+<a href="../introduction.html" class="">5 Minute Introduction</a>
+</li>
+
+<li>
+<a href="../selectors.html" class="">Methods for Selecting Variables</a>
+</li>
+
+<li>
+<a href="../transformers.html" class="">Methods for Transforming Variables</a>
+</li>
+
+<li>
+<a href="../aggregations.html" class="">Methods for Groups and Aggregations</a>
+</li>
+
+<li>
+<a href="../merge.html" class="">Join two DataFrames together</a>
+</li>
+
+<li class="header">Developers API</li>
+
+<li>
+<a href="../reference.html" class="">Step Reference</a>
+</li>
+
+<li>
+<a href="../extensions.html" class="">Custom Steps</a>
+</li>
+
+<li>
+<a href="../roadmap.html" class="">Roadmap</a>
+</li>
+
+<li class="header">Examples</li>
+
+<li>
+<a href="san_francisco_crime.html" class="active">San Francisco Crime</a>
+</li>
+
+<!-- <li class="divider"></li> -->
+
+
+
+</ul>
+
+</nav>
+
+</div> <!-- end of book-summary -->
+
+<div class="book-body">
+<div class="body-inner">
+<div class="book-header" role="navigation">
+
+<!-- Title -->
+<h1>
+<i class="fa fa-circle-o-notch fa-spin"></i>
+<a href="." ></a>
+</h1>
+
+</div> <!-- end of book-header -->
+
+<div class="page-wrapper" tabindex="-1" role="main">
+<div class="page-inner">
+
+<section class="normal markdown-section">
+
+
+
+<h1 id="san-fanciscon-crime">San Fanciscon Crime<a class="headerlink" href="#san-fanciscon-crime" title="Permanent link">&para;</a></h1>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>From 1934 to 1963, San Francisco was infamous for housing some of the world's most notorious criminals on the inescapable island of Alcatraz. Today, the city is known more for its tech scene than its criminal past. But, with rising wealth inequality, housing shortages, and a proliferation of expensive digital toys riding BART to work, there is no scarcity of crime in the city by the bay.</p>
+<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
+<p>From Sunset to SOMA, and Marina to Excelsior, this dataset provides nearly 12 years of crime reports from across all of San Francisco's neighborhoods. Given time and location, you must predict the category of crime that occurred.</p>
+<h3 id="approach">Approach<a class="headerlink" href="#approach" title="Permanent link">&para;</a></h3>
+<p>We will apply a full Data Science life cycle composed of the following steps:</p>
+<ul>
+<li>Data Wrangling to perform all the necessary actions to clean the dataset.</li>
+<li>Data Exploration for understanding the variables and create intuition on the data.</li>
+<li>Feature Engineering to create additional variables from the existing.</li>
+<li>Data Normalization and Data Transformation for preparing the dataset for the learning algorithms.</li>
+<li>Training / Testing data creation to evaluate the performance of our model.</li>
+</ul>
+<h2 id="data-wrangling">Data Wrangling<a class="headerlink" href="#data-wrangling" title="Permanent link">&para;</a></h2>
+<h3 id="loading-the-data">Loading the data<a class="headerlink" href="#loading-the-data" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Core imports</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Yeast imports</span>
+<span class="kn">from</span> <span class="nn">yeast</span> <span class="kn">import</span> <span class="n">Recipe</span>
+<span class="kn">from</span> <span class="nn">yeast.steps</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">yeast.transformers</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sf_train.csv&#39;</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sf_test.csv&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">train</span><span class="o">.</span><span class="n">shape</span>
+</code></pre></div>
+
+
+<h3 id="the-cleaning-recipe">The cleaning recipe<a class="headerlink" href="#the-cleaning-recipe" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># This dataset contains 2323 duplicates that we should remove</span>
+    <span class="n">DropDuplicateRowsStep</span><span class="p">(),</span>
+    <span class="c1"># Some Geolocation points are missplaced</span>
+    <span class="c1"># We will replace the outlying coordinates with the average coordinates</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">MapValues</span><span class="p">({</span><span class="o">-</span><span class="mf">120.5</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">}),</span>
+        <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="n">MapValues</span><span class="p">({</span><span class="mi">90</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">})</span>
+    <span class="p">}),</span>
+    <span class="n">MeanImputeStep</span><span class="p">([</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">])</span>
+<span class="p">])</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">baked_train</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">baked_test</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="n">baked_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+
+
+<h2 id="links-resources">Links &amp; Resources<a class="headerlink" href="#links-resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.kaggle.com/yannisp/sf-crime-analysis-prediction">SF-Crime Analysis &amp; Prediction by @yannisp</a></li>
+</ul>
+
+
+</section>
+
+</div> <!-- end of page-inner -->
+</div> <!-- end of page-wrapper -->
+
+</div> <!-- end of body-inner -->
+
+</div> <!-- end of book-body -->
+<script src="../js/main.js"></script>
+<script src="../js/gitbook.min.js"></script>
+<script src="../js/theme.min.js"></script>
+</body>
+</html>

@@ -75,7 +75,7 @@
 <li class="header">Examples</li>
 
 <li>
-<a href="examples/students.html" class="">Student Performance</a>
+<a href="examples/san_francisco_crime.html" class="">San Francisco Crime</a>
 </li>
 
 <!-- <li class="divider"></li> -->
@@ -153,6 +153,10 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li>Rank Transformers: Returns the sample ranks of the values in a column.</li>
 </ul>
 <h2 id="available-transformers">Available Transformers<a class="headerlink" href="#available-transformers" title="Permanent link">&para;</a></h2>
+<h4 id="general-transformers">General Transformers<a class="headerlink" href="#general-transformers" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="#MapValues">MapValues</a>: Replace specified values with new values.</li>
+</ul>
 <h4 id="string-transformers">String Transformers<a class="headerlink" href="#string-transformers" title="Permanent link">&para;</a></h4>
 <p>String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible:</p>
 <ul>
@@ -280,6 +284,26 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <p>Parameters:</p>
 <ul>
 <li><code>pattern</code>: Pattern or string to look for.</li>
+</ul></div>
+</div>
+<h3 id="mapvalues">MapValues<a class="headerlink" href="#mapvalues" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>MapValues</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Replace specified values with new values.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Map String/Categorical values</span>
+<span class="c1"># Replace <code>old_value</code> with <code>new_value</code></span>
+<span class="n">MapValues</span><span class="p">({</span><span class="s1">&#39;old_value&#39;</span><span class="p">:</span> <span class="s1">&#39;new_value&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">})</span>
+
+<span class="c1"># Map Numerical values</span>
+<span class="c1"># Replace <code>90</code> with <code>NaN</code></span>
+<span class="n">MapValues</span><span class="p">({</span><span class="mi">90</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">})</span>
+</code></pre></div>
+
+
+<p>Parameters:</p>
+<ul>
+<li><code>mapping</code>: Specify different replacement values for different existing values.
+           For example: <code>{'old': 'new'}</code> replace the value <code>old</code> with <code>new</code>.</li>
 </ul></div>
 </div>
 <h3 id="rank-ranktransformer">Rank / RankTransformer<a class="headerlink" href="#rank-ranktransformer" title="Permanent link">&para;</a></h3>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>Working With Strings - Yeast</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="A Python data processing engine for modeling or visualization">
+<meta name="generator" content="mkdocs-1.1, mkdocs-gitbook-1.0.7">
+
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+<meta name="HandheldFriendly" content="true"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta rel="next" href="" />
+<link href="../css/style.min.css" rel="stylesheet">
+<link href="../extra.css" rel="stylesheet">
+<link href="../styles.css" rel="stylesheet"> 
+</head>
+
+<body>
+<div class="book without-summary">
+<div class="book-summary">
+
+<nav role="navigation">
+<ul class="summary">
+<!--
+<li>
+<a href=".." target="_blank" class="custom-link">Yeast</a>
+</li>
+<li class="divider"></li> -->
+<li class="header">Yeast</li>
+
+<li>
+<a href="../index.html" class="">Home</a>
+</li>
+
+<li class="header">Getting Started</li>
+
+<li>
+<a href="../introduction.html" class="">5 Minute Introduction</a>
+</li>
+
+<li>
+<a href="../selectors.html" class="">Methods for Selecting Variables</a>
+</li>
+
+<li>
+<a href="../transformers.html" class="">Methods for Transforming Variables</a>
+</li>
+
+<li>
+<a href="../aggregations.html" class="">Methods for Groups and Aggregations</a>
+</li>
+
+<li>
+<a href="../merge.html" class="">Join two DataFrames together</a>
+</li>
+
+<li class="header">Developers API</li>
+
+<li>
+<a href="../reference.html" class="">Step Reference</a>
+</li>
+
+<li>
+<a href="../extensions.html" class="">Custom Steps</a>
+</li>
+
+<li>
+<a href="../roadmap.html" class="">Roadmap</a>
+</li>
+
+<li class="header">Examples</li>
+
+<li>
+<a href="san_francisco_crime.html" class="">San Francisco Crime</a>
+</li>
+
+<!-- <li class="divider"></li> -->
+
+
+
+</ul>
+
+</nav>
+
+</div> <!-- end of book-summary -->
+
+<div class="book-body">
+<div class="body-inner">
+<div class="book-header" role="navigation">
+
+<!-- Title -->
+<h1>
+<i class="fa fa-circle-o-notch fa-spin"></i>
+<a href="." ></a>
+</h1>
+
+</div> <!-- end of book-header -->
+
+<div class="page-wrapper" tabindex="-1" role="main">
+<div class="page-inner">
+
+<section class="normal markdown-section">
+
+
+
+<h1 id="working-with-strings">Working With Strings<a class="headerlink" href="#working-with-strings" title="Permanent link">&para;</a></h1>
+<p>The following dataset contains users and codes. It's a real use case example of a Data Science project I worked with when having tools to work with strings is fundamental. The idea is simple, you have a list of users with a code. The code have different meanings because each letter in each position represents something different. For this example we are going to focus in one explanation, the program name. The rules:</p>
+<ul>
+<li>The code should always have 5 letters, by default <code>N</code></li>
+<li>If the first letter is <code>A</code> (account) then the third letter contains the Program name.</li>
+<li>The Program names are: <code>G</code> Gold, <code>P</code> Platinum, and <code>B</code> Black.</li>
+</ul>
+<p>Let's answer the most basic question: How many accounts per type do they have?</p>
+<h2 id="importing-the-libraries">Importing the Libraries<a class="headerlink" href="#importing-the-libraries" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># General Libraries</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Yeast specifics classes</span>
+<span class="kn">from</span> <span class="nn">yeast</span> <span class="kn">import</span> <span class="n">Recipe</span>
+<span class="kn">from</span> <span class="nn">yeast.steps</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">yeast.transformers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">yeast.aggregations</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+
+
+<h2 id="getting-the-data">Getting the Data<a class="headerlink" href="#getting-the-data" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">codes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;string_codes.csv&#39;</span><span class="p">)</span>
+<span class="n">codes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>NNNNN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>ANPNN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>A B</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>ANPNN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="cleaning-the-data">Cleaning the Data<a class="headerlink" href="#cleaning-the-data" title="Permanent link">&para;</a></h2>
+<h3 id="defining-the-processing-recipe">Defining the processing Recipe<a class="headerlink" href="#defining-the-processing-recipe" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Trap: the column &quot;code&quot; on the csv is &quot;  code&quot;</span>
+    <span class="c1"># Cleaning the column names should fix this</span>
+    <span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">),</span>
+    <span class="c1"># Replace the missing values by &#39;NNNNN&#39; (no code)</span>
+    <span class="n">ReplaceNAStep</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;NNNNN&#39;</span><span class="p">),</span>
+    <span class="c1"># Let&#39;s clean the Code according to the business rules:</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="c1"># Transform the &quot;name&quot; column</span>
+        <span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="c1"># No whitespace to the left or right of the string</span>
+            <span class="n">StrTrim</span><span class="p">(),</span>
+            <span class="c1"># The code must have 5 characters, &#39;N&#39; if no information</span>
+            <span class="n">StrPad</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">),</span>
+            <span class="c1"># Whitespaces are also coded as &#39;N&#39;,</span>
+            <span class="n">StrReplaceAll</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">)</span>
+        <span class="p">],</span>
+        <span class="c1"># Extract the first letter of the code (Account)</span>
+        <span class="s1">&#39;code_account&#39;</span><span class="p">:</span> <span class="n">StrSlice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;code&#39;</span><span class="p">),</span>
+        <span class="c1"># Extract the third letter of the code (Account Type) if Account == &#39;A&#39;</span>
+        <span class="s1">&#39;code_type&#39;</span><span class="p">:</span> <span class="n">StrSlice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;code&#39;</span><span class="p">),</span>
+        <span class="c1"># Map the codes to the correct promotion name</span>
+        <span class="s1">&#39;program_name&#39;</span><span class="p">:</span> <span class="n">MapValues</span><span class="p">({</span>
+            <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="s1">&#39;Gold&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="s1">&#39;Platinum&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="s1">&#39;Black&#39;</span>
+        <span class="p">},</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;code_type&#39;</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">clean_codes</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span>
+<span class="n">clean_codes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user</th>
+      <th>code</th>
+      <th>code_account</th>
+      <th>code_type</th>
+      <th>program_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>NNNNN</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>NNNNN</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>ANPNN</td>
+      <td>A</td>
+      <td>P</td>
+      <td>Platinum</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>ANBNN</td>
+      <td>A</td>
+      <td>B</td>
+      <td>Black</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>ANPNN</td>
+      <td>A</td>
+      <td>P</td>
+      <td>Platinum</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="how-many-types-of-accounts-do-they-have">How many types of accounts do they have?<a class="headerlink" href="#how-many-types-of-accounts-do-they-have" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">group_recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Keep Only Accounts with Type</span>
+    <span class="n">FilterStep</span><span class="p">(</span><span class="s1">&#39;code_account == &quot;A&quot;&#39;</span><span class="p">),</span>
+    <span class="c1"># Group by Type</span>
+    <span class="n">GroupByStep</span><span class="p">(</span><span class="s1">&#39;program_name&#39;</span><span class="p">),</span>
+    <span class="c1"># Count the types</span>
+    <span class="n">SummarizeStep</span><span class="p">({</span>
+        <span class="s1">&#39;program_name_count&#39;</span><span class="p">:</span> <span class="n">AggCount</span><span class="p">(</span><span class="s1">&#39;code_type&#39;</span><span class="p">)</span>
+    <span class="p">}),</span>
+    <span class="c1"># Sort by count</span>
+    <span class="n">SortStep</span><span class="p">(</span><span class="s1">&#39;program_name_count&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">group_codes</span> <span class="o">=</span> <span class="n">group_recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">clean_codes</span><span class="p">)</span>
+<span class="n">group_codes</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>program_name</th>
+      <th>program_name_count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Gold</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Platinum</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Black</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+</section>
+
+</div> <!-- end of page-inner -->
+</div> <!-- end of page-wrapper -->
+
+</div> <!-- end of body-inner -->
+
+</div> <!-- end of book-body -->
+<script src="../js/main.js"></script>
+<script src="../js/gitbook.min.js"></script>
+<script src="../js/theme.min.js"></script>
+</body>
+</html>

@@ -75,7 +75,7 @@
 <li class="header">Examples</li>
 
 <li>
-<a href="examples/students.html" class="">Student Performance</a>
+<a href="examples/san_francisco_crime.html" class="">San Francisco Crime</a>
 </li>
 
 <!-- <li class="divider"></li> -->
@@ -141,43 +141,42 @@
 
 <p>The most common aggregations are:</p>
 <ul>
-<li>
+<li><a href="#strtoupper">AggMean</a>: Calculate the mean</li>
+<li><a href="#strtoupper">AggMedian</a>: Calculate the median</li>
+<li><a href="#strtoupper">AggMax</a>: Calculate the maximum</li>
+<li><a href="#strtoupper">AggMin</a>: Calculate the minimum</li>
+<li><a href="#strtoupper">AggCount</a>: Count occurrences</li>
+<li><a href="#strtoupper">AggCountDistinct</a>: Count unique occurrences</li>
+</ul>
+<h3 id="aggmean">AggMean<a class="headerlink" href="#aggmean" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.aggregations.<strong>AggMean</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Calculate the mean of the grouped numeric column</p></div>
 </div>
-</li>
-<li>
+<h3 id="aggmedian">AggMedian<a class="headerlink" href="#aggmedian" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.aggregations.<strong>AggMedian</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Calculate the median of the grouped numeric column</p></div>
 </div>
-</li>
-<li>
+<h3 id="aggmax">AggMax<a class="headerlink" href="#aggmax" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.aggregations.<strong>AggMax</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Calculate the max of the grouped numeric column</p></div>
 </div>
-</li>
-<li>
+<h3 id="aggmin">AggMin<a class="headerlink" href="#aggmin" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.aggregations.<strong>AggMin</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Calculate the min of the grouped numeric column</p></div>
 </div>
-</li>
-<li>
+<h3 id="aggcount">AggCount<a class="headerlink" href="#aggcount" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.aggregations.<strong>AggCount</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Calculate the count/size of the grouped numeric column</p></div>
 </div>
-</li>
-<li>
+<h3 id="aggcountdistinct">AggCountDistinct<a class="headerlink" href="#aggcountdistinct" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.aggregations.<strong>AggCountDistinct</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Calculate the unique count of the grouped numeric column</p></div>
 </div>
-</li>
-</ul>
 <h2 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
 <p><a href="merge.html">Join two DataFrames together</a></p>
 

@@ -75,7 +75,7 @@
 <li class="header">Examples</li>
 
 <li>
-<a href="examples/students.html" class="">Student Performance</a>
+<a href="examples/san_francisco_crime.html" class="">San Francisco Crime</a>
 </li>
 
 <!-- <li class="divider"></li> -->
@@ -123,13 +123,13 @@ It will keep columns based on their names or the results of the selectors.</p>
 <p>The selectors can choose columns based on their data type or name.
 They are shortcuts to select a subset of columns/predictors based on a common attribute:</p>
 <ul>
-<li><code>AllColumns</code></li>
-<li><code>AllString</code></li>
-<li><code>AllBoolean</code></li>
-<li><code>AllNumeric</code></li>
-<li><code>AllDatetime</code></li>
-<li><code>AllCategorical</code></li>
-<li><code>AllMatching</code></li>
+<li><a href="#allcolumns">AllColumns</a>: All variables</li>
+<li><a href="#allstring">AllString</a>: All string variables</li>
+<li><a href="#allboolean">AllBoolean</a>: All boolean variables</li>
+<li><a href="#allnumeric">AllNumeric</a>: All numerical variables</li>
+<li><a href="#alldatetime">AllDatetime</a>: All date or time variables</li>
+<li><a href="#allcategorical">AllCategorical</a>: All categorical variables</li>
+<li><a href="#allmatching">AllMatching</a>: All variables matching the regular expression</li>
 </ul>
 <p>The usage is quite simple, you can pass them on any parameter that indicates column names and
 basically they are used to select columns based on the attributes.</p>
@@ -144,56 +144,77 @@ basically they are used to select columns based on the attributes.</p>
 </code></pre></div>
 
 
-<p><strong>Available Selectors:</strong></p>
-<ul>
-<li>
+<h2 id="available-selectors">Available Selectors<a class="headerlink" href="#available-selectors" title="Permanent link">&para;</a></h2>
+<h3 id="allcolumns">AllColumns<a class="headerlink" href="#allcolumns" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllColumns</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Return all columns on the DataFrame</p></div>
-</div>
-</li>
-<li>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllString</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Return all string columns</p></div>
-</div>
-</li>
-<li>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllBoolean</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Return all boolean columns</p></div>
-</div>
-</li>
-<li>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllNumeric</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Return all numerical columns</p></div>
-</div>
-</li>
-<li>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllDatetime</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Return all DateTime columns</p></div>
-</div>
-</li>
-<li>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllCategorical</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Return all Categorical columns</p></div>
-</div>
-</li>
-<li>
-<div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllMatching</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern=''</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Return all columns matching the regular expression given by <code>pattern</code></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Will keep all the columns ending with &quot;ed&quot; (ed$)</span>
-<span class="n">Recipe</span><span class="p">([</span>
-  <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllMatching</span><span class="p">(</span><span class="s1">&#39;ed$&#39;</span><span class="p">))</span>
+<div class="autodoc-docstring"><p>Return all columns on the DataFrame</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Will keep all columns</span>
+    <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllColumns</span><span class="p">())</span>
 <span class="p">])</span>
 </code></pre></div></div>
 </div>
-</li>
-</ul>
+<h3 id="allstring">AllString<a class="headerlink" href="#allstring" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllString</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Return all string columns</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Will keep all strings</span>
+    <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllString</span><span class="p">())</span>
+<span class="p">])</span>
+</code></pre></div></div>
+</div>
+<h3 id="allboolean">AllBoolean<a class="headerlink" href="#allboolean" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllBoolean</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Return all boolean columns</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Will keep all booleans</span>
+    <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllBoolean</span><span class="p">())</span>
+<span class="p">])</span>
+</code></pre></div></div>
+</div>
+<h3 id="allnumeric">AllNumeric<a class="headerlink" href="#allnumeric" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllNumeric</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Return all numerical columns</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Will keep all numerical values like <code>int</code>, <code>float</code>, etc.</span>
+    <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">())</span>
+<span class="p">])</span>
+</code></pre></div></div>
+</div>
+<h3 id="alldatetime">AllDatetime<a class="headerlink" href="#alldatetime" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllDatetime</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Return all DateTime columns</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Will keep all dates and times</span>
+    <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllDatetime</span><span class="p">())</span>
+<span class="p">])</span>
+</code></pre></div></div>
+</div>
+<h3 id="allcategorical">AllCategorical<a class="headerlink" href="#allcategorical" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllCategorical</strong></code><span class="autodoc-punctuation">(</span><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Return all Categorical columns</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Will keep all categorical</span>
+    <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllCategorical</span><span class="p">())</span>
+<span class="p">])</span>
+</code></pre></div></div>
+</div>
+<h3 id="allmatching">AllMatching<a class="headerlink" href="#allmatching" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.selectors.<strong>AllMatching</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern=''</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Return all columns matching the regular expression given by <code>pattern</code></p>
+<div class="codehilite"><pre><span></span><code><span class="n">Recipe</span><span class="p">([</span>
+    <span class="c1"># Will keep all the columns ending with &quot;ed&quot; (ed$)</span>
+    <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllMatching</span><span class="p">(</span><span class="s1">&#39;ed$&#39;</span><span class="p">))</span>
+<span class="p">])</span>
+</code></pre></div></div>
+</div>
 <h2 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="transformers.html">Methods for Transforming Variables</a></li>
