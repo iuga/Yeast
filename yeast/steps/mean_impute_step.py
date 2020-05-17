@@ -1,6 +1,7 @@
 from yeast.step import Step
 from yeast.errors import YeastValidationError
 
+
 class MeanImputeStep(Step):
     """
     Impute numeric data using the mean
