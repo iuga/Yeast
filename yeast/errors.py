@@ -7,20 +7,27 @@ class YeastValidationError(Exception):
 
 class YeastRecipeError(Exception):
     """
-    YeastRecipeError is raised when there is an error on the Recipe
+    YeastRecipeError is raised when there was an error on the Recipe
     """
     pass
 
 
 class YeastBakeError(Exception):
     """
-    YeastRecipeError is raised when there is an error while baking
+    YeastRecipeError is raised when there was an error while baking
     """
     pass
 
 
 class YeastTransformerError(Exception):
     """
-    YeastRecipeError is raised when there is an error while transforming
+    YeastRecipeError is raised when there was an error while transforming
+    """
+    pass
+
+
+class YeastCookbookError(Exception):
+    """
+    YeastCookbookError is raised when there was an error on the cookbook
     """
     pass

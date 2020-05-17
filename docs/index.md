@@ -3,7 +3,7 @@
 </p>
 
 Yeast is a Python data processing engine for modeling or visualization based on Pandas designed for
-reliable production data pipelines and inspired on [Tidyverse](https://www.tidyverse.org) and
+reliable production data pipelines and inspired on [Tidyverse](https://www.tidyverse.org), [Dplyr](https://dplyr.tidyverse.org), [Stringr](https://stringr.tidyverse.org) and
 [R Recipes](https://tidymodels.github.io/recipes/).
 
 ```python

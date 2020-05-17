@@ -1,5 +1,5 @@
 from yeast.transformers import StrToLower, StrToUpper, StrToSentence, StrToTitle, StrTrim
-from yeast.transformers import StrSlice, StrReplace, StrRemove, StrRemoveAll
+from yeast.transformers import StrSlice, StrReplace, StrRemove, StrRemoveAll, StrMapValues
 
 from data_samples import startrek_data as data
 from data_samples import startrek_characters as chars_data
@@ -60,3 +60,16 @@ def test_str_remove(chars_data):
 def test_str_remove_all(chars_data):
     titles = StrRemoveAll('p').resolve(chars_data, column='name').to_list()
     assert 'hilia  georgiou' in titles
+
+
+def test_str_map_values(chars_data):
+    ranks = StrMapValues({
+        'Capitain': 'Captain',
+        'CAPTAIN': 'Captain',
+        'Comander': 'Commander'
+    }).resolve(chars_data, column='rank').to_list()
+    assert 'Captain' in ranks
+    assert 'Capitain' not in ranks
+    assert 'CAPTAIN' not in ranks
+    assert 'Commander' in ranks
+    assert 'Comander' not in ranks

@@ -3,16 +3,12 @@
 
 **Row and Column Operations**
 
-- `MutateStep`
 - `DropZVColumnsStep`
-- `ReplaceNAStep`
 - `LagStep` and `LeadStep`
 - `PivotLongerStep` and `PivotWiderStep`
 
 **Individual Transformations**
 
-- `ColumnMapValuesStep`
-- `ReplaceNAStep`
 - `IfElseStep`
 
 **Documentation Steps**

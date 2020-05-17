@@ -16,13 +16,13 @@ Recipe([
 The selectors can choose columns based on their data type or name.
 They are shortcuts to select a subset of columns/predictors based on a common attribute:
 
-- `AllColumns`
-- `AllString`
-- `AllBoolean`
-- `AllNumeric`
-- `AllDatetime`
-- `AllCategorical`
-- `AllMatching`
+- [AllColumns](#allcolumns): All variables
+- [AllString](#allstring): All string variables
+- [AllBoolean](#allboolean): All boolean variables
+- [AllNumeric](#allnumeric): All numerical variables
+- [AllDatetime](#alldatetime): All date or time variables
+- [AllCategorical](#allcategorical): All categorical variables
+- [AllMatching](#allmatching): All variables matching the regular expression
 
 The usage is quite simple, you can pass them on any parameter that indicates column names and
 basically they are used to select columns based on the attributes.
@@ -39,21 +39,41 @@ Recipe([
 ```
 
 
-**Available Selectors:**
+## Available Selectors
 
-- ::: yeast.selectors.AllColumns
+### AllColumns
+
+::: yeast.selectors.AllColumns
     :docstring:
-- ::: yeast.selectors.AllString
+
+### AllString
+
+::: yeast.selectors.AllString
     :docstring:
-- ::: yeast.selectors.AllBoolean
+
+### AllBoolean
+
+::: yeast.selectors.AllBoolean
     :docstring:
-- ::: yeast.selectors.AllNumeric
+
+### AllNumeric
+
+::: yeast.selectors.AllNumeric
     :docstring:
-- ::: yeast.selectors.AllDatetime
+
+### AllDatetime
+
+::: yeast.selectors.AllDatetime
     :docstring:
-- ::: yeast.selectors.AllCategorical
+
+### AllCategorical
+
+::: yeast.selectors.AllCategorical
     :docstring:
-- ::: yeast.selectors.AllMatching
+
+### AllMatching
+
+::: yeast.selectors.AllMatching
     :docstring:
 
 ## What's next?

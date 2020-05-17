@@ -36,17 +36,42 @@ recipe = Recipe([
 
 The most common aggregations are:
 
-- ::: yeast.aggregations.AggMean
+- [AggMean](#strtoupper): Calculate the mean
+- [AggMedian](#strtoupper): Calculate the median
+- [AggMax](#strtoupper): Calculate the maximum
+- [AggMin](#strtoupper): Calculate the minimum
+- [AggCount](#strtoupper): Count occurrences
+- [AggCountDistinct](#strtoupper): Count unique occurrences
+
+
+### AggMean
+
+::: yeast.aggregations.AggMean
     :docstring:
-- ::: yeast.aggregations.AggMedian
+
+### AggMedian
+
+::: yeast.aggregations.AggMedian
+      :docstring:
+
+### AggMax
+
+::: yeast.aggregations.AggMax
     :docstring:
-- ::: yeast.aggregations.AggMax
+
+### AggMin
+
+::: yeast.aggregations.AggMin
     :docstring:
-- ::: yeast.aggregations.AggMin
+
+### AggCount
+
+::: yeast.aggregations.AggCount
     :docstring:
-- ::: yeast.aggregations.AggCount
-    :docstring:
-- ::: yeast.aggregations.AggCountDistinct
+
+### AggCountDistinct
+
+::: yeast.aggregations.AggCountDistinct
     :docstring:
 
 ## What's next?

@@ -210,6 +210,27 @@ class StrRemoveAll(StrTransformer):
         return df[column].str.replace(self.pattern, "", n=-1)
 
 
+class StrMapValues(StrTransformer):
+    """
+    Replace specified values with new values.
+
+    ```python
+    StrMapValues({'old_value': 'new_value', ...})
+    ```
+
+    Parameters:
+
+    - `mapping`: Specify different replacement values for different existing values.
+               For example: `{'old': 'new'}` replace the value `old` with `new`.
+    """
+    def __init__(self, mapping, column=None):
+        super().__init__(column=column)
+        self.mapping = mapping
+
+    def do_resolve(self, df, column):
+        return df[column].replace(self.mapping)
+
+
 class RankTransformer(Transformer):
     """
     Returns the sample ranks of the values in the column.

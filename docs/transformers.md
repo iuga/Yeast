@@ -51,54 +51,137 @@ Currently the transformers are categorized as:
 
 ## Available Transformers
 
-### String Transformers
+#### String Transformers
 
 String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible:
 
-- ::: yeast.transformers.StrToUpper
-    :docstring:
-- ::: yeast.transformers.StrToLower
-    :docstring:
-- ::: yeast.transformers.StrToSentence
-    :docstring:
-- ::: yeast.transformers.StrToTitle
-    :docstring:
-- ::: yeast.transformers.StrTrim
-    :docstring:
-- ::: yeast.transformers.StrReplace
-    :docstring:
-- ::: yeast.transformers.StrReplaceAll
-    :docstring:
-- ::: yeast.transformers.StrPad
-    :docstring:
-- ::: yeast.transformers.StrSlice
-    :docstring:
-- ::: yeast.transformers.StrRemove
-    :docstring:
-- ::: yeast.transformers.StrRemoveAll
-    :docstring:
+- [StrToUpper](#strtoupper): Convert to UPPER CASE
+- [StrToLower](#strtolower): Convert to lower case
+- [StrToSentence](#strtosentence): Convert to Sentence case
+- [StrToTitle](#strtotitle): Convert to Title Case
+- [StrTrim](#strtrim): Remove whitespaces
+- [StrReplace](#strreplace): Replace first occurrence of pattern
+- [StrReplaceAll](#strreplaceall): Replace all occurrences of pattern
+- [StrPad](#strpad): Pad a string
+- [StrSlice](#strslice): Extract and replace substrings
+- [StrRemove](#strremove): Remove first matched pattern
+- [StrRemoveAll](#strremoveall): Remove all matched patterns
+- [StrMapValues](#strmapvalues): Replace specified values with new values.
 
-### Rank Transformers
+#### Rank Transformers
 
 Returns the sample ranks of the values in a column:
 
-- ::: yeast.transformers.RankTransformer
+- [Rank / RankTransformer](#rank-ranktransformer): Return the sample ranks of the values
+- [RowNumber](#rownumber): Return the row number
+- [RankFirst](#rankfirst): Increasing rank values at each index
+- [RankMin](#rankmin): Return the minimum value
+- [RankMax](#rankmax): Return the maximum value
+- [RankDense](#rankdense): Like `RankMin` but with no gaps between ranks
+- [RankMean](#rankmean): Return the mean/average value
+- [RankPercent](#rankpercent): A number between 0 and 1 computed by rescaling `RankMin` to `[0, 1]`
+
+## Transformer Documentation
+
+### StrToUpper
+
+::: yeast.transformers.StrToUpper
     :docstring:
-- ::: yeast.transformers.Rank
+
+### StrToLower
+
+::: yeast.transformers.StrToLower
     :docstring:
-- ::: yeast.transformers.RowNumber
+
+### StrToSentence
+
+::: yeast.transformers.StrToSentence
     :docstring:
-- ::: yeast.transformers.RankFirst
+
+### StrToTitle
+
+::: yeast.transformers.StrToTitle
     :docstring:
-- ::: yeast.transformers.RankMin
+
+### StrTrim
+
+::: yeast.transformers.StrTrim
     :docstring:
-- ::: yeast.transformers.RankMax
+
+### StrReplace
+
+::: yeast.transformers.StrReplace
     :docstring:
-- ::: yeast.transformers.RankDense
+
+### StrReplaceAll
+
+::: yeast.transformers.StrReplaceAll
     :docstring:
-- ::: yeast.transformers.RankMean
+
+
+### StrPad
+
+::: yeast.transformers.StrPad
     :docstring:
-- ::: yeast.transformers.RankPercent
+
+### StrSlice
+
+::: yeast.transformers.StrSlice
+    :docstring:
+
+### StrRemove
+
+::: yeast.transformers.StrRemove
+    :docstring:
+
+### StrRemoveAll
+
+::: yeast.transformers.StrRemoveAll
+    :docstring:
+
+### StrMapValues
+
+::: yeast.transformers.StrMapValues
+    :docstring:
+
+### Rank / RankTransformer
+
+::: yeast.transformers.RankTransformer
+    :docstring:
+
+### RowNumber
+
+::: yeast.transformers.RowNumber
+    :docstring:
+
+### RankFirst
+
+::: yeast.transformers.RankFirst
+    :docstring:
+
+### RankMin
+
+::: yeast.transformers.RankMin
+    :docstring:
+
+### RankMax
+
+::: yeast.transformers.RankMax
+    :docstring:
+
+### RankDense
+
+::: yeast.transformers.RankDense
+    :docstring:
+
+### RankMean
+
+::: yeast.transformers.RankMean
+    :docstring:
+
+### RankPercent
+
+::: yeast.transformers.RankPercent
     :docstring:
 
 

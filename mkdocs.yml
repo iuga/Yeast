@@ -22,6 +22,7 @@ nav:
     - Roadmap: roadmap.md
   - Examples:
     - Student Performance: examples/students.md
+    - Working with Strings: examples/working_with_strings.md
 plugins: []
 extra_css:
     - extra.css

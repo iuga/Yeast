@@ -12,6 +12,7 @@ Execute operations over columns or predictors:
 - [CastColumnsStep](#castcolumnsstep) / [CastStep](#castcolumnsstep): Cast the columns data types
 - [DropColumnsStep](#dropcolumnsstep): Drop/Remove columns
 - [CleanColumnNamesStep](#cleancolumnnamesstep): Clean all column names
+- [ReplaceNAStep](#replacenastep): Replace missing values
 
 #### Row Operations
 
@@ -76,6 +77,11 @@ Customize Yeast behavior for our project:
 ### CleanColumnNamesStep
 
 ::: yeast.steps.CleanColumnNamesStep
+    :docstring:
+
+### ReplaceNAStep
+
+::: yeast.steps.ReplaceNAStep
     :docstring:
 
 ## Row Operations

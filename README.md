@@ -2,7 +2,8 @@
   <img src="./docs/logo.png" alt="Yeast logo">
 </p>
 
-Yeast is a Python data processing engine for modeling or visualization based on Pandas designed for reliable production data pipelines and inspired on [R Recipes](https://tidymodels.github.io/recipes/).
+Yeast is a Python data processing engine for modeling or visualization based on Pandas designed for reliable production data pipelines and inspired on on [Tidyverse](https://www.tidyverse.org), [Dplyr](https://dplyr.tidyverse.org), [Stringr](https://stringr.tidyverse.org) and
+[R Recipes](https://tidymodels.github.io/recipes/).
 
 <p align="right">
   <img src="https://github.com/iuga/Yeast/workflows/Build/badge.svg" alt="Yeast build">

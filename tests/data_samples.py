@@ -1,5 +1,6 @@
 import pytest
 import pandas as pd
+import numpy as np
 
 
 @pytest.fixture
@@ -92,6 +93,36 @@ def startrek_starships_specs():
             9.975,
             9.9,
             9.2
+        ]
+    })
+    return pdf
+
+
+@pytest.fixture
+def warp_factors():
+    """
+    Specs of the Star Trek SpaceShips
+    """
+    pdf = pd.DataFrame({
+        'uid': [
+            'NCC-1701',
+            'Narada',
+            'NCC-74656',
+            'NCC-1031',
+            'NCC-1764',
+            'NX-01',
+            'Borg cube',
+            None,
+        ],
+        'warp': [
+            9.2,
+            np.nan,
+            9.975,
+            9.9,
+            9.2,
+            4,
+            None,
+            np.nan
         ]
     })
     return pdf
