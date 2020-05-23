@@ -17,6 +17,7 @@ class MutateStep(Step):
                       transformers. E.g: `{ column_name: Transformer }`.
                       It also support lambda functions. E.g: `{var : lambda df: df}` and a
                       list of transforers (lambda or Transformer: `{var: [tx1, tx2, ...]}`
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -83,8 +84,9 @@ class MutateStep(Step):
     - `YeastBakeError`: If there was an error executing any transformer
     - `YeastValidationError`: xxx
     """
-    def __init__(self, transformers):
+    def __init__(self, transformers, role='all'):
         self.transformers = transformers
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         for column, transformers in self.transformers.items():

@@ -1,5 +1,6 @@
 import itertools
 from yeast.selectors import Selector
+from yeast.errors import YeastBakeError
 
 
 class Step():
@@ -10,7 +11,7 @@ class Step():
     Workflow:
     init() -->
                prepare() --> do_prepare() -->
-                                             bake() -->                                  do_bake()
+                      validate()              bake() -->                                  do_bake()
                                                         validate() --> do_validate() -->
 
     Notes:
@@ -20,18 +21,29 @@ class Step():
     - do_validate() is called by validate()
 
     The `needs_preparation` is used to understand if the recipe needs the preparation stage.
-    If any of the steps require prep, skip this stake (time-consuming)
+    If any of the steps require preparation, skip this stage (time-consuming)
     """
-    needs_preparation = False
+    def __init__(self, needs_preparation=False, prepared=False, role='all'):
+        """
+        Initialize the Step
+
+        Parameters:
+
+        - `needs_preparation`: True if prepare must be executed before bake, False otherwise
+        - `prepared`: is set by Yeast when the preapre step has been run. Default it to False
+        - `role`: string with the assigned role. Default: `all`
+        """
+        self.needs_preparation = needs_preparation
+        self.prepared = prepared
+        self.role = role
 
     def prepare(self, df):
         """
         During this phase the original df must not be transformed.
-
-        :returns self for chaining
         """
         self.validate(df)
         self.do_prepare(df)
+        self.prepared = True
         return self
 
     def bake(self, df):
@@ -40,6 +52,10 @@ class Step():
 
         :returns the transformed dataframe
         """
+        if self.needs_preparation and not self.prepared:
+            raise YeastBakeError(
+                f'{self.__class__.__name__} needs preparation. Did you run prepare(...)?'
+            )
         self.validate(df)
         return self.do_bake(df)
 

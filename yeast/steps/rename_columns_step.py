@@ -10,6 +10,7 @@ class RenameColumnsStep(Step):
     Parameters:
 
     - `mapping`: rename mapping as { 'old_name': 'new_name', ... }
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -23,9 +24,9 @@ class RenameColumnsStep(Step):
 
     - `YeastValidationError`: if any column old or new is not a string.
     """
-    def __init__(self, mapping):
+    def __init__(self, mapping, role='all'):
         self.mapping = mapping
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         return df.rename(columns=self.mapping)

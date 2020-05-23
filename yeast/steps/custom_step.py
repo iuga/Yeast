@@ -23,6 +23,7 @@ class CustomStep(Step):
     - `to_validate`: perform validations on the data. Raise YeastValidationError on a problem.
     - `to_prepare`: prepare the step before bake, like train or calculate aggregations.
     - `to_bake`: execute the bake (processing). This is the core method.
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Inline Usage:
 
@@ -103,10 +104,11 @@ class CustomStep(Step):
 
     - `YeastValidationError`: if any of the parameters is defined but not callable.
     """
-    def __init__(self, to_prepare=None, to_bake=None, to_validate=None):
+    def __init__(self, to_prepare=None, to_bake=None, to_validate=None, role='all'):
         self.to_prepare = to_prepare
         self.to_bake = to_bake
         self.to_validate = to_validate
+        super().__init__(needs_preparation=False, role=role)
 
     def do_prepare(self, df):
         """

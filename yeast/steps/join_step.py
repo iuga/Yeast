@@ -24,6 +24,7 @@ class JoinStep(Step):
     - `how`: Type of the join: `left`, `right`, `inner` or `full`
     - `by`: optional colum name list to join by. Default: `None`
     - `df`: optional df to be used as input if `y` is a Recipe
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -53,11 +54,12 @@ class JoinStep(Step):
     """
     how_types = ['left', 'right', 'inner', 'full', 'outer']
 
-    def __init__(self, y, how="left", by=None, df=None):
+    def __init__(self, y, how="left", by=None, df=None, role='all'):
         self.y = y
         self.how = 'outer' if how == 'full' else how
         self.by = by if not by else by if type(by) in [list, tuple] else [by]
         self.df = df
+        super().__init__(needs_preparation=False, role=role)
 
     def do_prepare(self, left):
         # Prepare the Recipe before Merges

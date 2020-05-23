@@ -3,7 +3,7 @@ import numpy as np
 
 from yeast import Recipe
 from yeast.steps import MeanImputeStep, MutateStep
-from yeast.errors import YeastValidationError
+from yeast.errors import YeastValidationError, YeastBakeError
 from yeast.transformers import MapValues
 
 from data_samples import startrek_data as data
@@ -53,3 +53,13 @@ def test_if_column_does_not_exist_raises_an_error(data):
 
     with pytest.raises(YeastValidationError):
         step.prepare(data)
+
+
+def test_if_bake_and_not_prepare_should_raise_an_error(data):
+    """
+    If we are baking without preparation we should have an error
+    """
+    step = MeanImputeStep(['not_found'])
+
+    with pytest.raises(YeastBakeError):
+        step.bake(data)

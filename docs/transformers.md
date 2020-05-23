@@ -70,6 +70,7 @@ String Transformers provide a cohesive set of transformers designed to make work
 - [StrSlice](#strslice): Extract and replace substrings
 - [StrRemove](#strremove): Remove first matched pattern
 - [StrRemoveAll](#strremoveall): Remove all matched patterns
+- [StrContains](#strcontains): Test if pattern is contained on a string column
 
 #### Rank Transformers
 
@@ -84,7 +85,27 @@ Returns the sample ranks of the values in a column:
 - [RankMean](#rankmean): Return the mean/average value
 - [RankPercent](#rankpercent): A number between 0 and 1 computed by rescaling `RankMin` to `[0, 1]`
 
+#### Date Transformers
+
+Returns components of a Date or DateTime column:
+
+- [DateYear](#dateyear): Get the year
+- [DateQuarter](#datequarter): Get the quarter
+- [DateMonth](#datemonth): Get the month
+- [DateWeek](#dateweek): Get the week
+- [DateDay](#dateday): Get the day
+- [DateDayOfWeek](#datedayofweek): Get the day of the week where Monday=0 and Sunday=6.
+- [DateDayOfYear](#datedayofyear): Get the day of the year.
+- [DateHour](#datehour): Get the hour
+- [DateMinute](#dateminute): Get the minute
+- [DateSecond](#datesecond): Get the second
+
 ## Transformer Documentation
+
+### MapValues
+
+::: yeast.transformers.MapValues
+    :docstring:
 
 ### StrToUpper
 
@@ -142,9 +163,9 @@ Returns the sample ranks of the values in a column:
 ::: yeast.transformers.StrRemoveAll
     :docstring:
 
-### MapValues
+### StrContains
 
-::: yeast.transformers.MapValues
+::: yeast.transformers.StrContains
     :docstring:
 
 ### Rank / RankTransformer
@@ -185,6 +206,56 @@ Returns the sample ranks of the values in a column:
 ### RankPercent
 
 ::: yeast.transformers.RankPercent
+    :docstring:
+
+### DateYear
+
+::: yeast.transformers.DateYear
+    :docstring:
+
+### DateQuarter
+
+::: yeast.transformers.DateQuarter
+    :docstring:
+
+### DateMonth
+
+::: yeast.transformers.DateMonth
+    :docstring:
+
+### DateWeek
+
+::: yeast.transformers.DateWeek
+    :docstring:
+
+### DateDay
+
+::: yeast.transformers.DateDay
+    :docstring:
+
+### DateDayOfWeek
+
+::: yeast.transformers.DateDayOfWeek
+    :docstring:
+
+### DateDayOfYear
+
+::: yeast.transformers.DateDayOfYear
+    :docstring:
+
+### DateHour
+
+::: yeast.transformers.DateHour
+    :docstring:
+
+### DateMinute
+
+::: yeast.transformers.DateMinute
+    :docstring:
+
+### DateSecond
+
+::: yeast.transformers.DateSecond
     :docstring:
 
 

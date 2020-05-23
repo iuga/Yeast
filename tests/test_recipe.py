@@ -52,3 +52,43 @@ def test_recipe_workflow_only_accepts_yeast_steps(raw_data):
             steps.SelectColumnsStep(['year', 'seasons']),
             {},
         ])
+
+
+def test_skip_on_other_set_workflow(raw_data):
+    """
+    Secuential execution of the recipe but one step (FilterStep) must be skipped on new data
+    """
+    recipe = Recipe([
+        steps.CleanColumnNamesStep('snake'),
+        steps.SelectColumnsStep(['creation_year', 'total_seasons']),
+        steps.FilterStep('creation_year in [2017, 2020]', role='train')
+    ])
+    recipe = recipe.prepare(raw_data)
+
+    train = recipe.bake(raw_data)
+    assert train.shape == (2, 2)  # Filter Step was applied
+
+    test = recipe.bake(raw_data, role='test')
+    assert test.shape == (6, 2)  # Filter Step was applied
+
+
+def test_custom_roles_workflow(raw_data):
+    """
+    Different steps with different roles should be executed differently
+    """
+    recipe = Recipe([
+        steps.CleanColumnNamesStep('snake'),
+        steps.SelectColumnsStep(['creation_year', 'total_seasons']),
+        steps.FilterStep('creation_year == 2020', role='train'),
+        steps.SelectColumnsStep(['creation_year'], role='train'),
+        steps.SelectColumnsStep(['total_seasons'], role='test'),
+    ])
+    recipe = recipe.prepare(raw_data)
+
+    train = recipe.bake(raw_data, role='train')
+    assert train.shape == (1, 1)  # Filter Step was applied
+    assert 'creation_year' in train.columns  # Only creation_year in train role
+
+    test = recipe.bake(raw_data, role='test')
+    assert test.shape == (6, 1)  # Filter Step was applied
+    assert 'total_seasons' in test.columns  # Only total_seasons in test role

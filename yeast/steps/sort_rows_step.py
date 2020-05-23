@@ -10,6 +10,7 @@ class SortRowsStep(Step):
 
     - `columns`: list of string column names to sort by
     - `ascending`: boolean flag wo sort ascending vs. descending
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -21,10 +22,10 @@ class SortRowsStep(Step):
 
     - `YeastValidationError`: if any column does not exist or any column name is invalid.
     """
-    def __init__(self, columns, ascending=True):
+    def __init__(self, columns, ascending=True, role='all'):
         self.selector = columns
         self.ascending = ascending if isinstance(ascending, bool) else True
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         return df.sort_values(by=self.selector, axis=0, ascending=self.ascending, ignore_index=True)

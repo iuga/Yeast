@@ -28,7 +28,7 @@ Aggregate or Summarize data:
 
 - [GroupByStep](#groupbystep): Group by rows based on columns
 - [SummarizeStep](#summarizestep): Summarize the group by data
-- [DropDuplicateRowsStep](#dropduplicaterowsstep): Drop duplicate rows
+- [DropDuplicateRowsStep](#dropduplicaterowsstep) / [DropDuplicatesStep](#dropduplicaterowsstep): Drop duplicate rows
 
 #### Imputation
 

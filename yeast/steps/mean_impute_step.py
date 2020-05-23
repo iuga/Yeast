@@ -12,6 +12,7 @@ class MeanImputeStep(Step):
     Parameters:
 
     - `selector`: string list of column names or a selector to impute
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -27,11 +28,10 @@ class MeanImputeStep(Step):
 
     - `YeastValidationError`: if a column does not exist
     """
-    needs_preparation = True
-
-    def __init__(self, selector):
+    def __init__(self, selector, role='all'):
         self.selector = selector
         self.means = {}
+        super().__init__(needs_preparation=True, role=role)
 
     def do_prepare(self, df):
         """

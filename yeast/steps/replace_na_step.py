@@ -10,6 +10,7 @@ class ReplaceNAStep(Step):
 
     - `mapping`: replacing mapping as `{'column': replacement_value, ...}` or string column name.
     - `value`: value to replace the NAs if mapping is a string column name. Default: `0`
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -29,9 +30,10 @@ class ReplaceNAStep(Step):
 
     - `YeastValidationError`: if a column does not exist on the dataframe
     """
-    def __init__(self, mapping, value=0):
+    def __init__(self, mapping, value=0, role='all'):
         self.mapping = mapping
         self.value = value
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         if isinstance(self.mapping, str):

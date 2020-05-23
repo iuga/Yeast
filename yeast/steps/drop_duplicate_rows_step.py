@@ -13,6 +13,7 @@ class DropDuplicateRowsStep(Step):
                                     duplicates except for the first occurrence. `last` : Drop
                                     duplicates except for the last occurrence. `none` : Drop
                                     all duplicates.
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -31,14 +32,14 @@ class DropDuplicateRowsStep(Step):
 
     - `YeastValidationError`: if any column does not exist or any column name is invalid.
     """
-    def __init__(self, columns=None, keep="first"):
+    def __init__(self, columns=None, keep="first", role='all'):
         self.selector = columns
         self.keep = {
             'first': 'first',
             'last': 'last',
             'none': False
         }.get(keep, 'first')
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         return df.drop_duplicates(subset=self.selector, keep=self.keep)

@@ -20,6 +20,7 @@ class FilterRowsStep(Step):
     Parameters:
 
     - `expression`: The query string to evaluate.
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -48,10 +49,10 @@ class FilterRowsStep(Step):
 
     - `YeastValidationError`: if the expression is an empty string.
     """
-    def __init__(self, expression, **kwargs):
+    def __init__(self, expression, role='all', **kwargs):
         self.expression = expression
         self.kwargs = kwargs
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         return df.query(expr=self.expression, **self.kwargs)

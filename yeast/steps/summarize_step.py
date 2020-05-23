@@ -16,6 +16,7 @@ class SummarizeStep(Step):
     - `aggregations`: dictionary with the aggregations to perform. The key is the new column name
                       where the value is the specification of the aggregation to perform.
                       For example: `{'new_column_name': AggMean('column')}`
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -34,9 +35,9 @@ class SummarizeStep(Step):
 
     - `YeastValidationError`: If there was not a GroupByStep before
     """
-    def __init__(self, aggregations):
+    def __init__(self, aggregations, role='all'):
         self.aggregations = aggregations
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, gdf):
         aggs = {}

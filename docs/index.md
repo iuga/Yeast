@@ -72,3 +72,8 @@ pip install git+https://github.com/iuga/Yeast
 ## Developers Guide
 
 - [Steps List & Reference](reference.md)
+- [Custom Steps](extensions.md)
+
+## Examples
+
+- [San Francisco Crime](examples/san_francisco_crime.md) _(Wrangling, Feature Engineering)_

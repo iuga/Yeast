@@ -1,3 +1,4 @@
+import pandas as pd
 from yeast.errors import YeastTransformerError
 
 
@@ -237,6 +238,36 @@ class StrRemoveAll(StrTransformer):
         return df[column].str.replace(self.pattern, "", n=-1)
 
 
+class StrContains(StrTransformer):
+    """
+    Test if pattern or regex is contained within a string column.
+    Return a boolean variable ( True and False ).
+
+    ```python
+    MutateStep({
+        'feature': StrContains("_temp", column="text", case=True, regex=True)
+    }),
+    # You can convert to numerical (0 and 1) with:
+    CastStep({'feature': 'integer'})
+    ```
+
+    Parameters:
+
+    - `pattern`: Pattern or string to look for.
+    - `case`: If True, case sensitive.
+    - `regex`: If True, assumes the pat is a regular expression. If False, treats the pat as a
+               literal string.
+    """
+    def __init__(self, pattern, column=None, case=True, regex=True):
+        super().__init__(column=column)
+        self.pattern = pattern
+        self.case = case
+        self.regex = regex
+
+    def do_resolve(self, df, column):
+        return df[column].str.contains(self.pattern, case=self.case, regex=self.regex)
+
+
 class RankTransformer(Transformer):
     """
     Returns the sample ranks of the values in the column.
@@ -375,3 +406,112 @@ class RankPercent(RankTransformer):
         self.ascending = ascending
         self.method = 'min'
         self.percentage = True
+
+
+class DateTransformer(Transformer):
+    """
+    Base abstract interface to define Date column transformers
+    """
+    pass
+
+
+class DateExtract(Transformer):
+    """
+    Extract a part of the date as a new variable, like year.
+    """
+    features = [
+        'year', 'quarter', 'month', 'week', 'day', 'dayofweek', 'dayofyear', 'hour',
+        'minute', 'second'
+    ]
+
+    def __init__(self, feature, column=None):
+        super().__init__(column=column)
+        self.feature = feature
+        if self.feature not in self.features:
+            raise YeastTransformerError(
+                f'Extractor {feature} not recognized from: {self.features}.'
+            )
+
+    def do_resolve(self, df, column):
+        return getattr(pd.to_datetime(df[column]).dt, self.feature).astype('Int64')
+
+
+class DateYear(DateExtract):
+    """
+    Extract the year of a Date column
+    """
+    def __init__(self, column=None):
+        super().__init__('year', column=column)
+
+
+class DateQuarter(DateExtract):
+    """
+    Extract the quarter of a Date column
+    """
+    def __init__(self, column=None):
+        super().__init__('quarter', column=column)
+
+
+class DateMonth(DateExtract):
+    """
+    Extract the month of a Date column
+    """
+    def __init__(self, column=None):
+        super().__init__('month', column=column)
+
+
+class DateWeek(DateExtract):
+    """
+    Extract the week of a Date column
+    """
+    def __init__(self, column=None):
+        super().__init__('week', column=column)
+
+
+class DateDay(DateExtract):
+    """
+    Extract the day of a Date column
+    """
+    def __init__(self, column=None):
+        super().__init__('day', column=column)
+
+
+class DateDayOfYear(DateExtract):
+    """
+    Extract the day of year of a Date column.
+    """
+    def __init__(self, column=None):
+        super().__init__('dayofyear', column=column)
+
+
+class DateDayOfWeek(DateExtract):
+    """
+    Extract the day of week of a Date column.
+    The day of the week is Monday=0 and Sunday=6
+    """
+    def __init__(self, column=None):
+        super().__init__('dayofweek', column=column)
+
+
+class DateHour(DateExtract):
+    """
+    Extract the hour of a Date column.
+    """
+    def __init__(self, column=None):
+        super().__init__('hour', column=column)
+
+
+class DateMinute(DateExtract):
+    """
+    Extract the minute of a Date column.
+    """
+    def __init__(self, column=None):
+        super().__init__('minute', column=column)
+
+
+class DateSecond(DateExtract):
+    """
+    Extract the seconds of a Date column.
+    """
+    def __init__(self, column=None):
+        super().__init__('second', column=column)

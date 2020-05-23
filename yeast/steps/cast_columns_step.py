@@ -17,7 +17,8 @@ class CastColumnsStep(Step):
 
     Parameters:
 
-    - `mapping`: casting mapping as { 'column_name': 'type', ... }
+    - `mapping`: Casting mapping as { 'column_name': 'type', ... }
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -47,13 +48,12 @@ class CastColumnsStep(Step):
         'float64': 'float64',
         'int64': 'int64',
         'int32': 'int32',
-        'float64': 'float64',
-        'float32': 'float32',
+        'float32': 'float32'
     }
 
-    def __init__(self, mapping):
+    def __init__(self, mapping, role='all'):
         self.mapping = mapping
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         return df.astype(self.convert_mapping(self.mapping))

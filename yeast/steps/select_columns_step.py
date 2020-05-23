@@ -9,6 +9,7 @@ class SelectColumnsStep(Step):
     Parameters:
 
     - `columns`: list of string column names, selectors or combinations to keep
+    -- `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -34,9 +35,9 @@ class SelectColumnsStep(Step):
 
     - `YeastValidationError`: if any column does not exist or any column name is invalid.
     """
-    def __init__(self, columns):
+    def __init__(self, columns, role='all'):
         self.selector = columns
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         return df[self.selector]

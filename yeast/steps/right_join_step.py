@@ -14,6 +14,7 @@ class RightJoinStep(JoinStep):
     - `y`: DataFrame or Recipe to merge with.
     - `by`: optional colum name list to merge by. Default: `None`
     - `df`: optional df to be used as input if `y` is a Recipe
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -41,8 +42,11 @@ class RightJoinStep(JoinStep):
 
     - `YeastValidationError`: if any of the validations is not correct.
     """
-    def __init__(self, y, by=None, df=None):
-        self.y = y
-        self.how = "right"
-        self.by = by if not by else by if type(by) in [list, tuple] else [by]
-        self.df = df
+    def __init__(self, y, by=None, df=None, role='all'):
+        super().__init__(
+            y,
+            how="right",
+            by=by if not by else by if isinstance(by, (list, tuple)) else [by],
+            df=df,
+            role=role
+        )

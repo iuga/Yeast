@@ -16,6 +16,7 @@ class GroupByStep(Step):
     Parameters:
 
     - `columns`: list of string column names to group by or a selector
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -34,9 +35,9 @@ class GroupByStep(Step):
 
     - `YeastValidationError`: if a column does not exist on the DataFrame
     """
-    def __init__(self, columns):
+    def __init__(self, columns, role='all'):
         self.selector = columns
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         return df.groupby(self.selector, sort=True)

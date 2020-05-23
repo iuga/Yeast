@@ -126,3 +126,33 @@ def warp_factors():
         ]
     })
     return pdf
+
+
+@pytest.fixture
+def release_dates():
+    """
+    Series Release Dates
+    """
+    pdf = pd.DataFrame({
+        'name': [
+            'The Original Series',
+            'The Next Generation',
+            'Deep Space Nine',
+            'Voyager',
+            'Enterprise',
+            'Discovery',
+            'Picard',
+            'Strange New Worlds'
+        ],
+        'released': [
+            '1966-09-08',
+            '1987-09-28',
+            '1993-01-03 12:15:23',
+            '1995-01-16',
+            '2001-09-26 13:53',
+            '2017-09-24',
+            '2020-01-23 15',
+            np.nan
+        ]
+    })
+    return pdf

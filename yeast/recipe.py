@@ -55,11 +55,19 @@ class Recipe():
                     raise YeastPreparationError(f'There was an error while preparing: {ex}') from ex
         return self
 
-    def bake(self, df):
+    def bake(self, df, role='all'):
         """
         Bake the recipe returning the transformed data frame.
-        For each step in the recipe:
-            bake the step
+
+
+
+        Parameters:
+
+        - `df`: DataFrame to bake
+        - `role`: String name of the role to control baking flows on new data. Default: `all` to
+                  execute all steps in the recipe. The role support any name that you want to use.
+                  For example, if `role='train'` will execute all steps with role 'all' or 'train'
+                  but all other roles will be skipped.
         """
         if not isinstance(df, (DataFrame, Recipe)):
             raise YeastRecipeError('Data must be a Pandas DataFrame or a Recipe')
@@ -67,7 +75,8 @@ class Recipe():
         baked_df = df.copy()
         for step in self.steps:
             try:
-                baked_df = step.bake(baked_df)
+                if role == 'all' or step.role == 'all' or role == step.role:
+                    baked_df = step.bake(baked_df)
             except YeastRecipeError as ex:
                 raise ex
             except YeastValidationError as ex:

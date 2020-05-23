@@ -16,6 +16,7 @@ class CleanColumnNamesStep(Step):
     Parameters:
 
     - `case`: case that will be used on the columns, `snake` by default.
+    - `role`: String name of the role to control baking flows on new data. Default: `all`.
 
     Usage:
 
@@ -31,9 +32,9 @@ class CleanColumnNamesStep(Step):
     """
     cases = ['snake', 'lower_camel', 'upper_camel']
 
-    def __init__(self, case="snake"):
+    def __init__(self, case="snake", role='all'):
         self.case = case
-        super().__init__()
+        super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
         if self.case == 'snake':
@@ -41,7 +42,7 @@ class CleanColumnNamesStep(Step):
                 c: underscore(c.strip().replace('  ', ' ').replace(' ', '_')) for c in df.columns
             }
         elif self.case in ['upper_camel', 'lower_camel']:
-            upper = True if self.case == 'upper_camel' else False
+            upper = bool(self.case == 'upper_camel')
             mapper = {
                 c: camelize(
                     c.strip().replace('  ', ' ').replace(' ', ''),

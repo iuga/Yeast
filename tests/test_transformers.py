@@ -1,10 +1,14 @@
 import numpy as np
+import pandas as pd
 
 from yeast.transformers import StrToLower, StrToUpper, StrToSentence, StrToTitle, StrTrim
 from yeast.transformers import StrSlice, StrReplace, StrRemove, StrRemoveAll, MapValues
+from yeast.transformers import DateYear, DateMonth, DateQuarter, DateWeek, DateDay, DateDayOfWeek
+from yeast.transformers import DateHour, DateMinute, DateSecond, DateDayOfYear
 
 from data_samples import startrek_data as data
 from data_samples import startrek_characters as chars_data
+from data_samples import release_dates
 
 
 def test_str_to_lower(data):
@@ -88,3 +92,133 @@ def test_numerical_map_values(data):
     assert np.isnan(seasons[3])
     assert seasons[4] == 8
     assert seasons[5] == 2
+
+
+def test_extract_date_year(release_dates):
+    years = DateYear().resolve(release_dates, column='released').to_list()
+    # [1966, 1987, 1993, 1995, 2001, 2017, 2020, <NA>]
+    assert years[0] == 1966
+    assert years[1] == 1987
+    assert years[2] == 1993
+    assert years[3] == 1995
+    assert years[4] == 2001
+    assert years[5] == 2017
+    assert years[6] == 2020
+    assert pd.isna(years[7])
+
+
+def test_extract_date_month(release_dates):
+    feature = DateMonth().resolve(release_dates, column='released').to_list()
+    # [9, 9, 1, 1, 9, 9, 1, <NA>]
+    assert feature[0] == 9
+    assert feature[1] == 9
+    assert feature[2] == 1
+    assert feature[3] == 1
+    assert feature[4] == 9
+    assert feature[5] == 9
+    assert feature[6] == 1
+    assert pd.isna(feature[7])
+
+
+def test_extract_date_quarter(release_dates):
+    feature = DateQuarter().resolve(release_dates, column='released').to_list()
+    # [3, 3, 1, 1, 3, 3, 1, <NA>]
+    assert feature[0] == 3
+    assert feature[1] == 3
+    assert feature[2] == 1
+    assert feature[3] == 1
+    assert feature[4] == 3
+    assert feature[5] == 3
+    assert feature[6] == 1
+    assert pd.isna(feature[7])
+
+
+def test_extract_date_week(release_dates):
+    feature = DateWeek().resolve(release_dates, column='released').to_list()
+    # [36, 40, 53, 3, 39, 38, 4, <NA>]
+    assert feature[0] == 36
+    assert feature[1] == 40
+    assert feature[2] == 53
+    assert feature[3] == 3
+    assert feature[4] == 39
+    assert feature[5] == 38
+    assert feature[6] == 4
+    assert pd.isna(feature[7])
+
+
+def test_extract_date_day(release_dates):
+    feature = DateDay().resolve(release_dates, column='released').to_list()
+    # [8, 28, 3, 16, 26, 24, 23, <NA>]
+    assert feature[0] == 8
+    assert feature[1] == 28
+    assert feature[2] == 3
+    assert feature[3] == 16
+    assert feature[4] == 26
+    assert feature[5] == 24
+    assert feature[6] == 23
+    assert pd.isna(feature[7])
+
+
+def test_extract_date_dow(release_dates):
+    feature = DateDayOfWeek().resolve(release_dates, column='released').to_list()
+    # [3, 0, 6, 0, 2, 6, 3, <NA>]
+    assert feature[0] == 3
+    assert feature[1] == 0
+    assert feature[2] == 6
+    assert feature[3] == 0
+    assert feature[4] == 2
+    assert feature[5] == 6
+    assert feature[6] == 3
+    assert pd.isna(feature[7])
+
+
+def test_extract_date_doy(release_dates):
+    feature = DateDayOfYear().resolve(release_dates, column='released').to_list()
+    # [251, 271, 3, 16, 269, 267, 23, <NA>]
+    assert feature[0] == 251
+    assert feature[1] == 271
+    assert feature[2] == 3
+    assert feature[3] == 16
+    assert feature[4] == 269
+    assert feature[5] == 267
+    assert feature[6] == 23
+    assert pd.isna(feature[7])
+
+
+def test_extract_date_hour(release_dates):
+    feature = DateHour().resolve(release_dates, column='released').to_list()
+    # [0, 0, 12, 0, 13, 0, 15, <NA>]
+    assert feature[0] == 0
+    assert feature[1] == 0
+    assert feature[2] == 12
+    assert feature[3] == 0
+    assert feature[4] == 13
+    assert feature[5] == 0
+    assert feature[6] == 15
+    assert pd.isna(feature[7])
+
+
+def test_extract_date_minute(release_dates):
+    feature = DateMinute().resolve(release_dates, column='released').to_list()
+    # [0, 0, 15, 0, 53, 0, 0, <NA>]
+    assert feature[0] == 0
+    assert feature[1] == 0
+    assert feature[2] == 15
+    assert feature[3] == 0
+    assert feature[4] == 53
+    assert feature[5] == 0
+    assert feature[6] == 0
+    assert pd.isna(feature[7])
+
+
+def test_extract_date_seconds(release_dates):
+    feature = DateSecond().resolve(release_dates, column='released').to_list()
+    # [0, 0, 15, 0, 53, 0, 0, <NA>]
+    assert feature[0] == 0
+    assert feature[1] == 0
+    assert feature[2] == 23
+    assert feature[3] == 0
+    assert feature[4] == 0
+    assert feature[5] == 0
+    assert feature[6] == 0
+    assert pd.isna(feature[7])
