@@ -111,7 +111,7 @@
 <p>The Yeast library contains a number of different Steps but you might need to define your own
 operations using <code>CustomStep</code>:</p>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CustomStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">to_prepare=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_bake=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_validate=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CustomStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">to_prepare=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_bake=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_validate=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Custom Step was designed to extend all the power of Yeast Pipelines and cover all scenarios
 where the Yeast steps are not adequate. You might need to define your own operations.
 You could define your custom transformations, business rules or extend to third-party libraries.
@@ -130,6 +130,7 @@ business rules in Steps that could be shared across Recipes.</p>
 <li><code>to_validate</code>: perform validations on the data. Raise YeastValidationError on a problem.</li>
 <li><code>to_prepare</code>: prepare the step before bake, like train or calculate aggregations.</li>
 <li><code>to_bake</code>: execute the bake (processing). This is the core method.</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Inline Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>

@@ -131,7 +131,7 @@
 <ul>
 <li><a href="#groupbystep">GroupByStep</a>: Group by rows based on columns</li>
 <li><a href="#summarizestep">SummarizeStep</a>: Summarize the group by data</li>
-<li><a href="#dropduplicaterowsstep">DropDuplicateRowsStep</a>: Drop duplicate rows</li>
+<li><a href="#dropduplicaterowsstep">DropDuplicateRowsStep</a> / <a href="#dropduplicaterowsstep">DropDuplicatesStep</a>: Drop duplicate rows</li>
 </ul>
 <h4 id="imputation">Imputation<a class="headerlink" href="#imputation" title="Permanent link">&para;</a></h4>
 <p>Impute missing data:</p>
@@ -155,11 +155,12 @@
 <h2 id="columns-operations_1">Columns Operations<a class="headerlink" href="#columns-operations_1" title="Permanent link">&para;</a></h2>
 <h3 id="selectcolumnsstep">SelectColumnsStep<a class="headerlink" href="#selectcolumnsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SelectColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SelectColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of keep columns based on their names or selectors</p>
 <p>Parameters:</p>
 <ul>
-<li><code>columns</code>: list of string column names, selectors or combinations to keep</li>
+<li><code>columns</code>: list of string column names, selectors or combinations to keep
+-- <code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;]</span>
@@ -187,7 +188,7 @@
 </div>
 <h2 id="mutatestep">MutateStep<a class="headerlink" href="#mutatestep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MutateStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">transformers</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MutateStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">transformers</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Create or transform variables mantaining the number of rows appliyng a list of transformers.
 If more than one transformer is passed to a column, they will be executed in order.
 New variables overwrite existing variables of the same name.</p>
@@ -197,6 +198,7 @@ New variables overwrite existing variables of the same name.</p>
                   transformers. E.g: <code>{ column_name: Transformer }</code>.
                   It also support lambda functions. E.g: <code>{var : lambda df: df}</code> and a
                   list of transforers (lambda or Transformer: <code>{var: [tx1, tx2, ...]}</code></li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Create a variable using a lambda function</span>
@@ -265,12 +267,13 @@ New variables overwrite existing variables of the same name.</p>
 </div>
 <h3 id="renamecolumnsstep">RenameColumnsStep<a class="headerlink" href="#renamecolumnsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>RenameColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>RenameColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of renaming columns based on a mapping dictionary.
 Columns that don't exist are ignored.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>mapping</code>: rename mapping as { 'old_name': 'new_name', ... }</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">RenameColumnsStep</span><span class="p">({</span>
@@ -286,7 +289,7 @@ Columns that don't exist are ignored.</p>
 </div>
 <h3 id="castcolumnsstep">CastColumnsStep<a class="headerlink" href="#castcolumnsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CastColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CastColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of casting columns to a type based on a mapping dictionary.</p>
 <p>Available Types:</p>
 <ul>
@@ -299,7 +302,8 @@ Columns that don't exist are ignored.</p>
 </ul>
 <p>Parameters:</p>
 <ul>
-<li><code>mapping</code>: casting mapping as { 'column_name': 'type', ... }</li>
+<li><code>mapping</code>: Casting mapping as { 'column_name': 'type', ... }</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">CastColumnsStep</span><span class="p">({</span>
@@ -317,11 +321,12 @@ Columns that don't exist are ignored.</p>
 </div>
 <h3 id="dropcolumnsstep">DropColumnsStep<a class="headerlink" href="#dropcolumnsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>DropColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>DropColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of drop columns based on their names.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>columns</code>: list of string column names to drop or a selector.</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># DataFrame columns: [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;]</span>
@@ -337,7 +342,7 @@ Columns that don't exist are ignored.</p>
 </div>
 <h3 id="cleancolumnnamesstep">CleanColumnNamesStep<a class="headerlink" href="#cleancolumnnamesstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CleanColumnNamesStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">case='snake'</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CleanColumnNamesStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">case='snake'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of clean all columns names.</p>
 <p>Available cases:</p>
 <ul>
@@ -348,6 +353,7 @@ Columns that don't exist are ignored.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>case</code>: case that will be used on the columns, <code>snake</code> by default.</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># DataFrame columns: [&#39;TheName&#39;, &#39;B&#39;, &#39;the name&#39;, &#39;Other Name&#39;]</span>
@@ -363,12 +369,13 @@ Columns that don't exist are ignored.</p>
 </div>
 <h3 id="replacenastep">ReplaceNAStep<a class="headerlink" href="#replacenastep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>ReplaceNAStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">value=0</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>ReplaceNAStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">value=0</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace missing values</p>
 <p>Parameters:</p>
 <ul>
 <li><code>mapping</code>: replacing mapping as <code>{'column': replacement_value, ...}</code> or string column name.</li>
 <li><code>value</code>: value to replace the NAs if mapping is a string column name. Default: <code>0</code></li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Replace NA values in one column</span>
@@ -391,7 +398,7 @@ Columns that don't exist are ignored.</p>
 <h2 id="row-operations_1">Row Operations<a class="headerlink" href="#row-operations_1" title="Permanent link">&para;</a></h2>
 <h3 id="filterrowsstep">FilterRowsStep<a class="headerlink" href="#filterrowsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>FilterRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">expression</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>FilterRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">expression</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of filtering out rows based on boolean conditions.</p>
 <p>Operators:</p>
 <ul>
@@ -407,6 +414,7 @@ Columns that don't exist are ignored.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>expression</code>: The query string to evaluate.</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Subset a DataFrame based on a numeric variable</span>
@@ -437,12 +445,13 @@ Columns that don't exist are ignored.</p>
 </div>
 <h3 id="sortrowsstep">SortRowsStep<a class="headerlink" href="#sortrowsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SortRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SortRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of sorting rows based on columns.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>columns</code>: list of string column names to sort by</li>
 <li><code>ascending</code>: boolean flag wo sort ascending vs. descending</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">SortRowsStep</span><span class="p">([</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
@@ -456,7 +465,7 @@ Columns that don't exist are ignored.</p>
 </div>
 <h3 id="dropduplicaterowsstep">DropDuplicateRowsStep<a class="headerlink" href="#dropduplicaterowsstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>DropDuplicateRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">keep='first'</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>DropDuplicateRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">keep='first'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of remove duplicate rows, optionally only considering certain columns.</p>
 <p>Parameters:</p>
 <ul>
@@ -465,6 +474,7 @@ Columns that don't exist are ignored.</p>
                                 duplicates except for the first occurrence. <code>last</code> : Drop
                                 duplicates except for the last occurrence. <code>none</code> : Drop
                                 all duplicates.</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Remove duplicates considering all columns, keep the first occurence</span>
@@ -487,7 +497,7 @@ Columns that don't exist are ignored.</p>
 <h2 id="aggregations_1">Aggregations<a class="headerlink" href="#aggregations_1" title="Permanent link">&para;</a></h2>
 <h3 id="groupbystep">GroupByStep<a class="headerlink" href="#groupbystep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>GroupByStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>GroupByStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Most data operations are done on groups defined by columns.
 GroupByStep takes an existing DataFrame and converts it into a Pandas DataFrameGroupBy where
 aggregation/summarization/mutation operations are performed "by group".</p>
@@ -498,6 +508,7 @@ aggregation/summarization/mutation operations are performed "by group".</p>
 <p>Parameters:</p>
 <ul>
 <li><code>columns</code>: list of string column names to group by or a selector</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Basic Group By and an Aggregation</span>
@@ -518,7 +529,7 @@ aggregation/summarization/mutation operations are performed "by group".</p>
 </div>
 <h3 id="summarizestep">SummarizeStep<a class="headerlink" href="#summarizestep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SummarizeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">aggregations</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SummarizeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">aggregations</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Create one or more numeric variables summarizing the columns of an existing group created by
 GroupByStep() resulting in one row in the output for each group. Please refer to the
 Aggregations documentation to see the complete list of supported aggregations.
@@ -528,6 +539,7 @@ The most used ones are: <code>AggMean</code>, <code>AggMedian</code>, <code>AggC
 <li><code>aggregations</code>: dictionary with the aggregations to perform. The key is the new column name
                   where the value is the specification of the aggregation to perform.
                   For example: <code>{'new_column_name': AggMean('column')}</code></li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Basic Summarization on a Group</span>
@@ -549,13 +561,14 @@ The most used ones are: <code>AggMean</code>, <code>AggMedian</code>, <code>AggC
 <h2 id="imputation_1">Imputation<a class="headerlink" href="#imputation_1" title="Permanent link">&para;</a></h2>
 <h3 id="meanimputestep">MeanImputeStep<a class="headerlink" href="#meanimputestep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MeanImputeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MeanImputeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Impute numeric data using the mean</p>
 <p>MeanImputeStep estimates the variable mean from the prepare data then applies the new values
 to new data sets using these averages.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>selector</code>: string list of column names or a selector to impute</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Impute the age and size column using the mean from the training set</span>
@@ -574,7 +587,7 @@ to new data sets using these averages.</p>
 <h2 id="workflows_1">Workflows<a class="headerlink" href="#workflows_1" title="Permanent link">&para;</a></h2>
 <h3 id="leftjoinstep">LeftJoinStep<a class="headerlink" href="#leftjoinstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>LeftJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>LeftJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Left Join two DataFrames together</p>
 <p>Return all rows from <code>x</code>, and all columns from <code>x</code> and <code>y</code>.
 Rows in <code>x</code> with no match in <code>y</code> will have NA values in the new columns.
@@ -585,6 +598,7 @@ are returned.</p>
 <li><code>y</code>: DataFrame or Recipe to merge with.</li>
 <li><code>by</code>: optional colum name list to merge by. Default: <code>None</code></li>
 <li><code>df</code>: optional df to be used as input if <code>y</code> is a Recipe</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Left Join with another DataFrame</span>
@@ -614,7 +628,7 @@ are returned.</p>
 </div>
 <h3 id="rightjoinstep">RightJoinStep<a class="headerlink" href="#rightjoinstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>RightJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>RightJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Right Join two DataFrames together</p>
 <p>Return all rows from <code>y</code>, and all columns from <code>x</code> and <code>y</code>. Rows in <code>y</code> with no match in <code>x</code>
 will have <code>NA</code> values in the new columns. If there are multiple matches between <code>x</code> and <code>y</code>,
@@ -624,6 +638,7 @@ all combinations of the matches are returned.</p>
 <li><code>y</code>: DataFrame or Recipe to merge with.</li>
 <li><code>by</code>: optional colum name list to merge by. Default: <code>None</code></li>
 <li><code>df</code>: optional df to be used as input if <code>y</code> is a Recipe</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Right Join with another DataFrame</span>
@@ -653,7 +668,7 @@ all combinations of the matches are returned.</p>
 </div>
 <h3 id="innerjoinstep">InnerJoinStep<a class="headerlink" href="#innerjoinstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>InnerJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>InnerJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Inner Join two DataFrames together</p>
 <p>Return all rows from <code>x</code> where there are matching values in <code>y</code>, and all columns from <code>x</code> and
 <code>y</code>. If there are multiple matches between <code>x</code> and <code>y</code>, all combination of the matches are
@@ -663,6 +678,7 @@ returned.</p>
 <li><code>y</code>: DataFrame or Recipe to merge with.</li>
 <li><code>by</code>: optional colum name list to merge by. Default: <code>None</code></li>
 <li><code>df</code>: optional df to be used as input if <code>y</code> is a Recipe</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Inner Join with another DataFrame</span>
@@ -692,7 +708,7 @@ returned.</p>
 </div>
 <h3 id="fulljoinstep">FullJoinStep<a class="headerlink" href="#fulljoinstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>FullJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>FullJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Full Join two DataFrames together</p>
 <p>Return all rows and all columns from both <code>x</code> and <code>y</code>.
 Where there are not matching values, returns <code>NA</code> for the one missing.</p>
@@ -701,6 +717,7 @@ Where there are not matching values, returns <code>NA</code> for the one missing
 <li><code>y</code>: DataFrame or Recipe to merge with.</li>
 <li><code>by</code>: optional colum name list to merge by. Default: <code>None</code></li>
 <li><code>df</code>: optional df to be used as input if <code>y</code> is a Recipe</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Full Outer Join with another DataFrame</span>
@@ -731,7 +748,7 @@ Where there are not matching values, returns <code>NA</code> for the one missing
 <h2 id="extensions_1">Extensions<a class="headerlink" href="#extensions_1" title="Permanent link">&para;</a></h2>
 <h3 id="customstep">CustomStep<a class="headerlink" href="#customstep" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CustomStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">to_prepare=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_bake=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_validate=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CustomStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">to_prepare=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_bake=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_validate=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Custom Step was designed to extend all the power of Yeast Pipelines and cover all scenarios
 where the Yeast steps are not adequate. You might need to define your own operations.
 You could define your custom transformations, business rules or extend to third-party libraries.
@@ -750,6 +767,7 @@ business rules in Steps that could be shared across Recipes.</p>
 <li><code>to_validate</code>: perform validations on the data. Raise YeastValidationError on a problem.</li>
 <li><code>to_prepare</code>: prepare the step before bake, like train or calculate aggregations.</li>
 <li><code>to_bake</code>: execute the bake (processing). This is the core method.</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Inline Usage:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>

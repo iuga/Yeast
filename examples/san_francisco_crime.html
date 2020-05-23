@@ -113,10 +113,9 @@
 <h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
 <p>From Sunset to SOMA, and Marina to Excelsior, this dataset provides nearly 12 years of crime reports from across all of San Francisco's neighborhoods. Given time and location, you must predict the category of crime that occurred.</p>
 <h3 id="approach">Approach<a class="headerlink" href="#approach" title="Permanent link">&para;</a></h3>
-<p>We will apply a full Data Science life cycle composed of the following steps:</p>
+<p>We will apply a full Data Science Development life cycle composed of the following steps:</p>
 <ul>
 <li>Data Wrangling to perform all the necessary actions to clean the dataset.</li>
-<li>Data Exploration for understanding the variables and create intuition on the data.</li>
 <li>Feature Engineering to create additional variables from the existing.</li>
 <li>Data Normalization and Data Transformation for preparing the dataset for the learning algorithms.</li>
 <li>Training / Testing data creation to evaluate the performance of our model.</li>
@@ -131,39 +130,205 @@
 <span class="kn">from</span> <span class="nn">yeast</span> <span class="kn">import</span> <span class="n">Recipe</span>
 <span class="kn">from</span> <span class="nn">yeast.steps</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">yeast.transformers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">yeast.selectors</span> <span class="kn">import</span> <span class="o">*</span>
 </code></pre></div>
 
 
-<div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sf_train.csv&#39;</span><span class="p">)</span>
-<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sf_test.csv&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-
-<div class="codehilite"><pre><span></span><code><span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">train</span><span class="o">.</span><span class="n">shape</span>
+<div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../data/sf_train.csv&#39;</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../data/sf_test.csv&#39;</span><span class="p">)</span>
 </code></pre></div>
 
 
 <h3 id="the-cleaning-recipe">The cleaning recipe<a class="headerlink" href="#the-cleaning-recipe" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
-    <span class="c1"># This dataset contains 2323 duplicates that we should remove</span>
-    <span class="n">DropDuplicateRowsStep</span><span class="p">(),</span>
+    <span class="c1"># Normalize all column names</span>
+    <span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">),</span>
+    <span class="c1"># This dataset contains 2323 duplicates that we should remove only on training set</span>
+    <span class="n">DropDuplicateRowsStep</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s1">&#39;training&#39;</span><span class="p">),</span>
     <span class="c1"># Some Geolocation points are missplaced</span>
     <span class="c1"># We will replace the outlying coordinates with the average coordinates</span>
     <span class="n">MutateStep</span><span class="p">({</span>
-        <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">MapValues</span><span class="p">({</span><span class="o">-</span><span class="mf">120.5</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">}),</span>
-        <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="n">MapValues</span><span class="p">({</span><span class="mi">90</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">})</span>
+        <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">MapValues</span><span class="p">({</span><span class="o">-</span><span class="mf">120.5</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">}),</span>
+        <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">MapValues</span><span class="p">({</span><span class="mi">90</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">})</span>
     <span class="p">}),</span>
-    <span class="n">MeanImputeStep</span><span class="p">([</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">])</span>
+    <span class="n">MeanImputeStep</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]),</span>
+    <span class="c1"># Extract some features drom the date:</span>
+    <span class="n">CastStep</span><span class="p">({</span><span class="s1">&#39;dates&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime&#39;</span><span class="p">}),</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="n">DateYear</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;quarter&#39;</span><span class="p">:</span> <span class="n">DateQuarter</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;month&#39;</span><span class="p">:</span> <span class="n">DateMonth</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;week&#39;</span><span class="p">:</span> <span class="n">DateWeek</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;day&#39;</span><span class="p">:</span> <span class="n">DateDay</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;hour&#39;</span><span class="p">:</span> <span class="n">DateHour</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;minute&#39;</span><span class="p">:</span> <span class="n">DateMinute</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;dow&#39;</span><span class="p">:</span> <span class="n">DateDayOfWeek</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;doy&#39;</span><span class="p">:</span> <span class="n">DateDayOfYear</span><span class="p">(</span><span class="s1">&#39;dates&#39;</span><span class="p">)</span>
+    <span class="p">}),</span>
+    <span class="c1"># Calculate the tenure: days(date - min(date)):</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s1">&#39;tenure&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;dates&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dates&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">days</span><span class="p">)</span>
+    <span class="p">}),</span>
+    <span class="c1"># Is it on a block?</span>
+    <span class="n">MutateStep</span><span class="p">({</span>
+        <span class="s1">&#39;is_block&#39;</span><span class="p">:</span> <span class="n">StrContains</span><span class="p">(</span><span class="s1">&#39;block&#39;</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">}),</span>
+    <span class="c1"># Convert the category (target) into a numerical feature:</span>
+    <span class="c1"># OrdinalScoreStep(&#39;category&#39;),</span>
+    <span class="c1"># Drop irrelevant Columns</span>
+    <span class="n">DropColumnsStep</span><span class="p">([</span><span class="s1">&#39;dates&#39;</span><span class="p">,</span> <span class="s1">&#39;day_of_week&#39;</span><span class="p">]),</span>
+    <span class="c1"># Cast the numerical features</span>
+    <span class="n">CastStep</span><span class="p">({</span>
+        <span class="s1">&#39;is_block&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span>  <span class="c1"># True and False to 1 and 0</span>
+    <span class="p">}),</span>
+    <span class="c1"># Keep only numerical features</span>
+    <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">()),</span>
 <span class="p">])</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
 </code></pre></div>
 
 
 <div class="codehilite"><pre><span></span><code><span class="n">baked_train</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-<span class="n">baked_test</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-<span class="n">baked_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">baked_test</span>  <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;testing&quot;</span><span class="p">)</span>
 </code></pre></div>
 
+
+<div class="codehilite"><pre><span></span><code><span class="n">baked_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>726598</th>
+      <th>144656</th>
+      <th>604682</th>
+      <th>680623</th>
+      <th>608770</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x</th>
+      <td>-122.474</td>
+      <td>-122.435</td>
+      <td>-122.429</td>
+      <td>-122.403</td>
+      <td>-122.42</td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td>37.76</td>
+      <td>37.7249</td>
+      <td>37.7818</td>
+      <td>37.7754</td>
+      <td>37.7393</td>
+    </tr>
+    <tr>
+      <th>year</th>
+      <td>2005</td>
+      <td>2013</td>
+      <td>2006</td>
+      <td>2005</td>
+      <td>2006</td>
+    </tr>
+    <tr>
+      <th>quarter</th>
+      <td>1</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>month</th>
+      <td>1</td>
+      <td>6</td>
+      <td>10</td>
+      <td>9</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>week</th>
+      <td>4</td>
+      <td>24</td>
+      <td>42</td>
+      <td>38</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>day</th>
+      <td>27</td>
+      <td>13</td>
+      <td>17</td>
+      <td>21</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>hour</th>
+      <td>7</td>
+      <td>19</td>
+      <td>10</td>
+      <td>17</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>minute</th>
+      <td>0</td>
+      <td>35</td>
+      <td>51</td>
+      <td>30</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>dow</th>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>doy</th>
+      <td>27</td>
+      <td>164</td>
+      <td>290</td>
+      <td>264</td>
+      <td>265</td>
+    </tr>
+    <tr>
+      <th>tenure</th>
+      <td>752</td>
+      <td>3811</td>
+      <td>1380</td>
+      <td>989</td>
+      <td>1355</td>
+    </tr>
+    <tr>
+      <th>is_block</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 <h2 id="links-resources">Links &amp; Resources<a class="headerlink" href="#links-resources" title="Permanent link">&para;</a></h2>
 <ul>

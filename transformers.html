@@ -171,6 +171,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><a href="#strslice">StrSlice</a>: Extract and replace substrings</li>
 <li><a href="#strremove">StrRemove</a>: Remove first matched pattern</li>
 <li><a href="#strremoveall">StrRemoveAll</a>: Remove all matched patterns</li>
+<li><a href="#strcontains">StrContains</a>: Test if pattern is contained on a string column</li>
 </ul>
 <h4 id="rank-transformers">Rank Transformers<a class="headerlink" href="#rank-transformers" title="Permanent link">&para;</a></h4>
 <p>Returns the sample ranks of the values in a column:</p>
@@ -184,7 +185,41 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><a href="#rankmean">RankMean</a>: Return the mean/average value</li>
 <li><a href="#rankpercent">RankPercent</a>: A number between 0 and 1 computed by rescaling <code>RankMin</code> to <code>[0, 1]</code></li>
 </ul>
+<h4 id="date-transformers">Date Transformers<a class="headerlink" href="#date-transformers" title="Permanent link">&para;</a></h4>
+<p>Returns components of a Date or DateTime column:</p>
+<ul>
+<li><a href="#dateyear">DateYear</a>: Get the year</li>
+<li><a href="#datequarter">DateQuarter</a>: Get the quarter</li>
+<li><a href="#datemonth">DateMonth</a>: Get the month</li>
+<li><a href="#dateweek">DateWeek</a>: Get the week</li>
+<li><a href="#dateday">DateDay</a>: Get the day</li>
+<li><a href="#datedayofweek">DateDayOfWeek</a>: Get the day of the week where Monday=0 and Sunday=6.</li>
+<li><a href="#datedayofyear">DateDayOfYear</a>: Get the day of the year.</li>
+<li><a href="#datehour">DateHour</a>: Get the hour</li>
+<li><a href="#dateminute">DateMinute</a>: Get the minute</li>
+<li><a href="#datesecond">DateSecond</a>: Get the second</li>
+</ul>
 <h2 id="transformer-documentation">Transformer Documentation<a class="headerlink" href="#transformer-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="mapvalues">MapValues<a class="headerlink" href="#mapvalues" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>MapValues</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Replace specified values with new values.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Map String/Categorical values</span>
+<span class="c1"># Replace <code>old_value</code> with <code>new_value</code></span>
+<span class="n">MapValues</span><span class="p">({</span><span class="s1">&#39;old_value&#39;</span><span class="p">:</span> <span class="s1">&#39;new_value&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">})</span>
+
+<span class="c1"># Map Numerical values</span>
+<span class="c1"># Replace <code>90</code> with <code>NaN</code></span>
+<span class="n">MapValues</span><span class="p">({</span><span class="mi">90</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">})</span>
+</code></pre></div>
+
+
+<p>Parameters:</p>
+<ul>
+<li><code>mapping</code>: Specify different replacement values for different existing values.
+           For example: <code>{'old': 'new'}</code> replace the value <code>old</code> with <code>new</code>.</li>
+</ul></div>
+</div>
 <h3 id="strtoupper">StrToUpper<a class="headerlink" href="#strtoupper" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToUpper</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
@@ -286,24 +321,25 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>pattern</code>: Pattern or string to look for.</li>
 </ul></div>
 </div>
-<h3 id="mapvalues">MapValues<a class="headerlink" href="#mapvalues" title="Permanent link">&para;</a></h3>
+<h3 id="strcontains">StrContains<a class="headerlink" href="#strcontains" title="Permanent link">&para;</a></h3>
 <div class="autodoc">
-<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>MapValues</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
-<div class="autodoc-docstring"><p>Replace specified values with new values.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Map String/Categorical values</span>
-<span class="c1"># Replace <code>old_value</code> with <code>new_value</code></span>
-<span class="n">MapValues</span><span class="p">({</span><span class="s1">&#39;old_value&#39;</span><span class="p">:</span> <span class="s1">&#39;new_value&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">})</span>
-
-<span class="c1"># Map Numerical values</span>
-<span class="c1"># Replace <code>90</code> with <code>NaN</code></span>
-<span class="n">MapValues</span><span class="p">({</span><span class="mi">90</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">})</span>
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrContains</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">case=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">regex=True</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Test if pattern or regex is contained within a string column.
+Return a boolean variable ( True and False ).</p>
+<div class="codehilite"><pre><span></span><code><span class="n">MutateStep</span><span class="p">({</span>
+    <span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="n">StrContains</span><span class="p">(</span><span class="s2">&quot;_temp&quot;</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">}),</span>
+<span class="c1"># You can convert to numerical (0 and 1) with:</span>
+<span class="n">CastStep</span><span class="p">({</span><span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">})</span>
 </code></pre></div>
 
 
 <p>Parameters:</p>
 <ul>
-<li><code>mapping</code>: Specify different replacement values for different existing values.
-           For example: <code>{'old': 'new'}</code> replace the value <code>old</code> with <code>new</code>.</li>
+<li><code>pattern</code>: Pattern or string to look for.</li>
+<li><code>case</code>: If True, case sensitive.</li>
+<li><code>regex</code>: If True, assumes the pat is a regular expression. If False, treats the pat as a
+           literal string.</li>
 </ul></div>
 </div>
 <h3 id="rank-ranktransformer">Rank / RankTransformer<a class="headerlink" href="#rank-ranktransformer" title="Permanent link">&para;</a></h3>
@@ -392,6 +428,57 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>ascending</code>: boolean with the order of the row numbers</li>
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
+</div>
+<h3 id="dateyear">DateYear<a class="headerlink" href="#dateyear" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateYear</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the year of a Date column</p></div>
+</div>
+<h3 id="datequarter">DateQuarter<a class="headerlink" href="#datequarter" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateQuarter</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the quarter of a Date column</p></div>
+</div>
+<h3 id="datemonth">DateMonth<a class="headerlink" href="#datemonth" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateMonth</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the month of a Date column</p></div>
+</div>
+<h3 id="dateweek">DateWeek<a class="headerlink" href="#dateweek" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateWeek</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the week of a Date column</p></div>
+</div>
+<h3 id="dateday">DateDay<a class="headerlink" href="#dateday" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateDay</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the day of a Date column</p></div>
+</div>
+<h3 id="datedayofweek">DateDayOfWeek<a class="headerlink" href="#datedayofweek" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateDayOfWeek</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the day of week of a Date column.
+The day of the week is Monday=0 and Sunday=6</p></div>
+</div>
+<h3 id="datedayofyear">DateDayOfYear<a class="headerlink" href="#datedayofyear" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateDayOfYear</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the day of year of a Date column.</p></div>
+</div>
+<h3 id="datehour">DateHour<a class="headerlink" href="#datehour" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateHour</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the hour of a Date column.</p></div>
+</div>
+<h3 id="dateminute">DateMinute<a class="headerlink" href="#dateminute" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateMinute</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the minute of a Date column.</p></div>
+</div>
+<h3 id="datesecond">DateSecond<a class="headerlink" href="#datesecond" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateSecond</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Extract the seconds of a Date column.</p></div>
 </div>
 <h2 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
 <ul>

@@ -111,59 +111,132 @@
 <p>Eager to get started? This part of the documentation, begins with some background information about
 Yeast, then focuses on step-by-step instructions for Recipe development.</p>
 <h2 id="a-minimal-recipe">A Minimal Recipe<a class="headerlink" href="#a-minimal-recipe" title="Permanent link">&para;</a></h2>
-<p>A minimal Yeast Recipe looks something like this:</p>
+<p>The idea of a <code>Recipe</code> is to define a blueprint of data transformations that are executed
+sequentially to process your data. A Recipe executes an ordered list of <code>Steps</code> that are used to
+<code>bake</code>/transform your data. A minimal Yeast Recipe looks something like this:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">Yeast</span> <span class="kn">import</span> <span class="n">Recipe</span><span class="p">,</span> <span class="n">steps</span>
 
 <span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
   <span class="c1"># Convert all columns names to Snake Case:</span>
-  <span class="n">steps</span><span class="o">.</span><span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">)</span>
+  <span class="n">steps</span><span class="o">.</span><span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">),</span>
+  <span class="c1"># Drop duplicated rows</span>
+  <span class="n">steps</span><span class="o">.</span><span class="n">DropDuplicatesStep</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;training&quot;</span><span class="p">)</span>  
 <span class="p">])</span>
 
-<span class="n">baked_df</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="c1"># Prepare the recipe:</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+
+<span class="c1"># Process the training and testing set</span>
+<span class="n">baked_train</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;training&quot;</span><span class="p">)</span>
+<span class="n">baked_test</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;testing&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 
 <p>So what did that code do?</p>
 <ul>
 <li>First we imported the <code>Recipe</code> class and the <code>steps</code> module. An instance of a recipe will be our
-  list of steps to process data while steps contains a collection of well tested methods to
-  simplify the job.</li>
+  blueprint while the steps module contains a collection of well tested methods to simplify the job.</li>
 <li>Next we created an instance of <code>Recipe</code> that will receive a list of steps that will be executed
   sequentially in order to process and clean the data. As an example <code>CleanColumnNamesStep</code> will
   rename all columns to match the snake case convention.</li>
 <li>Then we used <code>prepare(data)</code> to prepare the recipe before baking (processing). Some steps require
   preparation before be baked (executed). For example: calculate the mean before imputation.</li>
-<li>Finally, we called <code>bake(data)</code> to execute all the steps on <code>data</code> (a Pandas DataFrame).</li>
+<li>Finally, we called <code>bake(data)</code> to execute all the steps on the <code>data</code> (a Pandas DataFrame).</li>
 </ul>
+<p>What about the roles?</p>
+<p>Roles are strings that can be used to define execution flows. By default all steps and recipes contains
+the role <code>all</code>, meaning that all steps are going to be executed during <code>bake</code>. However, there are times
+where we would like to circumvent some steps while baking on new data, for example, when some variables
+are not available on the test set. The correct approach for this is to define a role in the step, in this
+example was <code>DropDuplicatesStep</code> with <code>role="training"</code> indicating that this step will be executed when bake
+has the role <code>all</code> or <code>training</code>. All other roles will skip the execution of this step, for example, <code>testing</code>.</p>
 <h2 id="the-steps">The Steps<a class="headerlink" href="#the-steps" title="Permanent link">&para;</a></h2>
 <p>Steps are a collection of well-tested instruments that you can use without too much study in your
-data processing flow because they cover a wide range of use-cases. Each one has its own signature and
-specifics that you can discover on the <a href="reference.html">API reference</a>. One example:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Convert all columns names to Snake Case:</span>
-<span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">)</span>
+data processing flows. Each one has its own signature and specifics that you can discover on
+the <a href="reference.html">API reference</a>. This library will be evolving to cover more use cases.
+Some example:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">Yeast.steps</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+  <span class="c1"># Convert all columns names to Snake Case:</span>
+  <span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">),</span>
+  <span class="c1"># Create new columns/variables:</span>
+  <span class="n">MutateStep</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">StrToLower</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)}),</span>
+  <span class="c1"># Aggregate features based on groups</span>
+  <span class="n">GroupByStep</span><span class="p">(</span><span class="s1">&#39;city&#39;</span><span class="p">),</span> <span class="n">SummarizeStep</span><span class="p">({</span><span class="s1">&#39;total_sales&#39;</span><span class="p">:</span> <span class="n">AggSum</span><span class="p">(</span><span class="s1">&#39;sales&#39;</span><span class="p">)})</span>
+<span class="p">])</span>
 </code></pre></div>
 
 
 <h2 id="selectors">Selectors<a class="headerlink" href="#selectors" title="Permanent link">&para;</a></h2>
-<p>The <a href="selectors.html">selectors</a> can select columns based on their data type or name:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Shortcut to keep only the numerical columns</span>
-<span class="n">SelectColumnsStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">())</span>
+<p><a href="selectors.html">Selectors</a> are convenience classes that you can use to select columns based on
+some conditions, like their data type or name:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">Yeast.selectors</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+  <span class="c1"># Shortcut to keep only the numerical columns</span>
+  <span class="n">SelectColumnsStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">()),</span>
+  <span class="c1"># Shortcut to keep only the numerical columns</span>
+  <span class="n">SelectColumnsStep</span><span class="p">([</span><span class="n">AllString</span><span class="p">(),</span> <span class="n">AllMatching</span><span class="p">(</span><span class="s1">&#39;ed$&#39;</span><span class="p">)])</span>
+<span class="p">])</span>
 </code></pre></div>
 
 
-<h2 id="recipes">Recipes<a class="headerlink" href="#recipes" title="Permanent link">&para;</a></h2>
-<p>A Recipe executes an ordered list of steps that will be used to prepare and bake/transform the data.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Define a recipe of steps to process your data</span>
+<h2 id="filtering-data">Filtering Data<a class="headerlink" href="#filtering-data" title="Permanent link">&para;</a></h2>
+<p>In almost all of your data analysis you will need a method to filter out observations based on some
+conditions. <code>FilterStep</code> provides you a straightforward approach to define those rules and execute them:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">Yeast.selectors</span> <span class="kn">import</span> <span class="o">*</span>
+
 <span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
-  <span class="c1"># Convert all columns names to Snake Case:</span>
-  <span class="n">CleanColumnNamesStep</span><span class="p">(</span><span class="s1">&#39;snake&#39;</span><span class="p">)</span>
+  <span class="c1"># Filter out all ages less than 15 and where closed_account are 1</span>
+  <span class="n">FilterStep</span><span class="p">(</span><span class="s1">&#39;age &lt; 15 &amp; closed_account == 1&#39;</span><span class="p">)</span>
 <span class="p">])</span>
+</code></pre></div>
 
-<span class="c1"># Prepare the recipe</span>
-<span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
 
-<span class="c1"># Execute (bake) the recipe</span>
-<span class="n">clean_data</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+<h2 id="transforming-variables">Transforming Variables<a class="headerlink" href="#transforming-variables" title="Permanent link">&para;</a></h2>
+<p><a href="transformers.html">Transformers</a> are convenience classes that you can use to transform your data or
+create new variables based on those transformations. Some examples:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">Yeast.transformers</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+  <span class="n">MutateStep</span><span class="p">({</span>
+    <span class="c1"># Replace all occurrences of &quot;--&quot; with &quot;-&quot;</span>
+    <span class="s1">&#39;job_title&#39;</span><span class="p">:</span> <span class="n">StrReplaceAll</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">),</span>
+    <span class="c1"># Convert the name into Title Case</span>
+    <span class="s1">&#39;fullname&#39;</span><span class="p">:</span> <span class="n">StrToTitle</span><span class="p">(),</span>
+    <span class="c1"># Remove trail/leading whitespaces from the text</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">StrTrim</span><span class="p">()</span>
+  <span class="p">})</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<h2 id="aggregations">Aggregations<a class="headerlink" href="#aggregations" title="Permanent link">&para;</a></h2>
+<p>Most data operations <a href="aggregations.html">are done on groups</a> defined by columns. <code>GroupByStep</code> takes an existing dataset
+and converts it into a Pandas DataFrameGroupBy where aggregation/summarization/mutation operations are
+performed "by group" using <code>SummarizeStep</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+  <span class="c1"># Group the data by client_id and branch columns</span>
+  <span class="n">GroupByStep</span><span class="p">([</span><span class="s1">&#39;client_id&#39;</span><span class="p">,</span> <span class="s1">&#39;branch_id&#39;</span><span class="p">]),</span>
+  <span class="c1"># Let&#39;s summarize the data:</span>
+  <span class="n">SummarizeStep</span><span class="p">({</span>
+    <span class="c1"># The total sales are the sum of the ticket_total</span>
+    <span class="s1">&#39;total_sales&#39;</span><span class="p">:</span> <span class="n">AggSum</span><span class="p">(</span><span class="s1">&#39;ticket_total&#39;</span><span class="p">),</span>
+    <span class="c1"># Number of sales to the client in that branch</span>
+    <span class="s1">&#39;number_of_sales&#39;</span><span class="p">:</span> <span class="n">AggCount</span><span class="p">(</span><span class="s1">&#39;ticket_id&#39;</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">])</span>
+</code></pre></div>
+
+
+<h2 id="merging-two-datasets">Merging Two Datasets<a class="headerlink" href="#merging-two-datasets" title="Permanent link">&para;</a></h2>
+<p>In practice, you’ll normally have many tables that contribute to an analysis, and you need flexible
+tools to combine them. Yeast supports <a href="merge.html">four types of joins</a>: left, right, inner and full:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+  <span class="c1"># Left join with the `sales_df` dataset the current recipe</span>
+  <span class="n">LeftJoinStep</span><span class="p">(</span><span class="n">sales_df</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;client_id&quot;</span><span class="p">)</span>
+<span class="p">])</span>
 </code></pre></div>
 
 
