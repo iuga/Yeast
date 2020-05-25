@@ -131,6 +131,9 @@
 <span class="kn">from</span> <span class="nn">yeast.steps</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">yeast.transformers</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">yeast.selectors</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Machine Learning imports</span>
+<span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
 </code></pre></div>
 
 
@@ -173,21 +176,21 @@
     <span class="n">MutateStep</span><span class="p">({</span>
         <span class="s1">&#39;is_block&#39;</span><span class="p">:</span> <span class="n">StrContains</span><span class="p">(</span><span class="s1">&#39;block&#39;</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="p">}),</span>
-    <span class="c1"># Convert the category (target) into a numerical feature:</span>
-    <span class="c1"># OrdinalScoreStep(&#39;category&#39;),</span>
     <span class="c1"># Drop irrelevant Columns</span>
     <span class="n">DropColumnsStep</span><span class="p">([</span><span class="s1">&#39;dates&#39;</span><span class="p">,</span> <span class="s1">&#39;day_of_week&#39;</span><span class="p">]),</span>
     <span class="c1"># Cast the numerical features</span>
     <span class="n">CastStep</span><span class="p">({</span>
         <span class="s1">&#39;is_block&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span>  <span class="c1"># True and False to 1 and 0</span>
     <span class="p">}),</span>
+    <span class="c1"># Convert the category (target) into a numerical feature:</span>
+    <span class="n">OrdinalEncoderStep</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s1">&#39;training&#39;</span><span class="p">),</span>
     <span class="c1"># Keep only numerical features</span>
     <span class="n">SelectStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">()),</span>
 <span class="p">])</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
 </code></pre></div>
 
 
-<div class="codehilite"><pre><span></span><code><span class="n">baked_train</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="n">baked_train</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;training&quot;</span><span class="p">)</span>
 <span class="n">baked_test</span>  <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;testing&quot;</span><span class="p">)</span>
 </code></pre></div>
 
@@ -214,125 +217,252 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>726598</th>
-      <th>144656</th>
-      <th>604682</th>
-      <th>680623</th>
-      <th>608770</th>
+      <th>304544</th>
+      <th>158399</th>
+      <th>244432</th>
+      <th>514937</th>
+      <th>16967</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <th>category</th>
+      <td>25</td>
+      <td>16</td>
+      <td>21</td>
+      <td>16</td>
+      <td>7</td>
+    </tr>
+    <tr>
       <th>x</th>
-      <td>-122.474</td>
-      <td>-122.435</td>
-      <td>-122.429</td>
+      <td>-122.391</td>
+      <td>-122.468</td>
+      <td>-122.422</td>
       <td>-122.403</td>
-      <td>-122.42</td>
+      <td>-122.427</td>
     </tr>
     <tr>
       <th>y</th>
-      <td>37.76</td>
-      <td>37.7249</td>
-      <td>37.7818</td>
-      <td>37.7754</td>
-      <td>37.7393</td>
+      <td>37.734</td>
+      <td>37.717</td>
+      <td>37.7416</td>
+      <td>37.7982</td>
+      <td>37.7692</td>
     </tr>
     <tr>
       <th>year</th>
-      <td>2005</td>
+      <td>2011</td>
       <td>2013</td>
-      <td>2006</td>
-      <td>2005</td>
-      <td>2006</td>
+      <td>2012</td>
+      <td>2008</td>
+      <td>2015</td>
     </tr>
     <tr>
       <th>quarter</th>
       <td>1</td>
       <td>2</td>
-      <td>4</td>
-      <td>3</td>
-      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>month</th>
+      <td>3</td>
+      <td>4</td>
       <td>1</td>
-      <td>6</td>
-      <td>10</td>
-      <td>9</td>
-      <td>9</td>
+      <td>2</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>week</th>
+      <td>10</td>
+      <td>14</td>
       <td>4</td>
-      <td>24</td>
-      <td>42</td>
-      <td>38</td>
-      <td>38</td>
+      <td>6</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>day</th>
-      <td>27</td>
-      <td>13</td>
-      <td>17</td>
-      <td>21</td>
-      <td>22</td>
+      <td>8</td>
+      <td>6</td>
+      <td>28</td>
+      <td>9</td>
+      <td>20</td>
     </tr>
     <tr>
       <th>hour</th>
-      <td>7</td>
-      <td>19</td>
+      <td>18</td>
+      <td>18</td>
+      <td>2</td>
+      <td>0</td>
       <td>10</td>
-      <td>17</td>
-      <td>17</td>
     </tr>
     <tr>
       <th>minute</th>
       <td>0</td>
-      <td>35</td>
-      <td>51</td>
       <td>30</td>
-      <td>35</td>
+      <td>41</td>
+      <td>15</td>
+      <td>43</td>
     </tr>
     <tr>
       <th>dow</th>
-      <td>3</td>
-      <td>3</td>
       <td>1</td>
-      <td>2</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
       <td>4</td>
     </tr>
     <tr>
       <th>doy</th>
-      <td>27</td>
-      <td>164</td>
-      <td>290</td>
-      <td>264</td>
-      <td>265</td>
+      <td>67</td>
+      <td>96</td>
+      <td>28</td>
+      <td>40</td>
+      <td>51</td>
     </tr>
     <tr>
       <th>tenure</th>
-      <td>752</td>
-      <td>3811</td>
-      <td>1380</td>
-      <td>989</td>
-      <td>1355</td>
+      <td>2983</td>
+      <td>3743</td>
+      <td>3309</td>
+      <td>1860</td>
+      <td>4428</td>
     </tr>
     <tr>
       <th>is_block</th>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
 </div>
 
+<h2 id="training-and-validation-using-xgboost">Training and Validation using XGBoost<a class="headerlink" href="#training-and-validation-using-xgboost" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">baked_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="nb">set</span><span class="p">([</span><span class="s1">&#39;category&#39;</span><span class="p">]))</span>
+<span class="n">dtrain</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">DMatrix</span><span class="p">(</span>
+    <span class="n">baked_train</span><span class="p">[</span><span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="n">baked_train</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> 
+    <span class="n">feature_names</span><span class="o">=</span><span class="n">baked_train</span><span class="p">[</span><span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;eta&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;multi:softprob&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;num_class&#39;</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span>
+    <span class="s1">&#39;eval_metric&#39;</span><span class="p">:</span> <span class="s1">&#39;mlogloss&#39;</span>
+<span class="p">}</span>
+
+<span class="n">history</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">cv</span><span class="p">(</span>
+    <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">dtrain</span><span class="o">=</span><span class="n">dtrain</span><span class="p">,</span> <span class="n">nfold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">num_boost_round</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">stratified</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose_eval</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">history</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</code></pre></div>
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>train-mlogloss-mean</th>
+      <th>train-mlogloss-std</th>
+      <th>test-mlogloss-mean</th>
+      <th>test-mlogloss-std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>2.482818</td>
+      <td>0.000661</td>
+      <td>2.485002</td>
+      <td>0.002041</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2.467268</td>
+      <td>0.000718</td>
+      <td>2.469610</td>
+      <td>0.002145</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2.454027</td>
+      <td>0.000752</td>
+      <td>2.456544</td>
+      <td>0.002004</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2.442648</td>
+      <td>0.001062</td>
+      <td>2.445381</td>
+      <td>0.001881</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2.433441</td>
+      <td>0.001282</td>
+      <td>2.436348</td>
+      <td>0.001993</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The above model achieved <strong>2.433441</strong> 5-fold cross-validation score after 10 epochs and <strong>2.436348</strong> on the testing set while 2.49136 was the benchmark.</p>
+<h3 id="xgboost-feature-importance">XGBoost: Feature Importance<a class="headerlink" href="#xgboost-feature-importance" title="Permanent link">&para;</a></h3>
+<p>A benefit of using gradient boosting is that after the boosted trees are constructed, it is relatively straightforward to retrieve importance scores for each attribute. Generally, importance provides a score that indicates how useful or valuable each feature was in the construction of the boosted decision trees within the model</p>
+<div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">xgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+    <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">dtrain</span><span class="o">=</span><span class="n">dtrain</span><span class="p">,</span> <span class="n">num_boost_round</span><span class="o">=</span><span class="mi">15</span>
+<span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">importance</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s1">       </span><span class="se">\t</span><span class="s1"> </span><span class="si">{</span><span class="n">importance</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="err">hour         598</span>
+<span class="err">x            649</span>
+<span class="err">y            836</span>
+<span class="err">is_block         383</span>
+<span class="err">dow          35</span>
+<span class="err">minute           626</span>
+<span class="err">tenure           393</span>
+<span class="err">day          51</span>
+<span class="err">doy          61</span>
+<span class="err">year         32</span>
+</code></pre></div>
+
+
 <h2 id="links-resources">Links &amp; Resources<a class="headerlink" href="#links-resources" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://www.kaggle.com/yannisp/sf-crime-analysis-prediction">SF-Crime Analysis &amp; Prediction by @yannisp</a></li>
+<li><a href="https://machinelearningmastery.com/feature-importance-and-feature-selection-with-xgboost-in-python/">Feature Importance and Feature Selection With XGBoost in Python</a></li>
 </ul>
 
 

@@ -119,6 +119,7 @@
 <li><a href="#dropcolumnsstep">DropColumnsStep</a>: Drop/Remove columns</li>
 <li><a href="#cleancolumnnamesstep">CleanColumnNamesStep</a>: Clean all column names</li>
 <li><a href="#replacenastep">ReplaceNAStep</a>: Replace missing values</li>
+<li><a href="#ordinalencoderstep">OrdinalEncoderStep</a>: Encode discrete features as integer numbers</li>
 </ul>
 <h4 id="row-operations">Row Operations<a class="headerlink" href="#row-operations" title="Permanent link">&para;</a></h4>
 <p>Execute operations over rows or values:</p>
@@ -393,6 +394,38 @@ Columns that don't exist are ignored.</p>
 <p>Raises:</p>
 <ul>
 <li><code>YeastValidationError</code>: if a column does not exist on the dataframe</li>
+</ul></div>
+</div>
+<h3 id="ordinalencoderstep">OrdinalEncoderStep<a class="headerlink" href="#ordinalencoderstep" title="Permanent link">&para;</a></h3>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>OrdinalEncoderStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Encode categorical/string discrete features as integer numbers (0 to n - 1).</p>
+<p>Parameters:</p>
+<ul>
+<li><code>selector</code>: List of columns, column name or selector.</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">recipe</span><span class="p">([</span>
+    <span class="c1"># Ordinal Encode the gender column</span>
+    <span class="n">OrdinalEncoderStep</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Extract the categories and the values on the prepare</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+
+<span class="c1"># Encode on new data without changing the values</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+
+<span class="c1"># Example:</span>
+<span class="c1"># Gender: &#39;Male&#39;, &#39;Female&#39;, &#39;Male&#39;, None, &#39;Male&#39;, &#39;Female&#39;</span>
+<span class="c1"># Encoded: 0, 1, 0, NA, 0, 1</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: If the column was not found</li>
 </ul></div>
 </div>
 <h2 id="row-operations_1">Row Operations<a class="headerlink" href="#row-operations_1" title="Permanent link">&para;</a></h2>
