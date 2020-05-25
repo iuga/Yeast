@@ -13,6 +13,7 @@ Execute operations over columns or predictors:
 - [DropColumnsStep](#dropcolumnsstep): Drop/Remove columns
 - [CleanColumnNamesStep](#cleancolumnnamesstep): Clean all column names
 - [ReplaceNAStep](#replacenastep): Replace missing values
+- [OrdinalEncoderStep](#ordinalencoderstep): Encode discrete features as integer numbers
 
 #### Row Operations
 
@@ -89,6 +90,11 @@ Customize Yeast behavior for our project:
 ### ReplaceNAStep
 
 ::: yeast.steps.ReplaceNAStep
+    :docstring:
+
+### OrdinalEncoderStep
+
+::: yeast.steps.OrdinalEncoderStep
     :docstring:
 
 ## Row Operations

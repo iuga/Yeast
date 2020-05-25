@@ -40,21 +40,22 @@ class SelectColumnsStep(Step):
         super().__init__(needs_preparation=False, role=role)
 
     def do_bake(self, df):
-        return df[self.selector]
+        columns = self.resolve_selector(self.selector, df)
+        return df[columns]
 
     def do_validate(self, df):
         """
         - Check that all columns are not empty strings
         - Check if the df contains all elements in columns
         """
-        self.selector = self.resolve_selector(self.selector, df)
+        columns = self.resolve_selector(self.selector, df)
 
-        if not all(isinstance(c, str) for c in self.selector):
+        if not all(isinstance(c, str) for c in columns):
             raise YeastValidationError('Invalid column names')
 
-        matches = [c in df.columns for c in self.selector]
+        matches = [c in df.columns for c in columns]
         if not all(matches):
-            missing_columns = [c for c, v in zip(self.selector, matches) if not v]
+            missing_columns = [c for c, v in zip(columns, matches) if not v]
             raise YeastValidationError(f'The following columns are missing: {missing_columns}')
 
 
