@@ -112,8 +112,6 @@ Customize Yeast behavior for our project:
 ::: yeast.steps.DropDuplicateRowsStep
     :docstring:
 
-## Individual Transformations
-
 # Aggregations
 
 ## GroupByStep
