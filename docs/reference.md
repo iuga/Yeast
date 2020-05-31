@@ -2,7 +2,7 @@
 
 This module exposes a collection of well-tested steps that you can directly use them on your data processing pipelines.
 
-#### Columns Operations
+**Columns Operations**
 
 Execute operations over columns or predictors:
 
@@ -15,7 +15,7 @@ Execute operations over columns or predictors:
 - [ReplaceNAStep](#replacenastep): Replace missing values
 - [OrdinalEncoderStep](#ordinalencoderstep): Encode discrete features as integer numbers
 
-#### Row Operations
+**Row Operations**
 
 Execute operations over rows or values:
 
@@ -23,7 +23,7 @@ Execute operations over rows or values:
 - [SortRowsStep](#sortrowsstep) / [SortStep](#sortrowsstep): Sort values based on columns
 
 
-#### Aggregations
+**Aggregations**
 
 Aggregate or Summarize data:
 
@@ -31,13 +31,13 @@ Aggregate or Summarize data:
 - [SummarizeStep](#summarizestep): Summarize the group by data
 - [DropDuplicateRowsStep](#dropduplicaterowsstep) / [DropDuplicatesStep](#dropduplicaterowsstep): Drop duplicate rows
 
-#### Imputation
+**Imputation**
 
 Impute missing data:
 
 - [MeanImputeStep](#meanimputestep): Impute numeric data using the mean
 
-#### WorkFlows
+**WorkFlows**
 
 Arrange and merge workflows and recipes
 
@@ -46,18 +46,15 @@ Arrange and merge workflows and recipes
 - [InnerJoinStep](#innerjoinstep): Inner Join with a DataFrame or Recipe
 - [FullJoinStep](#fulljoinstep): Full Outer Join with a DataFrame or Recipe
 
-#### Extensions
+**Extensions**
 
 Customize Yeast behavior for our project:
 
 - [CustomStep](#customstep): Step to add your own functionality
 
+# Columns Operations
 
-# Steps Documentation
-
-## Columns Operations
-
-### SelectColumnsStep
+## SelectColumnsStep
 
 ::: yeast.steps.SelectColumnsStep
     :docstring:
@@ -67,100 +64,100 @@ Customize Yeast behavior for our project:
 ::: yeast.steps.MutateStep
     :docstring:
 
-### RenameColumnsStep
+## RenameColumnsStep
 
 ::: yeast.steps.RenameColumnsStep
     :docstring:
 
-### CastColumnsStep
+## CastColumnsStep
 
 ::: yeast.steps.CastColumnsStep
     :docstring:
 
-### DropColumnsStep
+## DropColumnsStep
 
 ::: yeast.steps.DropColumnsStep
     :docstring:
 
-### CleanColumnNamesStep
+## CleanColumnNamesStep
 
 ::: yeast.steps.CleanColumnNamesStep
     :docstring:
 
-### ReplaceNAStep
+## ReplaceNAStep
 
 ::: yeast.steps.ReplaceNAStep
     :docstring:
 
-### OrdinalEncoderStep
+## OrdinalEncoderStep
 
 ::: yeast.steps.OrdinalEncoderStep
     :docstring:
 
-## Row Operations
+# Row Operations
 
-### FilterRowsStep
+## FilterRowsStep
 
 ::: yeast.steps.FilterRowsStep
     :docstring:
 
-### SortRowsStep
+## SortRowsStep
 
 ::: yeast.steps.SortRowsStep
     :docstring:
 
 
-### DropDuplicateRowsStep
+## DropDuplicateRowsStep
 
 ::: yeast.steps.DropDuplicateRowsStep
     :docstring:
 
 ## Individual Transformations
 
-## Aggregations
+# Aggregations
 
-### GroupByStep
+## GroupByStep
 
 ::: yeast.steps.GroupByStep
     :docstring:
 
-### SummarizeStep
+## SummarizeStep
 
 ::: yeast.steps.SummarizeStep
     :docstring:
 
-## Imputation
+# Imputation
 
-### MeanImputeStep
+## MeanImputeStep
 
 ::: yeast.steps.MeanImputeStep
     :docstring:
 
-## Workflows
+# Workflows
 
-### LeftJoinStep
+## LeftJoinStep
 
 ::: yeast.steps.LeftJoinStep
     :docstring:
 
-### RightJoinStep
+## RightJoinStep
 
 ::: yeast.steps.RightJoinStep
     :docstring:
 
-### InnerJoinStep
+## InnerJoinStep
 
 ::: yeast.steps.InnerJoinStep
     :docstring:
 
-### FullJoinStep
+## FullJoinStep
 
 ::: yeast.steps.FullJoinStep
     :docstring:
 
-## Extensions
+# Extensions
 
-### CustomStep
+## CustomStep
 
 ::: yeast.steps.CustomStep
     :docstring:

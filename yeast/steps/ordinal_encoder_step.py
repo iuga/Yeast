@@ -73,3 +73,9 @@ class OrdinalEncoderStep(Step):
         if not all(matches):
             missing_columns = [c for c, v in zip(columns, matches) if not v]
             raise YeastValidationError(f'The following columns are missing: {missing_columns}')
+
+    def get_mapping(self):
+        """
+        Return the generated mappings
+        """
+        return self.mappings

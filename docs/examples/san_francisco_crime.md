@@ -353,7 +353,7 @@ history.tail()
 
 The above model achieved **2.433441** 5-fold cross-validation score after 10 epochs and **2.436348** on the testing set while 2.49136 was the benchmark.
 
-### XGBoost: Feature Importance
+### Feature Importance
 A benefit of using gradient boosting is that after the boosted trees are constructed, it is relatively straightforward to retrieve importance scores for each attribute. Generally, importance provides a score that indicates how useful or valuable each feature was in the construction of the boosted decision trees within the model
 
 
@@ -366,19 +366,19 @@ model = xgb.train(
 
 ```python
 for feature, importance in model.get_score().items():
-    print(f'{feature}       \t {importance}')
+    print(f'{feature}: {importance}')
 ```
 
-    hour       	 598
-    x       	 649
-    y       	 836
-    is_block       	 383
-    dow       	 35
-    minute       	 626
-    tenure       	 393
-    day       	 51
-    doy       	 61
-    year       	 32
+    hour: 598
+    x: 649
+    y: 836
+    is_block: 383
+    dow: 35
+    minute: 626
+    tenure: 393
+    day: 51
+    doy: 61
+    year: 32
 
 
 ## Links & Resources

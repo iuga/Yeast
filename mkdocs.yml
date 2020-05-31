@@ -13,11 +13,11 @@ nav:
   - Getting Started:
     - 5 Minute Introduction: introduction.md
     - Methods for Selecting Variables: selectors.md
-    - Methods for Transforming Variables: transformers.md
+    - Methods for Creating and Transforming Variables: transformers.md
     - Methods for Groups and Aggregations: aggregations.md
     - Join two DataFrames together: merge.md
   - Developers API:
-    - Step Reference: reference.md
+    - Steps Reference: reference.md
     - Custom Steps: extensions.md
     - Roadmap: roadmap.md
   - Examples:

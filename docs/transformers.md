@@ -49,13 +49,11 @@ Currently the transformers are categorized as:
 - String Transformers: String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible.
 - Rank Transformers: Returns the sample ranks of the values in a column.
 
-## Available Transformers
-
-#### General Transformers
+**General Transformers**
 
 - [MapValues](#MapValues): Replace specified values with new values.
 
-#### String Transformers
+**String Transformers**
 
 String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible:
 
@@ -72,7 +70,7 @@ String Transformers provide a cohesive set of transformers designed to make work
 - [StrRemoveAll](#strremoveall): Remove all matched patterns
 - [StrContains](#strcontains): Test if pattern is contained on a string column
 
-#### Rank Transformers
+**Rank Transformers**
 
 Returns the sample ranks of the values in a column:
 
@@ -85,7 +83,7 @@ Returns the sample ranks of the values in a column:
 - [RankMean](#rankmean): Return the mean/average value
 - [RankPercent](#rankpercent): A number between 0 and 1 computed by rescaling `RankMin` to `[0, 1]`
 
-#### Date Transformers
+**Date Transformers**
 
 Returns components of a Date or DateTime column:
 
@@ -100,165 +98,168 @@ Returns components of a Date or DateTime column:
 - [DateMinute](#dateminute): Get the minute
 - [DateSecond](#datesecond): Get the second
 
-## Transformer Documentation
+# General Transformers
 
-### MapValues
+## MapValues
 
 ::: yeast.transformers.MapValues
     :docstring:
 
-### StrToUpper
+# String Transformers
+
+## StrToUpper
 
 ::: yeast.transformers.StrToUpper
     :docstring:
 
-### StrToLower
+## StrToLower
 
 ::: yeast.transformers.StrToLower
     :docstring:
 
-### StrToSentence
+## StrToSentence
 
 ::: yeast.transformers.StrToSentence
     :docstring:
 
-### StrToTitle
+## StrToTitle
 
 ::: yeast.transformers.StrToTitle
     :docstring:
 
-### StrTrim
+## StrTrim
 
 ::: yeast.transformers.StrTrim
     :docstring:
 
-### StrReplace
+## StrReplace
 
 ::: yeast.transformers.StrReplace
     :docstring:
 
-### StrReplaceAll
+## StrReplaceAll
 
 ::: yeast.transformers.StrReplaceAll
     :docstring:
 
-
-### StrPad
+## StrPad
 
 ::: yeast.transformers.StrPad
     :docstring:
 
-### StrSlice
+## StrSlice
 
 ::: yeast.transformers.StrSlice
     :docstring:
 
-### StrRemove
+## StrRemove
 
 ::: yeast.transformers.StrRemove
     :docstring:
 
-### StrRemoveAll
+## StrRemoveAll
 
 ::: yeast.transformers.StrRemoveAll
     :docstring:
 
-### StrContains
+## StrContains
 
 ::: yeast.transformers.StrContains
     :docstring:
 
-### Rank / RankTransformer
+# Rank Transformers
 
 ::: yeast.transformers.RankTransformer
     :docstring:
 
-### RowNumber
+## RowNumber
 
 ::: yeast.transformers.RowNumber
     :docstring:
 
-### RankFirst
+## RankFirst
 
 ::: yeast.transformers.RankFirst
     :docstring:
 
-### RankMin
+## RankMin
 
 ::: yeast.transformers.RankMin
     :docstring:
 
-### RankMax
+## RankMax
 
 ::: yeast.transformers.RankMax
     :docstring:
 
-### RankDense
+## RankDense
 
 ::: yeast.transformers.RankDense
     :docstring:
 
-### RankMean
+## RankMean
 
 ::: yeast.transformers.RankMean
     :docstring:
 
-### RankPercent
+## RankPercent
 
 ::: yeast.transformers.RankPercent
     :docstring:
 
-### DateYear
+# Date Transformers
+
+## DateYear
 
 ::: yeast.transformers.DateYear
     :docstring:
 
-### DateQuarter
+## DateQuarter
 
 ::: yeast.transformers.DateQuarter
     :docstring:
 
-### DateMonth
+## DateMonth
 
 ::: yeast.transformers.DateMonth
     :docstring:
 
-### DateWeek
+## DateWeek
 
 ::: yeast.transformers.DateWeek
     :docstring:
 
-### DateDay
+## DateDay
 
 ::: yeast.transformers.DateDay
     :docstring:
 
-### DateDayOfWeek
+## DateDayOfWeek
 
 ::: yeast.transformers.DateDayOfWeek
     :docstring:
 
-### DateDayOfYear
+## DateDayOfYear
 
 ::: yeast.transformers.DateDayOfYear
     :docstring:
 
-### DateHour
+## DateHour
 
 ::: yeast.transformers.DateHour
     :docstring:
 
-### DateMinute
+## DateMinute
 
 ::: yeast.transformers.DateMinute
     :docstring:
 
-### DateSecond
+## DateSecond
 
 ::: yeast.transformers.DateSecond
     :docstring:
 
 
-## What's next?
+# What's next?
 
 - [Methods for Groups and Aggregations](aggregations.md)
