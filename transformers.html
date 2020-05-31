@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<title>Methods for Transforming Variables - Yeast</title>
+<title>Methods for Creating and Transforming Variables - Yeast</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="A Python data processing engine for modeling or visualization">
 <meta name="generator" content="mkdocs-1.1, mkdocs-gitbook-1.0.7">
@@ -30,57 +30,63 @@
 <a href="." target="_blank" class="custom-link">Yeast</a>
 </li>
 <li class="divider"></li> -->
-<li class="header">Yeast</li>
 
+    <!-- Section TITLE -->
+    <li class="header">Yeast</li>
+    
 <li>
-<a href="index.html" class="">Home</a>
+  <a href="index.html" class="">Home</a>
 </li>
 
-<li class="header">Getting Started</li>
 
+    <!-- Section TITLE -->
+    <li class="header">Getting Started</li>
+    
 <li>
-<a href="introduction.html" class="">5 Minute Introduction</a>
+  <a href="introduction.html" class="">5 Minute Introduction</a>
+</li>
+    
+<li>
+  <a href="selectors.html" class="">Methods for Selecting Variables</a>
+</li>
+    
+<li>
+  <a href="transformers.html" class="active">Methods for Creating and Transforming Variables</a>
+</li>
+    
+<li>
+  <a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
+</li>
+    
+<li>
+  <a href="merge.html" class="">Join two DataFrames together</a>
 </li>
 
+
+    <!-- Section TITLE -->
+    <li class="header">Developers API</li>
+    
 <li>
-<a href="selectors.html" class="">Methods for Selecting Variables</a>
+  <a href="reference.html" class="">Steps Reference</a>
+</li>
+    
+<li>
+  <a href="extensions.html" class="">Custom Steps</a>
+</li>
+    
+<li>
+  <a href="roadmap.html" class="">Roadmap</a>
 </li>
 
+
+    <!-- Section TITLE -->
+    <li class="header">Examples</li>
+    
 <li>
-<a href="transformers.html" class="active">Methods for Transforming Variables</a>
-</li>
-
-<li>
-<a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
-</li>
-
-<li>
-<a href="merge.html" class="">Join two DataFrames together</a>
-</li>
-
-<li class="header">Developers API</li>
-
-<li>
-<a href="reference.html" class="">Step Reference</a>
-</li>
-
-<li>
-<a href="extensions.html" class="">Custom Steps</a>
-</li>
-
-<li>
-<a href="roadmap.html" class="">Roadmap</a>
-</li>
-
-<li class="header">Examples</li>
-
-<li>
-<a href="examples/san_francisco_crime.html" class="">San Francisco Crime</a>
+  <a href="examples/san_francisco_crime.html" class="">San Francisco Crime</a>
 </li>
 
 <!-- <li class="divider"></li> -->
-
-
 
 </ul>
 
@@ -152,12 +158,11 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li>String Transformers: String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible.</li>
 <li>Rank Transformers: Returns the sample ranks of the values in a column.</li>
 </ul>
-<h2 id="available-transformers">Available Transformers<a class="headerlink" href="#available-transformers" title="Permanent link">&para;</a></h2>
-<h4 id="general-transformers">General Transformers<a class="headerlink" href="#general-transformers" title="Permanent link">&para;</a></h4>
+<p><strong>General Transformers</strong></p>
 <ul>
 <li><a href="#MapValues">MapValues</a>: Replace specified values with new values.</li>
 </ul>
-<h4 id="string-transformers">String Transformers<a class="headerlink" href="#string-transformers" title="Permanent link">&para;</a></h4>
+<p><strong>String Transformers</strong></p>
 <p>String Transformers provide a cohesive set of transformers designed to make working with strings as easy as possible:</p>
 <ul>
 <li><a href="#strtoupper">StrToUpper</a>: Convert to UPPER CASE</li>
@@ -173,7 +178,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><a href="#strremoveall">StrRemoveAll</a>: Remove all matched patterns</li>
 <li><a href="#strcontains">StrContains</a>: Test if pattern is contained on a string column</li>
 </ul>
-<h4 id="rank-transformers">Rank Transformers<a class="headerlink" href="#rank-transformers" title="Permanent link">&para;</a></h4>
+<p><strong>Rank Transformers</strong></p>
 <p>Returns the sample ranks of the values in a column:</p>
 <ul>
 <li><a href="#rank-ranktransformer">Rank / RankTransformer</a>: Return the sample ranks of the values</li>
@@ -185,7 +190,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><a href="#rankmean">RankMean</a>: Return the mean/average value</li>
 <li><a href="#rankpercent">RankPercent</a>: A number between 0 and 1 computed by rescaling <code>RankMin</code> to <code>[0, 1]</code></li>
 </ul>
-<h4 id="date-transformers">Date Transformers<a class="headerlink" href="#date-transformers" title="Permanent link">&para;</a></h4>
+<p><strong>Date Transformers</strong></p>
 <p>Returns components of a Date or DateTime column:</p>
 <ul>
 <li><a href="#dateyear">DateYear</a>: Get the year</li>
@@ -199,8 +204,8 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><a href="#dateminute">DateMinute</a>: Get the minute</li>
 <li><a href="#datesecond">DateSecond</a>: Get the second</li>
 </ul>
-<h2 id="transformer-documentation">Transformer Documentation<a class="headerlink" href="#transformer-documentation" title="Permanent link">&para;</a></h2>
-<h3 id="mapvalues">MapValues<a class="headerlink" href="#mapvalues" title="Permanent link">&para;</a></h3>
+<h1 id="general-transformers">General Transformers<a class="headerlink" href="#general-transformers" title="Permanent link">&para;</a></h1>
+<h2 id="mapvalues">MapValues<a class="headerlink" href="#mapvalues" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>MapValues</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace specified values with new values.</p>
@@ -220,37 +225,38 @@ while you are allowed to refer to columns that you’ve just created:</p>
            For example: <code>{'old': 'new'}</code> replace the value <code>old</code> with <code>new</code>.</li>
 </ul></div>
 </div>
-<h3 id="strtoupper">StrToUpper<a class="headerlink" href="#strtoupper" title="Permanent link">&para;</a></h3>
+<h1 id="string-transformers">String Transformers<a class="headerlink" href="#string-transformers" title="Permanent link">&para;</a></h1>
+<h2 id="strtoupper">StrToUpper<a class="headerlink" href="#strtoupper" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToUpper</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert case of a string to Upper case:
 ("Yeast" to "YEAST")</p></div>
 </div>
-<h3 id="strtolower">StrToLower<a class="headerlink" href="#strtolower" title="Permanent link">&para;</a></h3>
+<h2 id="strtolower">StrToLower<a class="headerlink" href="#strtolower" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToLower</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert case of a string to Lower case:
 ("Yeast" to "yeast")</p></div>
 </div>
-<h3 id="strtosentence">StrToSentence<a class="headerlink" href="#strtosentence" title="Permanent link">&para;</a></h3>
+<h2 id="strtosentence">StrToSentence<a class="headerlink" href="#strtosentence" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToSentence</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Converts first character to uppercase and remaining to lowercase:
 ("yeast help" to "Yeast help")</p></div>
 </div>
-<h3 id="strtotitle">StrToTitle<a class="headerlink" href="#strtotitle" title="Permanent link">&para;</a></h3>
+<h2 id="strtotitle">StrToTitle<a class="headerlink" href="#strtotitle" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrToTitle</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Converts first character of each word to uppercase and remaining to lowercase:
 ("yeast help" to "Yeast Help")</p></div>
 </div>
-<h3 id="strtrim">StrTrim<a class="headerlink" href="#strtrim" title="Permanent link">&para;</a></h3>
+<h2 id="strtrim">StrTrim<a class="headerlink" href="#strtrim" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrTrim</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Convert removing whitespaces from start and end of string:
 (" Yeast " to "Yeast")</p></div>
 </div>
-<h3 id="strreplace">StrReplace<a class="headerlink" href="#strreplace" title="Permanent link">&para;</a></h3>
+<h2 id="strreplace">StrReplace<a class="headerlink" href="#strreplace" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrReplace</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">replacement</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace first ocurrence of matched patterns in a string: 'Y' to 'X' ("YYY" to "XYY")</p>
@@ -260,7 +266,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>replacement</code>: A string of replacements.</li>
 </ul></div>
 </div>
-<h3 id="strreplaceall">StrReplaceAll<a class="headerlink" href="#strreplaceall" title="Permanent link">&para;</a></h3>
+<h2 id="strreplaceall">StrReplaceAll<a class="headerlink" href="#strreplaceall" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrReplaceAll</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">replacement</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace all ocurrences of matched patterns in a string: 'Y' to 'X' ("YYY" to "XXX")</p>
@@ -270,7 +276,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>replacement</code>: A string of replacements.</li>
 </ul></div>
 </div>
-<h3 id="strpad">StrPad<a class="headerlink" href="#strpad" title="Permanent link">&para;</a></h3>
+<h2 id="strpad">StrPad<a class="headerlink" href="#strpad" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrPad</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">width</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">side='left'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">pad=' '</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Pad a string: 'Y' to 4 chars, left and '0' ("Y" to "000Y")</p>
@@ -281,7 +287,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>pad</code>: Single padding character (default is a space).</li>
 </ul></div>
 </div>
-<h3 id="strslice">StrSlice<a class="headerlink" href="#strslice" title="Permanent link">&para;</a></h3>
+<h2 id="strslice">StrSlice<a class="headerlink" href="#strslice" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrSlice</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">start</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">stop</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract and replace substrings from a string:</p>
@@ -295,7 +301,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>stop</code>: integer position of the last character</li>
 </ul></div>
 </div>
-<h3 id="strremove">StrRemove<a class="headerlink" href="#strremove" title="Permanent link">&para;</a></h3>
+<h2 id="strremove">StrRemove<a class="headerlink" href="#strremove" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrRemove</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Remove first matched pattern in a string</p>
@@ -308,7 +314,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>pattern</code>: Pattern or string to look for.</li>
 </ul></div>
 </div>
-<h3 id="strremoveall">StrRemoveAll<a class="headerlink" href="#strremoveall" title="Permanent link">&para;</a></h3>
+<h2 id="strremoveall">StrRemoveAll<a class="headerlink" href="#strremoveall" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrRemoveAll</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Remove all matched patterns in a string</p>
@@ -321,7 +327,7 @@ while you are allowed to refer to columns that you’ve just created:</p>
 <li><code>pattern</code>: Pattern or string to look for.</li>
 </ul></div>
 </div>
-<h3 id="strcontains">StrContains<a class="headerlink" href="#strcontains" title="Permanent link">&para;</a></h3>
+<h2 id="strcontains">StrContains<a class="headerlink" href="#strcontains" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>StrContains</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">pattern</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">case=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">regex=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Test if pattern or regex is contained within a string column.
@@ -342,7 +348,7 @@ Return a boolean variable ( True and False ).</p>
            literal string.</li>
 </ul></div>
 </div>
-<h3 id="rank-ranktransformer">Rank / RankTransformer<a class="headerlink" href="#rank-ranktransformer" title="Permanent link">&para;</a></h3>
+<h1 id="rank-transformers">Rank Transformers<a class="headerlink" href="#rank-transformers" title="Permanent link">&para;</a></h1>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankTransformer</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ties_method='first'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">percentage=False</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Returns the sample ranks of the values in the column.
@@ -359,7 +365,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>ascending</code>: boolean with the order of the row numbers</li>
 </ul></div>
 </div>
-<h3 id="rownumber">RowNumber<a class="headerlink" href="#rownumber" title="Permanent link">&para;</a></h3>
+<h2 id="rownumber">RowNumber<a class="headerlink" href="#rownumber" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RowNumber</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Creates/transforms a variable containg the row number.</p>
@@ -369,7 +375,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-<h3 id="rankfirst">RankFirst<a class="headerlink" href="#rankfirst" title="Permanent link">&para;</a></h3>
+<h2 id="rankfirst">RankFirst<a class="headerlink" href="#rankfirst" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankFirst</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Increasing rank values at each index set of ties</p>
@@ -379,7 +385,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-<h3 id="rankmin">RankMin<a class="headerlink" href="#rankmin" title="Permanent link">&para;</a></h3>
+<h2 id="rankmin">RankMin<a class="headerlink" href="#rankmin" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMin</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace by the minimum value</p>
@@ -389,7 +395,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-<h3 id="rankmax">RankMax<a class="headerlink" href="#rankmax" title="Permanent link">&para;</a></h3>
+<h2 id="rankmax">RankMax<a class="headerlink" href="#rankmax" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMax</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace by the maximum value</p>
@@ -399,7 +405,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-<h3 id="rankdense">RankDense<a class="headerlink" href="#rankdense" title="Permanent link">&para;</a></h3>
+<h2 id="rankdense">RankDense<a class="headerlink" href="#rankdense" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankDense</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace by the minimum value like <code>RankMin</code>, but with no gaps between ranks.</p>
@@ -409,7 +415,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-<h3 id="rankmean">RankMean<a class="headerlink" href="#rankmean" title="Permanent link">&para;</a></h3>
+<h2 id="rankmean">RankMean<a class="headerlink" href="#rankmean" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankMean</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace by the mean/average value</p>
@@ -419,7 +425,7 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-<h3 id="rankpercent">RankPercent<a class="headerlink" href="#rankpercent" title="Permanent link">&para;</a></h3>
+<h2 id="rankpercent">RankPercent<a class="headerlink" href="#rankpercent" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>RankPercent</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>A number between 0 and 1 computed by rescaling <code>RankMin</code> to [0, 1]</p>
@@ -429,62 +435,143 @@ minimum respectively. <code>dense</code> is like <code>min</code>, but with no g
 <li><code>column</code>: used to sort/arrange and rank values</li>
 </ul></div>
 </div>
-<h3 id="dateyear">DateYear<a class="headerlink" href="#dateyear" title="Permanent link">&para;</a></h3>
+<h1 id="date-transformers">Date Transformers<a class="headerlink" href="#date-transformers" title="Permanent link">&para;</a></h1>
+<h2 id="dateyear">DateYear<a class="headerlink" href="#dateyear" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateYear</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the year of a Date column</p></div>
 </div>
-<h3 id="datequarter">DateQuarter<a class="headerlink" href="#datequarter" title="Permanent link">&para;</a></h3>
+<h2 id="datequarter">DateQuarter<a class="headerlink" href="#datequarter" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateQuarter</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the quarter of a Date column</p></div>
 </div>
-<h3 id="datemonth">DateMonth<a class="headerlink" href="#datemonth" title="Permanent link">&para;</a></h3>
+<h2 id="datemonth">DateMonth<a class="headerlink" href="#datemonth" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateMonth</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the month of a Date column</p></div>
 </div>
-<h3 id="dateweek">DateWeek<a class="headerlink" href="#dateweek" title="Permanent link">&para;</a></h3>
+<h2 id="dateweek">DateWeek<a class="headerlink" href="#dateweek" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateWeek</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the week of a Date column</p></div>
 </div>
-<h3 id="dateday">DateDay<a class="headerlink" href="#dateday" title="Permanent link">&para;</a></h3>
+<h2 id="dateday">DateDay<a class="headerlink" href="#dateday" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateDay</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the day of a Date column</p></div>
 </div>
-<h3 id="datedayofweek">DateDayOfWeek<a class="headerlink" href="#datedayofweek" title="Permanent link">&para;</a></h3>
+<h2 id="datedayofweek">DateDayOfWeek<a class="headerlink" href="#datedayofweek" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateDayOfWeek</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the day of week of a Date column.
 The day of the week is Monday=0 and Sunday=6</p></div>
 </div>
-<h3 id="datedayofyear">DateDayOfYear<a class="headerlink" href="#datedayofyear" title="Permanent link">&para;</a></h3>
+<h2 id="datedayofyear">DateDayOfYear<a class="headerlink" href="#datedayofyear" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateDayOfYear</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the day of year of a Date column.</p></div>
 </div>
-<h3 id="datehour">DateHour<a class="headerlink" href="#datehour" title="Permanent link">&para;</a></h3>
+<h2 id="datehour">DateHour<a class="headerlink" href="#datehour" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateHour</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the hour of a Date column.</p></div>
 </div>
-<h3 id="dateminute">DateMinute<a class="headerlink" href="#dateminute" title="Permanent link">&para;</a></h3>
+<h2 id="dateminute">DateMinute<a class="headerlink" href="#dateminute" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateMinute</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the minute of a Date column.</p></div>
 </div>
-<h3 id="datesecond">DateSecond<a class="headerlink" href="#datesecond" title="Permanent link">&para;</a></h3>
+<h2 id="datesecond">DateSecond<a class="headerlink" href="#datesecond" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.transformers.<strong>DateSecond</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">column=None</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Extract the seconds of a Date column.</p></div>
 </div>
-<h2 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
+<h1 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h1>
 <ul>
 <li><a href="aggregations.html">Methods for Groups and Aggregations</a></li>
 </ul>
 
+  <style type="text/css">
+.floating-toc {
+      display: table;
+      font-size: 95%;
+      margin-bottom: 1em;
+      padding: 20px;
+      width: auto;
+}
+
+.floating-toc a {
+  color: #4183c4;
+  text-decoration: none;
+  background: 0 0;
+}
+</style>
+
+<div class="floating-toc" style="position: fixed; right: 50px; top: 75px;">
+  <div class="bs-sidebar hidden-print affix well" role="complementary">
+      <ul class="nav bs-sidenav" style=" list-style-type: none; margin: 0; padding: 0;">
+        <br>
+        
+          <!-- <li class="main active">xxx<a href="#methods-for-creating-and-transforming-variables">Methods for Creating and Transforming Variables</a></li> -->
+        <br>
+        
+        <b>General Transformers</b>
+        
+          <!-- <li class="main ">xxx<a href="#general-transformers">General Transformers</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#mapvalues">MapValues</a></li>
+        <br>
+        
+        <b>String Transformers</b>
+        
+          <!-- <li class="main ">xxx<a href="#string-transformers">String Transformers</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#strtoupper">StrToUpper</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strtolower">StrToLower</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strtosentence">StrToSentence</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strtotitle">StrToTitle</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strtrim">StrTrim</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strreplace">StrReplace</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strreplaceall">StrReplaceAll</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strpad">StrPad</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strslice">StrSlice</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strremove">StrRemove</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strremoveall">StrRemoveAll</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#strcontains">StrContains</a></li>
+        <br>
+        
+        <b>Rank Transformers</b>
+        
+          <!-- <li class="main ">xxx<a href="#rank-transformers">Rank Transformers</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#rownumber">RowNumber</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#rankfirst">RankFirst</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#rankmin">RankMin</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#rankmax">RankMax</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#rankdense">RankDense</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#rankmean">RankMean</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#rankpercent">RankPercent</a></li>
+        <br>
+        
+        <b>Date Transformers</b>
+        
+          <!-- <li class="main ">xxx<a href="#date-transformers">Date Transformers</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#dateyear">DateYear</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#datequarter">DateQuarter</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#datemonth">DateMonth</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#dateweek">DateWeek</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#dateday">DateDay</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#datedayofweek">DateDayOfWeek</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#datedayofyear">DateDayOfYear</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#datehour">DateHour</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#dateminute">DateMinute</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#datesecond">DateSecond</a></li>
+        <br>
+        
+        <b>What's next?</b>
+        
+          <!-- <li class="main ">xxx<a href="#whats-next">What's next?</a></li> -->
+      </ul>
+  </div>
+</div>
 
 </section>
 

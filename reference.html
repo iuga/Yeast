@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<title>Step Reference - Yeast</title>
+<title>Steps Reference - Yeast</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="A Python data processing engine for modeling or visualization">
 <meta name="generator" content="mkdocs-1.1, mkdocs-gitbook-1.0.7">
@@ -30,57 +30,63 @@
 <a href="." target="_blank" class="custom-link">Yeast</a>
 </li>
 <li class="divider"></li> -->
-<li class="header">Yeast</li>
 
+    <!-- Section TITLE -->
+    <li class="header">Yeast</li>
+    
 <li>
-<a href="index.html" class="">Home</a>
+  <a href="index.html" class="">Home</a>
 </li>
 
-<li class="header">Getting Started</li>
 
+    <!-- Section TITLE -->
+    <li class="header">Getting Started</li>
+    
 <li>
-<a href="introduction.html" class="">5 Minute Introduction</a>
+  <a href="introduction.html" class="">5 Minute Introduction</a>
+</li>
+    
+<li>
+  <a href="selectors.html" class="">Methods for Selecting Variables</a>
+</li>
+    
+<li>
+  <a href="transformers.html" class="">Methods for Creating and Transforming Variables</a>
+</li>
+    
+<li>
+  <a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
+</li>
+    
+<li>
+  <a href="merge.html" class="">Join two DataFrames together</a>
 </li>
 
+
+    <!-- Section TITLE -->
+    <li class="header">Developers API</li>
+    
 <li>
-<a href="selectors.html" class="">Methods for Selecting Variables</a>
+  <a href="reference.html" class="active">Steps Reference</a>
+</li>
+    
+<li>
+  <a href="extensions.html" class="">Custom Steps</a>
+</li>
+    
+<li>
+  <a href="roadmap.html" class="">Roadmap</a>
 </li>
 
+
+    <!-- Section TITLE -->
+    <li class="header">Examples</li>
+    
 <li>
-<a href="transformers.html" class="">Methods for Transforming Variables</a>
-</li>
-
-<li>
-<a href="aggregations.html" class="">Methods for Groups and Aggregations</a>
-</li>
-
-<li>
-<a href="merge.html" class="">Join two DataFrames together</a>
-</li>
-
-<li class="header">Developers API</li>
-
-<li>
-<a href="reference.html" class="active">Step Reference</a>
-</li>
-
-<li>
-<a href="extensions.html" class="">Custom Steps</a>
-</li>
-
-<li>
-<a href="roadmap.html" class="">Roadmap</a>
-</li>
-
-<li class="header">Examples</li>
-
-<li>
-<a href="examples/san_francisco_crime.html" class="">San Francisco Crime</a>
+  <a href="examples/san_francisco_crime.html" class="">San Francisco Crime</a>
 </li>
 
 <!-- <li class="divider"></li> -->
-
-
 
 </ul>
 
@@ -109,7 +115,7 @@
 
 <h1 id="steps-reference">Steps Reference<a class="headerlink" href="#steps-reference" title="Permanent link">&para;</a></h1>
 <p>This module exposes a collection of well-tested steps that you can directly use them on your data processing pipelines.</p>
-<h4 id="columns-operations">Columns Operations<a class="headerlink" href="#columns-operations" title="Permanent link">&para;</a></h4>
+<p><strong>Columns Operations</strong></p>
 <p>Execute operations over columns or predictors:</p>
 <ul>
 <li><a href="#selectcolumnsstep">SelectColumnsStep</a> / <a href="#selectcolumnsstep">SelectStep</a>: Select a group of columns</li>
@@ -121,25 +127,25 @@
 <li><a href="#replacenastep">ReplaceNAStep</a>: Replace missing values</li>
 <li><a href="#ordinalencoderstep">OrdinalEncoderStep</a>: Encode discrete features as integer numbers</li>
 </ul>
-<h4 id="row-operations">Row Operations<a class="headerlink" href="#row-operations" title="Permanent link">&para;</a></h4>
+<p><strong>Row Operations</strong></p>
 <p>Execute operations over rows or values:</p>
 <ul>
 <li><a href="#filterrowsstep">FilterRowsStep</a> / <a href="#filterrowsstep">FilterStep</a>: Filter values based on a expression</li>
 <li><a href="#sortrowsstep">SortRowsStep</a> / <a href="#sortrowsstep">SortStep</a>: Sort values based on columns</li>
 </ul>
-<h4 id="aggregations">Aggregations<a class="headerlink" href="#aggregations" title="Permanent link">&para;</a></h4>
+<p><strong>Aggregations</strong></p>
 <p>Aggregate or Summarize data:</p>
 <ul>
 <li><a href="#groupbystep">GroupByStep</a>: Group by rows based on columns</li>
 <li><a href="#summarizestep">SummarizeStep</a>: Summarize the group by data</li>
 <li><a href="#dropduplicaterowsstep">DropDuplicateRowsStep</a> / <a href="#dropduplicaterowsstep">DropDuplicatesStep</a>: Drop duplicate rows</li>
 </ul>
-<h4 id="imputation">Imputation<a class="headerlink" href="#imputation" title="Permanent link">&para;</a></h4>
+<p><strong>Imputation</strong></p>
 <p>Impute missing data:</p>
 <ul>
 <li><a href="#meanimputestep">MeanImputeStep</a>: Impute numeric data using the mean</li>
 </ul>
-<h4 id="workflows">WorkFlows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h4>
+<p><strong>WorkFlows</strong></p>
 <p>Arrange and merge workflows and recipes</p>
 <ul>
 <li><a href="#leftjoinstep">LeftJoinStep</a>: Left Join with a DataFrame or Recipe</li>
@@ -147,14 +153,13 @@
 <li><a href="#innerjoinstep">InnerJoinStep</a>: Inner Join with a DataFrame or Recipe</li>
 <li><a href="#fulljoinstep">FullJoinStep</a>: Full Outer Join with a DataFrame or Recipe</li>
 </ul>
-<h4 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">&para;</a></h4>
+<p><strong>Extensions</strong></p>
 <p>Customize Yeast behavior for our project:</p>
 <ul>
 <li><a href="#customstep">CustomStep</a>: Step to add your own functionality</li>
 </ul>
-<h1 id="steps-documentation">Steps Documentation<a class="headerlink" href="#steps-documentation" title="Permanent link">&para;</a></h1>
-<h2 id="columns-operations_1">Columns Operations<a class="headerlink" href="#columns-operations_1" title="Permanent link">&para;</a></h2>
-<h3 id="selectcolumnsstep">SelectColumnsStep<a class="headerlink" href="#selectcolumnsstep" title="Permanent link">&para;</a></h3>
+<h1 id="columns-operations">Columns Operations<a class="headerlink" href="#columns-operations" title="Permanent link">&para;</a></h1>
+<h2 id="selectcolumnsstep">SelectColumnsStep<a class="headerlink" href="#selectcolumnsstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SelectColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of keep columns based on their names or selectors</p>
@@ -266,7 +271,7 @@ New variables overwrite existing variables of the same name.</p>
 <li><code>YeastValidationError</code>: xxx</li>
 </ul></div>
 </div>
-<h3 id="renamecolumnsstep">RenameColumnsStep<a class="headerlink" href="#renamecolumnsstep" title="Permanent link">&para;</a></h3>
+<h2 id="renamecolumnsstep">RenameColumnsStep<a class="headerlink" href="#renamecolumnsstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>RenameColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of renaming columns based on a mapping dictionary.
@@ -288,7 +293,7 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if any column old or new is not a string.</li>
 </ul></div>
 </div>
-<h3 id="castcolumnsstep">CastColumnsStep<a class="headerlink" href="#castcolumnsstep" title="Permanent link">&para;</a></h3>
+<h2 id="castcolumnsstep">CastColumnsStep<a class="headerlink" href="#castcolumnsstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CastColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of casting columns to a type based on a mapping dictionary.</p>
@@ -320,7 +325,7 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if any column or type is not correct.</li>
 </ul></div>
 </div>
-<h3 id="dropcolumnsstep">DropColumnsStep<a class="headerlink" href="#dropcolumnsstep" title="Permanent link">&para;</a></h3>
+<h2 id="dropcolumnsstep">DropColumnsStep<a class="headerlink" href="#dropcolumnsstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>DropColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of drop columns based on their names.</p>
@@ -341,7 +346,7 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if any column does not exist or any column name is invalid.</li>
 </ul></div>
 </div>
-<h3 id="cleancolumnnamesstep">CleanColumnNamesStep<a class="headerlink" href="#cleancolumnnamesstep" title="Permanent link">&para;</a></h3>
+<h2 id="cleancolumnnamesstep">CleanColumnNamesStep<a class="headerlink" href="#cleancolumnnamesstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CleanColumnNamesStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">case='snake'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of clean all columns names.</p>
@@ -368,7 +373,7 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if the case is not available.</li>
 </ul></div>
 </div>
-<h3 id="replacenastep">ReplaceNAStep<a class="headerlink" href="#replacenastep" title="Permanent link">&para;</a></h3>
+<h2 id="replacenastep">ReplaceNAStep<a class="headerlink" href="#replacenastep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>ReplaceNAStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">mapping</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">value=0</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Replace missing values</p>
@@ -396,7 +401,7 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if a column does not exist on the dataframe</li>
 </ul></div>
 </div>
-<h3 id="ordinalencoderstep">OrdinalEncoderStep<a class="headerlink" href="#ordinalencoderstep" title="Permanent link">&para;</a></h3>
+<h2 id="ordinalencoderstep">OrdinalEncoderStep<a class="headerlink" href="#ordinalencoderstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>OrdinalEncoderStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Encode categorical/string discrete features as integer numbers (0 to n - 1).</p>
@@ -428,8 +433,8 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: If the column was not found</li>
 </ul></div>
 </div>
-<h2 id="row-operations_1">Row Operations<a class="headerlink" href="#row-operations_1" title="Permanent link">&para;</a></h2>
-<h3 id="filterrowsstep">FilterRowsStep<a class="headerlink" href="#filterrowsstep" title="Permanent link">&para;</a></h3>
+<h1 id="row-operations">Row Operations<a class="headerlink" href="#row-operations" title="Permanent link">&para;</a></h1>
+<h2 id="filterrowsstep">FilterRowsStep<a class="headerlink" href="#filterrowsstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>FilterRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">expression</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">**kwargs</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of filtering out rows based on boolean conditions.</p>
@@ -476,7 +481,7 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if the expression is an empty string.</li>
 </ul></div>
 </div>
-<h3 id="sortrowsstep">SortRowsStep<a class="headerlink" href="#sortrowsstep" title="Permanent link">&para;</a></h3>
+<h2 id="sortrowsstep">SortRowsStep<a class="headerlink" href="#sortrowsstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SortRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">ascending=True</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of sorting rows based on columns.</p>
@@ -496,7 +501,7 @@ Columns that don't exist are ignored.</p>
 <li><code>YeastValidationError</code>: if any column does not exist or any column name is invalid.</li>
 </ul></div>
 </div>
-<h3 id="dropduplicaterowsstep">DropDuplicateRowsStep<a class="headerlink" href="#dropduplicaterowsstep" title="Permanent link">&para;</a></h3>
+<h2 id="dropduplicaterowsstep">DropDuplicateRowsStep<a class="headerlink" href="#dropduplicaterowsstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>DropDuplicateRowsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">keep='first'</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Step in charge of remove duplicate rows, optionally only considering certain columns.</p>
@@ -527,8 +532,8 @@ Columns that don't exist are ignored.</p>
 </ul></div>
 </div>
 <h2 id="individual-transformations">Individual Transformations<a class="headerlink" href="#individual-transformations" title="Permanent link">&para;</a></h2>
-<h2 id="aggregations_1">Aggregations<a class="headerlink" href="#aggregations_1" title="Permanent link">&para;</a></h2>
-<h3 id="groupbystep">GroupByStep<a class="headerlink" href="#groupbystep" title="Permanent link">&para;</a></h3>
+<h1 id="aggregations">Aggregations<a class="headerlink" href="#aggregations" title="Permanent link">&para;</a></h1>
+<h2 id="groupbystep">GroupByStep<a class="headerlink" href="#groupbystep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>GroupByStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">columns</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Most data operations are done on groups defined by columns.
@@ -560,7 +565,7 @@ aggregation/summarization/mutation operations are performed "by group".</p>
 <li><code>YeastValidationError</code>: if a column does not exist on the DataFrame</li>
 </ul></div>
 </div>
-<h3 id="summarizestep">SummarizeStep<a class="headerlink" href="#summarizestep" title="Permanent link">&para;</a></h3>
+<h2 id="summarizestep">SummarizeStep<a class="headerlink" href="#summarizestep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>SummarizeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">aggregations</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Create one or more numeric variables summarizing the columns of an existing group created by
@@ -591,8 +596,8 @@ The most used ones are: <code>AggMean</code>, <code>AggMedian</code>, <code>AggC
 <li><code>YeastValidationError</code>: If there was not a GroupByStep before</li>
 </ul></div>
 </div>
-<h2 id="imputation_1">Imputation<a class="headerlink" href="#imputation_1" title="Permanent link">&para;</a></h2>
-<h3 id="meanimputestep">MeanImputeStep<a class="headerlink" href="#meanimputestep" title="Permanent link">&para;</a></h3>
+<h1 id="imputation">Imputation<a class="headerlink" href="#imputation" title="Permanent link">&para;</a></h1>
+<h2 id="meanimputestep">MeanImputeStep<a class="headerlink" href="#meanimputestep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MeanImputeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Impute numeric data using the mean</p>
@@ -617,8 +622,8 @@ to new data sets using these averages.</p>
 <li><code>YeastValidationError</code>: if a column does not exist</li>
 </ul></div>
 </div>
-<h2 id="workflows_1">Workflows<a class="headerlink" href="#workflows_1" title="Permanent link">&para;</a></h2>
-<h3 id="leftjoinstep">LeftJoinStep<a class="headerlink" href="#leftjoinstep" title="Permanent link">&para;</a></h3>
+<h1 id="workflows">Workflows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h1>
+<h2 id="leftjoinstep">LeftJoinStep<a class="headerlink" href="#leftjoinstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>LeftJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Left Join two DataFrames together</p>
@@ -659,7 +664,7 @@ are returned.</p>
 <li><code>YeastValidationError</code>: if any of the validations is not correct.</li>
 </ul></div>
 </div>
-<h3 id="rightjoinstep">RightJoinStep<a class="headerlink" href="#rightjoinstep" title="Permanent link">&para;</a></h3>
+<h2 id="rightjoinstep">RightJoinStep<a class="headerlink" href="#rightjoinstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>RightJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Right Join two DataFrames together</p>
@@ -699,7 +704,7 @@ all combinations of the matches are returned.</p>
 <li><code>YeastValidationError</code>: if any of the validations is not correct.</li>
 </ul></div>
 </div>
-<h3 id="innerjoinstep">InnerJoinStep<a class="headerlink" href="#innerjoinstep" title="Permanent link">&para;</a></h3>
+<h2 id="innerjoinstep">InnerJoinStep<a class="headerlink" href="#innerjoinstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>InnerJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Inner Join two DataFrames together</p>
@@ -739,7 +744,7 @@ returned.</p>
 <li><code>YeastValidationError</code>: if any of the validations is not correct.</li>
 </ul></div>
 </div>
-<h3 id="fulljoinstep">FullJoinStep<a class="headerlink" href="#fulljoinstep" title="Permanent link">&para;</a></h3>
+<h2 id="fulljoinstep">FullJoinStep<a class="headerlink" href="#fulljoinstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>FullJoinStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">y</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">by=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">df=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Full Join two DataFrames together</p>
@@ -778,8 +783,8 @@ Where there are not matching values, returns <code>NA</code> for the one missing
 <li><code>YeastValidationError</code>: if any of the validations is not correct.</li>
 </ul></div>
 </div>
-<h2 id="extensions_1">Extensions<a class="headerlink" href="#extensions_1" title="Permanent link">&para;</a></h2>
-<h3 id="customstep">CustomStep<a class="headerlink" href="#customstep" title="Permanent link">&para;</a></h3>
+<h1 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">&para;</a></h1>
+<h2 id="customstep">CustomStep<a class="headerlink" href="#customstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>CustomStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">to_prepare=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_bake=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">to_validate=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Custom Step was designed to extend all the power of Yeast Pipelines and cover all scenarios
@@ -879,6 +884,81 @@ business rules in Steps that could be shared across Recipes.</p>
 </ul></div>
 </div>
 
+  <style type="text/css">
+.floating-toc {
+      display: table;
+      font-size: 95%;
+      margin-bottom: 1em;
+      padding: 20px;
+      width: auto;
+}
+
+.floating-toc a {
+  color: #4183c4;
+  text-decoration: none;
+  background: 0 0;
+}
+</style>
+
+<div class="floating-toc" style="position: fixed; right: 50px; top: 75px;">
+  <div class="bs-sidebar hidden-print affix well" role="complementary">
+      <ul class="nav bs-sidenav" style=" list-style-type: none; margin: 0; padding: 0;">
+        <br>
+        
+          <!-- <li class="main active">xxx<a href="#steps-reference">Steps Reference</a></li> -->
+        <br>
+        
+        <b>Columns Operations</b>
+        
+          <!-- <li class="main ">xxx<a href="#columns-operations">Columns Operations</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#selectcolumnsstep">SelectColumnsStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#mutatestep">MutateStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#renamecolumnsstep">RenameColumnsStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#castcolumnsstep">CastColumnsStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#dropcolumnsstep">DropColumnsStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#cleancolumnnamesstep">CleanColumnNamesStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#replacenastep">ReplaceNAStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#ordinalencoderstep">OrdinalEncoderStep</a></li>
+        <br>
+        
+        <b>Row Operations</b>
+        
+          <!-- <li class="main ">xxx<a href="#row-operations">Row Operations</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#filterrowsstep">FilterRowsStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#sortrowsstep">SortRowsStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#dropduplicaterowsstep">DropDuplicateRowsStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#individual-transformations">Individual Transformations</a></li>
+        <br>
+        
+        <b>Aggregations</b>
+        
+          <!-- <li class="main ">xxx<a href="#aggregations">Aggregations</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#groupbystep">GroupByStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#summarizestep">SummarizeStep</a></li>
+        <br>
+        
+        <b>Imputation</b>
+        
+          <!-- <li class="main ">xxx<a href="#imputation">Imputation</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#meanimputestep">MeanImputeStep</a></li>
+        <br>
+        
+        <b>Workflows</b>
+        
+          <!-- <li class="main ">xxx<a href="#workflows">Workflows</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#leftjoinstep">LeftJoinStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#rightjoinstep">RightJoinStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#innerjoinstep">InnerJoinStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#fulljoinstep">FullJoinStep</a></li>
+        <br>
+        
+        <b>Extensions</b>
+        
+          <!-- <li class="main ">xxx<a href="#extensions">Extensions</a></li> -->
+              <li class="" style="margin-top: 5px;"><a href="#customstep">CustomStep</a></li>
+      </ul>
+  </div>
+</div>
 
 </section>
 
