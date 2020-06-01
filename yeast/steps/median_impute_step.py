@@ -2,12 +2,12 @@ from yeast.step import Step
 from yeast.errors import YeastValidationError
 
 
-class MeanImputeStep(Step):
+class MedianImputeStep(Step):
     """
-    Impute numeric data using the mean
+    Impute numeric data using the median
 
-    MeanImputeStep estimates the variable mean from the prepare data then replace the NA values
-    on new data sets using the calculated mean values.
+    MedianImputeStep estimates the variable median from the prepare data then replace the NA values
+    on new data sets using the calculated median values.
 
     Parameters:
 
@@ -17,11 +17,11 @@ class MeanImputeStep(Step):
     Usage:
 
     ```python
-    # Impute the age and size column using the mean from the training set
-    MeanImputeStep(['age', 'size'])
+    # Impute the age and size column using the median value from the training set
+    MedianImputeStep(['age', 'size'])
 
     # You can also use selectors:
-    MeanImputeStep(AllNumeric())
+    MedianImputeStep(AllNumeric())
     ```
 
     Raises:
@@ -30,16 +30,16 @@ class MeanImputeStep(Step):
     """
     def __init__(self, selector, role='all'):
         self.selector = selector
-        self.means = {}
+        self.medians = {}
         super().__init__(needs_preparation=True, role=role)
 
     def do_prepare(self, df):
         """
-        Calculate the column means on the prepare dataset
+        Calculate the column medians on the prepare dataset
         """
         columns = self.resolve_selector(self.selector, df)
         for column in columns:
-            self.means[column] = df[column].mean(skipna=True)
+            self.medians[column] = df[column].median(skipna=True)
 
     def do_bake(self, df):
         """
@@ -47,7 +47,7 @@ class MeanImputeStep(Step):
         """
         columns = self.resolve_selector(self.selector, df)
         for column in columns:
-            df[column] = df[column].fillna(self.means[column])
+            df[column] = df[column].fillna(self.medians[column])
         return df
 
     def do_validate(self, df):
@@ -55,7 +55,6 @@ class MeanImputeStep(Step):
         - All columns on the mapping must exist on the df
         """
         columns = self.resolve_selector(self.selector, df)
-
         matches = [c in df.columns for c in columns]
         if not all(matches):
             missing_columns = [c for c, v in zip(columns, matches) if not v]

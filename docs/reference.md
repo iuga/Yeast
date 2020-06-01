@@ -35,7 +35,8 @@ Aggregate or Summarize data:
 
 Impute missing data:
 
-- [MeanImputeStep](#meanimputestep): Impute numeric data using the mean
+- [MeanImputeStep](#meanimputestep): Impute numeric data using the mean value
+- [MedianImputeStep](#medianimputestep): Impute numeric data using the median value
 
 **WorkFlows**
 
@@ -129,6 +130,11 @@ Customize Yeast behavior for our project:
 ## MeanImputeStep
 
 ::: yeast.steps.MeanImputeStep
+    :docstring:
+
+## MedianImputeStep
+
+::: yeast.steps.MedianImputeStep
     :docstring:
 
 # Workflows
