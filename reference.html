@@ -143,7 +143,8 @@
 <p><strong>Imputation</strong></p>
 <p>Impute missing data:</p>
 <ul>
-<li><a href="#meanimputestep">MeanImputeStep</a>: Impute numeric data using the mean</li>
+<li><a href="#meanimputestep">MeanImputeStep</a>: Impute numeric data using the mean value</li>
+<li><a href="#medianimputestep">MedianImputeStep</a>: Impute numeric data using the median value</li>
 </ul>
 <p><strong>WorkFlows</strong></p>
 <p>Arrange and merge workflows and recipes</p>
@@ -600,8 +601,8 @@ The most used ones are: <code>AggMean</code>, <code>AggMedian</code>, <code>AggC
 <div class="autodoc">
 <div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MeanImputeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
 <div class="autodoc-docstring"><p>Impute numeric data using the mean</p>
-<p>MeanImputeStep estimates the variable mean from the prepare data then applies the new values
-to new data sets using these averages.</p>
+<p>MeanImputeStep estimates the variable mean from the prepare data then replace the NA values
+on new data sets using the calculated mean values.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>selector</code>: string list of column names or a selector to impute</li>
@@ -613,6 +614,31 @@ to new data sets using these averages.</p>
 
 <span class="c1"># You can also use selectors:</span>
 <span class="n">MeanImputeStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">())</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: if a column does not exist</li>
+</ul></div>
+</div>
+<h2 id="medianimputestep">MedianImputeStep<a class="headerlink" href="#medianimputestep" title="Permanent link">&para;</a></h2>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>MedianImputeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Impute numeric data using the median</p>
+<p>MedianImputeStep estimates the variable median from the prepare data then replace the NA values
+on new data sets using the calculated median values.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>selector</code>: string list of column names or a selector to impute</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Impute the age and size column using the median value from the training set</span>
+<span class="n">MedianImputeStep</span><span class="p">([</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">])</span>
+
+<span class="c1"># You can also use selectors:</span>
+<span class="n">MedianImputeStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">())</span>
 </code></pre></div>
 
 
@@ -939,6 +965,7 @@ business rules in Steps that could be shared across Recipes.</p>
         
           <!-- <li class="main ">xxx<a href="#imputation">Imputation</a></li> -->
               <li class="" style="margin-top: 5px;"><a href="#meanimputestep">MeanImputeStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#medianimputestep">MedianImputeStep</a></li>
         <br>
         
         <b>Workflows</b>
