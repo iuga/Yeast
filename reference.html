@@ -123,6 +123,7 @@
 <li><a href="#renamecolumnsstep">RenameColumnsStep</a>: Rename column names</li>
 <li><a href="#castcolumnsstep">CastColumnsStep</a> / <a href="#castcolumnsstep">CastStep</a>: Cast the columns data types</li>
 <li><a href="#dropcolumnsstep">DropColumnsStep</a>: Drop/Remove columns</li>
+<li><a href="#dropzvcolumnsstep">DropZVColumnsStep</a>: Drop all columns that contain only a single value</li>
 <li><a href="#cleancolumnnamesstep">CleanColumnNamesStep</a>: Clean all column names</li>
 <li><a href="#replacenastep">ReplaceNAStep</a>: Replace missing values</li>
 <li><a href="#ordinalencoderstep">OrdinalEncoderStep</a>: Encode discrete features as integer numbers</li>
@@ -145,6 +146,7 @@
 <ul>
 <li><a href="#meanimputestep">MeanImputeStep</a>: Impute numeric data using the mean value</li>
 <li><a href="#medianimputestep">MedianImputeStep</a>: Impute numeric data using the median value</li>
+<li><a href="#constantimputestep">ConstantImputeStep</a>: Impute data using a constant value</li>
 </ul>
 <p><strong>WorkFlows</strong></p>
 <p>Arrange and merge workflows and recipes</p>
@@ -346,6 +348,33 @@ Columns that don't exist are ignored.</p>
 <ul>
 <li><code>YeastValidationError</code>: if any column does not exist or any column name is invalid.</li>
 </ul></div>
+</div>
+<h2 id="dropzvcolumnsstep">DropZVColumnsStep<a class="headerlink" href="#dropzvcolumnsstep" title="Permanent link">&para;</a></h2>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>DropZVColumnsStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector=None</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">naomit=False</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Drop all columns that contain only a single value (Zero Variance).</p>
+<p>Notes:</p>
+<p>The parameter <code>naomit</code> is used to indicate if <code>NA</code> should be considered as a value.
+If <code>naomit=False</code> then <code>[NA, 'a']</code> will contain two values and it will not be removed.
+If <code>naomit=True</code> then <code>[NA, 'a']</code> will contain only one value and will be filtered because <code>NA</code>
+was not considered.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>selector</code>: string list of column names or a selector to impute.</li>
+<li><code>naomit</code>: True if NA is not considered a value, False otherwise.</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Remove all columns that contains zero variance:</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">DropZVColumnsStep</span><span class="p">()</span>
+<span class="p">])</span>
+
+<span class="c1"># Remove all numerical columns that contains zero variance:</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">Recipe</span><span class="p">([</span>
+    <span class="n">DropZVColumnsStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">())</span>
+<span class="p">])</span>
+</code></pre></div></div>
 </div>
 <h2 id="cleancolumnnamesstep">CleanColumnNamesStep<a class="headerlink" href="#cleancolumnnamesstep" title="Permanent link">&para;</a></h2>
 <div class="autodoc">
@@ -609,7 +638,12 @@ on new data sets using the calculated mean values.</p>
 <li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Impute the age and size column using the mean from the training set</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Impute the age and size columns using the mean from the training set</span>
+<span class="c1"># Age :  20,  31,  65,  NA,  45,  23,  NA</span>
+<span class="c1"># Size:   2,   5,   9,   3,   4,  NA,  NA</span>
+<span class="c1"># to</span>
+<span class="c1"># Age :  20,  31,  65, 36.8, 45,  23, 36.8 (mean=36.8)</span>
+<span class="c1"># Size:   2,   5,   9,    3,  4, 4.6,  4.6 (mean=4.6)</span>
 <span class="n">MeanImputeStep</span><span class="p">([</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">])</span>
 
 <span class="c1"># You can also use selectors:</span>
@@ -634,11 +668,55 @@ on new data sets using the calculated median values.</p>
 <li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
 </ul>
 <p>Usage:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Impute the age and size column using the median value from the training set</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Impute the age and size columns using the mean from the training set</span>
+<span class="c1"># Age :  20,  31,  65,  NA,  45,  23,  NA</span>
+<span class="c1"># Size:   2,   5,   9,   3,   4,  NA,  NA</span>
+<span class="c1"># to</span>
+<span class="c1"># Age :  20,  31,  65,  31,  45,  23,  31 (median=31)</span>
+<span class="c1"># Size:   2,   5,   9,   3,   4,   4,   4 (median=4)</span>
 <span class="n">MedianImputeStep</span><span class="p">([</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">])</span>
 
 <span class="c1"># You can also use selectors:</span>
 <span class="n">MedianImputeStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">())</span>
+</code></pre></div>
+
+
+<p>Raises:</p>
+<ul>
+<li><code>YeastValidationError</code>: if a column does not exist</li>
+</ul></div>
+</div>
+<h2 id="constantimputestep">ConstantImputeStep<a class="headerlink" href="#constantimputestep" title="Permanent link">&para;</a></h2>
+<div class="autodoc">
+<div class="autodoc-signature"><em>class </em><code>yeast.steps.<strong>ConstantImputeStep</strong></code><span class="autodoc-punctuation">(</span><em class="autodoc-param">selector</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">value</em><span class="autodoc-punctuation">, </span><em class="autodoc-param">role='all'</em><span class="autodoc-punctuation">)</span></div>
+<div class="autodoc-docstring"><p>Impute data using a constant value</p>
+<p>ConstantImputeStep replaces all NA values in the columns by a constant value. This step does not
+validate the column data type before impute, so you can generate mixed types on a column.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>selector</code>: string list of column names or a selector to impute</li>
+<li><code>value</code>: constant value to replace with</li>
+<li><code>role</code>: String name of the role to control baking flows on new data. Default: <code>all</code>.</li>
+</ul>
+<p>Usage:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Numerical:</span>
+<span class="c1"># Impute the age and size columns using zero as value</span>
+<span class="c1"># Age :  20,  31,  65,  NA,  45,  23,  NA</span>
+<span class="c1"># Size:   2,   5,   9,   3,   4,  NA,  NA</span>
+<span class="c1"># to</span>
+<span class="c1"># Age :  20,  31,  65,   0,  45,  23,   0</span>
+<span class="c1"># Size:   2,   5,   9,   3,   4,   0,   0</span>
+<span class="n">ConstantImputeStep</span><span class="p">([</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Categorical:</span>
+<span class="c1"># Impute the security column with &quot;other&quot;</span>
+<span class="c1"># security: &#39;stock&#39;, &#39;bond&#39;, &#39;etf&#39;, &#39;mf&#39;, NA</span>
+<span class="c1"># to</span>
+<span class="c1"># security: &#39;stock&#39;, &#39;bond&#39;, &#39;etf&#39;, &#39;mf&#39;, &#39;other&#39;</span>
+<span class="n">ConstantImputeStep</span><span class="p">([</span><span class="s1">&#39;security&#39;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;other&#39;</span><span class="p">)</span>
+
+<span class="c1"># You can also use selectors:</span>
+<span class="n">ConstantImputeStep</span><span class="p">(</span><span class="n">AllNumeric</span><span class="p">(),</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div>
 
 
@@ -941,6 +1019,7 @@ business rules in Steps that could be shared across Recipes.</p>
               <li class="" style="margin-top: 5px;"><a href="#renamecolumnsstep">RenameColumnsStep</a></li>
               <li class="" style="margin-top: 5px;"><a href="#castcolumnsstep">CastColumnsStep</a></li>
               <li class="" style="margin-top: 5px;"><a href="#dropcolumnsstep">DropColumnsStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#dropzvcolumnsstep">DropZVColumnsStep</a></li>
               <li class="" style="margin-top: 5px;"><a href="#cleancolumnnamesstep">CleanColumnNamesStep</a></li>
               <li class="" style="margin-top: 5px;"><a href="#replacenastep">ReplaceNAStep</a></li>
               <li class="" style="margin-top: 5px;"><a href="#ordinalencoderstep">OrdinalEncoderStep</a></li>
@@ -966,6 +1045,7 @@ business rules in Steps that could be shared across Recipes.</p>
           <!-- <li class="main ">xxx<a href="#imputation">Imputation</a></li> -->
               <li class="" style="margin-top: 5px;"><a href="#meanimputestep">MeanImputeStep</a></li>
               <li class="" style="margin-top: 5px;"><a href="#medianimputestep">MedianImputeStep</a></li>
+              <li class="" style="margin-top: 5px;"><a href="#constantimputestep">ConstantImputeStep</a></li>
         <br>
         
         <b>Workflows</b>
