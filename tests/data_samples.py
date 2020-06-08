@@ -153,6 +153,16 @@ def release_dates():
             '2017-09-24',
             '2020-01-23 15',
             np.nan
+        ],
+        'episodes': [
+            24,
+            24,
+            np.nan,
+            24,
+            24,
+            24,
+            24,
+            np.nan
         ]
     })
     return pdf

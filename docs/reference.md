@@ -11,6 +11,7 @@ Execute operations over columns or predictors:
 - [RenameColumnsStep](#renamecolumnsstep): Rename column names
 - [CastColumnsStep](#castcolumnsstep) / [CastStep](#castcolumnsstep): Cast the columns data types
 - [DropColumnsStep](#dropcolumnsstep): Drop/Remove columns
+- [DropZVColumnsStep](#dropzvcolumnsstep): Drop all columns that contain only a single value
 - [CleanColumnNamesStep](#cleancolumnnamesstep): Clean all column names
 - [ReplaceNAStep](#replacenastep): Replace missing values
 - [OrdinalEncoderStep](#ordinalencoderstep): Encode discrete features as integer numbers
@@ -21,7 +22,6 @@ Execute operations over rows or values:
 
 - [FilterRowsStep](#filterrowsstep) / [FilterStep](#filterrowsstep): Filter values based on a expression
 - [SortRowsStep](#sortrowsstep) / [SortStep](#sortrowsstep): Sort values based on columns
-
 
 **Aggregations**
 
@@ -37,6 +37,7 @@ Impute missing data:
 
 - [MeanImputeStep](#meanimputestep): Impute numeric data using the mean value
 - [MedianImputeStep](#medianimputestep): Impute numeric data using the median value
+- [ConstantImputeStep](#constantimputestep): Impute data using a constant value
 
 **WorkFlows**
 
@@ -78,6 +79,11 @@ Customize Yeast behavior for our project:
 ## DropColumnsStep
 
 ::: yeast.steps.DropColumnsStep
+    :docstring:
+
+## DropZVColumnsStep
+
+::: yeast.steps.DropZVColumnsStep
     :docstring:
 
 ## CleanColumnNamesStep
@@ -135,6 +141,11 @@ Customize Yeast behavior for our project:
 ## MedianImputeStep
 
 ::: yeast.steps.MedianImputeStep
+    :docstring:
+
+## ConstantImputeStep
+
+::: yeast.steps.ConstantImputeStep
     :docstring:
 
 # Workflows

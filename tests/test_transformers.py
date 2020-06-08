@@ -5,6 +5,7 @@ from yeast.transformers import StrToLower, StrToUpper, StrToSentence, StrToTitle
 from yeast.transformers import StrSlice, StrReplace, StrRemove, StrRemoveAll, MapValues
 from yeast.transformers import DateYear, DateMonth, DateQuarter, DateWeek, DateDay, DateDayOfWeek
 from yeast.transformers import DateHour, DateMinute, DateSecond, DateDayOfYear
+from yeast.transformers import Round, Ceil, Floor
 
 from data_samples import startrek_data as data
 from data_samples import startrek_characters as chars_data
@@ -222,3 +223,36 @@ def test_extract_date_seconds(release_dates):
     assert feature[5] == 0
     assert feature[6] == 0
     assert pd.isna(feature[7])
+
+
+def test_numerical_round(data):
+    # [9.3, 9.9, 7.4, 6.8, 8.9, 9.0]
+    ratings = Round(digits=0, column='rating').resolve(data).to_list()
+    assert ratings[0] == 9
+    assert ratings[1] == 10
+    assert ratings[2] == 7
+    assert ratings[3] == 7
+    assert ratings[4] == 9
+    assert ratings[5] == 9
+
+
+def test_numerical_ceil(data):
+    # [9.3, 9.9, 7.4, 6.8, 8.9, 9.0]
+    ratings = Ceil(column='rating').resolve(data).to_list()
+    assert ratings[0] == 10
+    assert ratings[1] == 10
+    assert ratings[2] == 8
+    assert ratings[3] == 7
+    assert ratings[4] == 9
+    assert ratings[5] == 9
+
+
+def test_numerical_floor(data):
+    # [9.3, 9.9, 7.4, 6.8, 8.9, 9.0]
+    ratings = Floor(column='rating').resolve(data).to_list()
+    assert ratings[0] == 9
+    assert ratings[1] == 9
+    assert ratings[2] == 7
+    assert ratings[3] == 6
+    assert ratings[4] == 8
+    assert ratings[5] == 9

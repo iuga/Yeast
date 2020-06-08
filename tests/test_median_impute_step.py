@@ -3,7 +3,7 @@ import numpy as np
 
 from yeast import Recipe
 from yeast.steps import MedianImputeStep, MutateStep
-from yeast.errors import YeastValidationError, YeastBakeError
+from yeast.errors import YeastValidationError, YeastBakeError, YeastPreparationError
 from yeast.transformers import MapValues
 
 from data_samples import startrek_data as data
@@ -65,3 +65,20 @@ def test_if_bake_and_not_prepare_should_raise_an_error(data):
 
     with pytest.raises(YeastBakeError):
         step.bake(data)
+
+
+def test_median_inputation_on_a_non_numerical_column_must_fail(data):
+    """
+    We can not calculate the median on a non-numerical column.
+    """
+    recipe = Recipe([
+        MutateStep({
+            'title': MapValues({
+                'Voyager': np.NaN
+            })
+        }),
+        MedianImputeStep(['title'])
+    ])
+
+    with pytest.raises(YeastPreparationError):
+        recipe.prepare(data)

@@ -1,5 +1,5 @@
 from yeast.step import Step
-from yeast.errors import YeastValidationError
+from yeast.errors import YeastValidationError, YeastPreparationError
 
 
 class MeanImputeStep(Step):
@@ -17,7 +17,12 @@ class MeanImputeStep(Step):
     Usage:
 
     ```python
-    # Impute the age and size column using the mean from the training set
+    # Impute the age and size columns using the mean from the training set
+    # Age :  20,  31,  65,  NA,  45,  23,  NA
+    # Size:   2,   5,   9,   3,   4,  NA,  NA
+    # to
+    # Age :  20,  31,  65, 36.8, 45,  23, 36.8 (mean=36.8)
+    # Size:   2,   5,   9,    3,  4, 4.6,  4.6 (mean=4.6)
     MeanImputeStep(['age', 'size'])
 
     # You can also use selectors:
@@ -39,7 +44,10 @@ class MeanImputeStep(Step):
         """
         columns = self.resolve_selector(self.selector, df)
         for column in columns:
-            self.means[column] = df[column].mean(skipna=True)
+            try:
+                self.means[column] = df[column].mean(skipna=True)
+            except TypeError as ex:
+                raise YeastPreparationError(f'Error calculating the mean on: {column}') from ex
 
     def do_bake(self, df):
         """

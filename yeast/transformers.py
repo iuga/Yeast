@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from yeast.errors import YeastTransformerError
 
@@ -515,3 +516,60 @@ class DateSecond(DateExtract):
     """
     def __init__(self, column=None):
         super().__init__('second', column=column)
+
+
+class NumericalTransformer(Transformer):
+    """
+    Base abstract interface to define numerical column transformers
+    """
+    pass
+
+
+class Round(NumericalTransformer):
+    """
+    Round each value in a column to the given number of digits.
+
+    Parameters:
+
+    - `column`: name used to round values
+    - `digits`: Number of decimal places to round to.
+    """
+    def __init__(self, digits=2, column=None):
+        super().__init__(column=column)
+        self.digits = digits
+
+    def do_resolve(self, df, column):
+        if hasattr(df[column], "round"):
+            return df[column].round(decimals=self.digits)
+        else:
+            raise YeastTransformerError(f'Error rounding "{column}"". Does it have the right type?')
+
+
+class Ceil(NumericalTransformer):
+    """
+    Ceil round each value in a column to the given number of digits.
+
+    Parameters:
+
+    - `column`: name used to round values
+    """
+    def __init__(self, column=None):
+        super().__init__(column=column)
+
+    def do_resolve(self, df, column):
+        return df[column].apply(np.ceil)
+
+
+class Floor(NumericalTransformer):
+    """
+    Floor round each value in a column to the given number of digits.
+
+    Parameters:
+
+    - `column`: name used to round values
+    """
+    def __init__(self, column=None):
+        super().__init__(column=column)
+
+    def do_resolve(self, df, column):
+        return df[column].apply(np.floor)

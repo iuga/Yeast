@@ -1,5 +1,5 @@
 from yeast.step import Step
-from yeast.errors import YeastValidationError
+from yeast.errors import YeastValidationError, YeastPreparationError
 
 
 class MedianImputeStep(Step):
@@ -17,7 +17,12 @@ class MedianImputeStep(Step):
     Usage:
 
     ```python
-    # Impute the age and size column using the median value from the training set
+    # Impute the age and size columns using the mean from the training set
+    # Age :  20,  31,  65,  NA,  45,  23,  NA
+    # Size:   2,   5,   9,   3,   4,  NA,  NA
+    # to
+    # Age :  20,  31,  65,  31,  45,  23,  31 (median=31)
+    # Size:   2,   5,   9,   3,   4,   4,   4 (median=4)
     MedianImputeStep(['age', 'size'])
 
     # You can also use selectors:
@@ -39,11 +44,14 @@ class MedianImputeStep(Step):
         """
         columns = self.resolve_selector(self.selector, df)
         for column in columns:
-            self.medians[column] = df[column].median(skipna=True)
+            try:
+                self.medians[column] = df[column].median(skipna=True)
+            except TypeError as ex:
+                raise YeastPreparationError(f'Error calculating the median on: {column}') from ex
 
     def do_bake(self, df):
         """
-        Replace all NA values with the calculated means
+        Replace all NA values with the calculated medians
         """
         columns = self.resolve_selector(self.selector, df)
         for column in columns:

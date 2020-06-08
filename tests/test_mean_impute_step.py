@@ -3,7 +3,7 @@ import numpy as np
 
 from yeast import Recipe
 from yeast.steps import MeanImputeStep, MutateStep
-from yeast.errors import YeastValidationError, YeastBakeError
+from yeast.errors import YeastValidationError, YeastBakeError, YeastPreparationError
 from yeast.transformers import MapValues
 
 from data_samples import startrek_data as data
@@ -41,8 +41,8 @@ def test_mean_inputation_on_numerical_column(data):
     assert ratings[1] == 7.7  # mean
     assert ratings[2] == 7.4
     assert ratings[3] == 6.8
-    assert ratings[4] == 8.9  # mean
-    assert ratings[5] == 7.7
+    assert ratings[4] == 8.9
+    assert ratings[5] == 7.7  # mean
 
 
 def test_if_column_does_not_exist_raises_an_error(data):
@@ -63,3 +63,20 @@ def test_if_bake_and_not_prepare_should_raise_an_error(data):
 
     with pytest.raises(YeastBakeError):
         step.bake(data)
+
+
+def test_mean_inputation_on_a_non_numerical_column_must_fail(data):
+    """
+    We can not calculate the mean on a non-numerical column.
+    """
+    recipe = Recipe([
+        MutateStep({
+            'title': MapValues({
+                'Voyager': np.NaN
+            })
+        }),
+        MeanImputeStep(['title'])
+    ])
+
+    with pytest.raises(YeastPreparationError):
+        recipe.prepare(data)
